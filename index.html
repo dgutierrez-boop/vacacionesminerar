@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALENDARIO VACACIONAL PERSONAL DE MINERAR S.A.</title>
+
+    <!-- FAVICON (GIF ANIMADO DE MINERAR) -->
+    <link rel="icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
+    <link rel="shortcut icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e272e 0%, #090a0f 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ANIMACIÓN DE VIBRACIÓN EN CANDADO */
+        @keyframes vibrate {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-8px) rotate(-5deg); }
+            40% { transform: translateX(8px) rotate(5deg); }
+            60% { transform: translateX(-8px) rotate(-5deg); }
+            80% { transform: translateX(8px) rotate(5deg); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake { animation: vibrate 0.4s ease-in-out; }
+
+        /* LOGIN OVERLAY */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: #1e272e; padding: 30px; border-radius: 12px;
+            width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            text-align: center; border-top: 5px solid #E67E00;
+            color: white;
+        }
+
+        .lock-icon-container {
+            font-size: 3rem; margin-bottom: 5px;
+            display: inline-block; transition: transform 0.2s;
+        }
+
+        .login-box h3 {
+            color: #f5f6fa; font-size: 1.1rem; margin-bottom: 15px;
+            font-weight: 800; text-transform: uppercase;
+        }
+
+        .login-box select, .login-box input {
+            width: 100%; padding: 10px; margin-bottom: 10px;
+            border: 2px solid #485460; border-radius: 6px;
+            font-size: 0.95rem; outline: none; background-color: #2f3640;
+            color: white;
+        }
+
+        .login-box select:focus, .login-box input:focus { border-color: #E67E00; }
+
+        .login-btn {
+            width: 100%; padding: 12px; background: #E67E00;
+            color: white; border: none; border-radius: 6px;
+            font-weight: bold; font-size: 1rem; cursor: pointer;
+            transition: background 0.2s; margin-top: 5px;
+        }
+
+        .login-btn:hover { background: #c66c00; }
+
+        .forgot-pass-link {
+            display: inline-block; margin-top: 12px; font-size: 0.8rem;
+            color: #E67E00; text-decoration: underline; cursor: pointer; font-weight: bold;
+        }
+
+        .login-info { font-size: 0.75rem; color: #aaa; margin-top: 10px; line-height: 1.3; }
+
+        /* CONTENEDOR PRINCIPAL - DESPLAZADO HACIA ABAJO */
+        .container {
+            width: 100%; max-width: 1550px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03); border-radius: 12px;
+            padding: 25px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            display: none;
+            margin-top: 80px; /* BAJADO SIGNIFICATIVAMENTE COMO SE SOLICITÓ */
+        }
+        
+        /* HEADER EN ESTILO OSCURO (TEMA LATERAL) */
+        header {
+            background: #1e272e;
+            color: #ffffff;
+            padding: 22px 25px 18px 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-top: 4px solid #E67E00;
+            border-bottom: 2px solid rgba(230, 126, 0, 0.4);
+            position: relative;
+        }
+
+        /* LOGO INSERTADO EN EL LATERAL IZQUIERDO */
+        .header-logo-left {
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-logo-left img {
+            width: 55px; height: 55px; object-fit: contain;
+        }
+
+        /* BLOQUE CENTRAL CON TÍTULOS Y CAMPO DE PERSONA */
+        .header-center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header-main-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #fbc531;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header-person-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-person-row label {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        /* ÁREAS DE ESCRITURA EN BLANCO/CLARO PARA FÁCIL LECTURA */
+        .header-person-row input {
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: 2px solid #E67E00;
+            border-radius: 6px;
+            outline: none;
+            color: #000000;
+            padding: 6px 12px;
+            width: 320px;
+            background: #ffffff;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* FILA INFERIOR DE METADATOS Y ACCIONES */
+        .header-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-top: 1px solid #353b48;
+            padding-top: 15px;
+        }
+
+        .meta-fields {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .field-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-group span {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #dcdde1;
+            text-transform: uppercase;
+        }
+
+        /* CAMPOS DE TEXTO EDITABLES BLANCOS */
+        .field-group input {
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 6px 10px;
+            outline: none;
+            text-transform: uppercase;
+            color: #000000;
+            background: #ffffff;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .print-btn, .logout-btn {
+            padding: 9px 16px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .print-btn { background: #27ae60; }
+        .print-btn:hover { background: #219653; transform: translateY(-1px); }
+        .logout-btn { background: #c0392b; }
+        .logout-btn:hover { background: #a93226; transform: translateY(-1px); }
+        
+        .main-content {
+            display: flex;
+            gap: 15px;
+            align-items: stretch;
+        }
+        
+        .calendar-section {
+            flex: 3;
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+        
+        .month-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            background: #2d3436;
+            border-radius: 8px;
+            color: white;
+            border-bottom: 2px solid #E67E00;
+        }
+        
+        .nav-btn {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            background: #E67E00;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .current-month {
+            text-align: center;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            background: #ccc;
+            padding: 4px;
+            border-radius: 8px;
+            flex-grow: 1;
+        }
+        
+        .calendar-day-header {
+            background: #ffffff;
+            color: #555;
+            padding: 6px 2px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 4px;
+        }
+        
+        .calendar-day {
+            background: white;
+            min-height: 100px;
+            padding: 6px;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        
+        .calendar-day:hover { 
+            background: #f8f9fa; 
+            box-shadow: inset 0 0 0 2px #E67E00;
+        }
+        
+        .day-number {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 4px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* FERIADOS DESTACADOS */
+        .calendar-day.holiday-day {
+            background-color: #fff0f0 !important;
+            border: 1px solid #ff7675;
+        }
+
+        .holiday-tag {
+            font-size: 0.65rem;
+            font-weight: 900;
+            background: #d63031;
+            color: white;
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        .day-content {
+            font-size: 0.75rem;
+            font-weight: bold;
+            word-break: break-word;
+            line-height: 1.25;
+            padding: 4px;
+            border-radius: 4px;
+            flex-grow: 1;
+            margin-top: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            color: #111;
+        }
+
+        .calendar-day.selected {
+            outline: 3px solid #E67E00 !important;
+            z-index: 2;
+        }
+
+        .empty-day {
+            background: #f5f5f5;
+            min-height: 100px;
+        }
+
+        /* PANEL DE CARGA LATERAL OSCURO */
+        .notes-section {
+            flex: 1;
+            min-width: 320px;
+            background-color: #1e272e;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            border-top: 5px solid #E67E00;
+        }
+        
+        .notes-section h2 {
+            color: #f5f6fa;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-bottom: 2px solid #E67E00;
+            padding-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .selected-date-info {
+            font-weight: bold;
+            color: #fbc531;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            border: 1px solid rgba(251, 197, 49, 0.3);
+        }
+
+        #notes {
+            flex-grow: 1;
+            width: 100%;
+            min-height: 180px;
+            padding: 12px;
+            border: 2px solid #485460;
+            background-color: #2f3640;
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            resize: vertical;
+            margin-bottom: 15px;
+            outline: none;
+            line-height: 1.4;
+        }
+
+        #notes:focus { 
+            border-color: #E67E00; 
+            background-color: #353b48;
+        }
+
+        .save-btn {
+            padding: 12px;
+            background: #E67E00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .save-btn:hover { 
+            background: #f39c12; 
+            transform: translateY(-1px);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* MODAL TRANSPARENTE FLOTANTE FUTURISTA AL PASAR EL PUNTERO (HOVER) */
+        .futuristic-hover-modal {
+            position: fixed;
+            pointer-events: none; /* No interfiere con la navegación del mouse */
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(230, 126, 0, 0.6);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #ffffff;
+            width: 320px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(230, 126, 0, 0.25);
+            z-index: 10000;
+            opacity: 0;
+            transform: scale(0.92) translateY(10px);
+            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .futuristic-hover-modal.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .fhm-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #E67E00;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .fhm-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #00d2d3;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .fhm-desc {
+            font-size: 0.85rem;
+            color: #c8d6e5;
+            line-height: 1.4;
+        }
+
+        /* IMPRESIÓN LIMPIA EN A4 */
+        @media print {
+            @page { size: A4 portrait; margin: 0; }
+            body { background: white !important; color: black !important; padding: 8mm !important; }
+            .login-overlay, .futuristic-hover-modal { display: none !important; }
+            .container { display: block !important; box-shadow: none !important; padding: 0 !important; width: 100% !important; background: transparent !important; margin-top: 0 !important; }
+            header { background: white !important; border: none !important; padding: 0 !important; margin-bottom: 10px !important; box-shadow: none !important; border-bottom: 2px solid #000 !important; color: black !important; }
+            .header-main-title { color: black !important; text-shadow: none !important; }
+            .header-person-row label, .field-group span { color: black !important; }
+            .header-person-row input, .field-group input { border: none !important; font-size: 1rem !important; background: transparent !important; }
+            .month-navigation, .notes-section, .header-actions { display: none !important; }
+            .main-content { display: block !important; }
+            .calendar-section { border: none !important; box-shadow: none !important; padding: 0 !important; }
+            .current-month { color: black !important; font-size: 1.6rem !important; margin: 5px 0 10px 0 !important; }
+            .calendar-grid { gap: 1px !important; background: #000 !important; }
+            .calendar-day-header { background: #fff !important; color: #000 !important; padding: 4px !important; font-size: 0.85rem !important; font-weight: bold !important; }
+            .calendar-day { min-height: 115px !important; border: 1px solid #777 !important; padding: 4px !important; }
+            .day-content { background: #f0f0f0 !important; border-left: 2px solid #000 !important; font-size: 0.7rem !important; padding: 2px !important; color: #000 !important; }
+            .legend { margin-top: 8px !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PANTALLA DE LOGIN -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+        <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Minerar" style="width:55px;height:55px;object-fit:contain; background:white; border-radius:12px; padding:3px; margin-bottom: 5px;">
+        <br>
+        <div class="lock-icon-container" id="lockIcon">🔒</div>
+
+        <h3 id="formTitle">Control de Vacaciones</h3>
+
+        <select id="userSelect" onchange="handleUserSelectChange()"></select>
+
+        <input type="text" id="usernameInput" placeholder="Nombre completo (ej: MARCELO)" style="display:none;">
+        <input type="email" id="emailInput" placeholder="Correo Electrónico" style="display:none;">
+
+        <input type="password" id="passwordInput" placeholder="Contraseña">
+        <input type="password" id="confirmPasswordInput" placeholder="Confirmar Contraseña" style="display:none;">
+
+        <button class="login-btn" id="submitBtn" onclick="processLogin()">INGRESAR AL SISTEMA</button>
+
+        <span class="forgot-pass-link" id="forgotBtn" onclick="recoverPassword()">¿Olvidaste tu contraseña?</span>
+
+        <p class="login-info" id="infoText">Selecciona tu usuario e ingresa tu contraseña.</p>
+    </div>
+</div>
+
+<!-- MODAL FLOTANTE FUTURISTA AL PASAR EL PUNTERO -->
+<div class="futuristic-hover-modal" id="hoverModal">
+    <div class="fhm-header">
+        <span>🇦🇷</span> <span id="fhmDateText">FERIADO NACIONAL</span>
+    </div>
+    <div class="fhm-title" id="fhmTitle">Título del Feriado</div>
+    <div class="fhm-desc" id="fhmDesc">Descripción corta de la conmemoración.</div>
+</div>
+
+<!-- CONTENEDOR PRINCIPAL - BAJADO SEGÚN EL INDICADOR AMARILLO -->
+<div class="container" id="mainContainer">
+    <header>
+        <!-- LOGO EN LATERAL IZQUIERDO -->
+        <div class="header-logo-left">
+            <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Minerar S.A.">
+        </div>
+
+        <!-- CENTRO DE ENCABEZADO -->
+        <div class="header-center-content">
+            <div class="header-main-title">
+                CALENDARIO VACACIONAL PERSONAL DE MINERAR S.A.
+            </div>
+
+            <div class="header-person-row">
+                <label>VACACIONES:</label>
+                <input type="text" id="titularName" value="ALVAREZ MIGUEL" placeholder="NOMBRE EMPLEADO" oninput="updateCalendar()">
+            </div>
+        </div>
+
+        <!-- FILA INFERIOR DE DATOS EDITABLES -->
+        <div class="header-bottom-row">
+            <div class="meta-fields">
+                <div class="field-group">
+                    <span>SECTOR:</span>
+                    <input type="text" id="sectorInput" value="TALLER">
+                </div>
+                <div class="field-group">
+                    <span>SUPERVISOR A CARGO:</span>
+                    <input type="text" id="supervisorInput" value="ALVAREZ MIGUEL">
+                </div>
+                <div class="field-group">
+                    <span>EMPRESA:</span>
+                    <input type="text" id="empresaInput" value="MINERAR S.A.">
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR A4</button>
+                <button class="logout-btn" onclick="logoutUser()">🔒 SALIR</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="calendar-section">
+            <div class="month-navigation">
+                <button class="nav-btn" onclick="changeMonth(-1)">&#10094; Ant.</button>
+                <div class="month-selector">
+                    <select id="monthSelect" onchange="updateCalendar()" style="padding: 5px; font-weight: bold; border-radius:4px;">
+                        <option value="0">Enero</option>
+                        <option value="1">Febrero</option>
+                        <option value="2">Marzo</option>
+                        <option value="3">Abril</option>
+                        <option value="4" selected>Mayo</option>
+                        <option value="5">Junio</option>
+                        <option value="6">Julio</option>
+                        <option value="7">Agosto</option>
+                        <option value="8">Septiembre</option>
+                        <option value="9">Octubre</option>
+                        <option value="10">Noviembre</option>
+                        <option value="11">Diciembre</option>
+                    </select>
+                    <select id="yearSelect" onchange="updateCalendar()" style="padding: 5px; font-weight: bold; border-radius:4px;">
+                        <option value="2026" selected>2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                </div>
+                <button class="nav-btn" onclick="changeMonth(1)">Sig. &#10095;</button>
+            </div>
+
+            <div class="current-month" id="monthYearTitle">MAYO 2026</div>
+
+            <div class="calendar-grid" id="calendarGrid"></div>
+
+            <div class="legend">
+                <span><span>&#9632;</span> Seleccionado</span>
+                <span><span style="color:#d63031;">&#9632;</span> Feriado Nacional (Pasa el mouse para ver)</span>
+                <span><span style="color:#e67e22;">&#9632;</span> Vacaciones por Empleado</span>
+            </div>
+        </div>
+
+        <!-- PANEL DE CARGA LATERAL OSCURO -->
+        <div class="notes-section">
+            <h2>Panel de Carga</h2>
+            <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla del calendario</div>
+
+            <textarea id="notes" placeholder="Escribe el nombre del empleado o detalles:&#10;&#10;Ej: Alvarez Miguel comienza vacaciones"></textarea>
+            <button class="save-btn" onclick="saveNote()">Guardar en Casilla</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUser = "";
+    let notesData = {};
+    let isRegisteringNew = false;
+    let currentDate = new Date(2026, 4, 1); // Mayo 2026
+    let selectedDateStr = "";
+    
+    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    // DETALLE DE FERIADOS
+    const holidayDetails = {
+        "01-01": { title: "Año Nuevo", desc: "Inicio del año calendario. Feriado inamovible para compartir en familia y descansar." },
+        "03-24": { title: "Día de la Memoria por la Verdad y la Justicia", desc: "Conmemoración a las víctimas de la última dictadura militar en Argentina." },
+        "04-02": { title: "Día del Veterano y Caídos en Malvinas", desc: "Homenaje a los combatientes y fallecidos en el conflicto de Malvinas en 1982." },
+        "05-01": { title: "Día del Trabajador", desc: "Conmemoración internacional del movimiento obrero y derechos laborales." },
+        "05-25": { title: "Día de la Revolución de Mayo", desc: "Conmemoración del establecimiento del primer gobierno patrio en 1810." },
+        "06-20": { title: "Paso a la Inmortalidad del Gral. Manuel Belgrano", desc: "Día de la Bandera Argentina en tributo a su creador." },
+        "07-09": { title: "Día de la Independencia", desc: "Conmemoración de la firma de la independencia patria en Tucumán en 1816." },
+        "08-17": { title: "Paso a la Inmortalidad del Gral. José de San Martín", desc: "Homenaje al Padre de la Patria y Gran Libertador." },
+        "10-12": { title: "Día del Respeto a la Diversidad Cultural", desc: "Jornada para la reflexión histórica sobre los pueblos originarios." },
+        "11-20": { title: "Día de la Soberanía Nacional", desc: "Conmemoración de la heroica Batalla de Vuelta de Obligado de 1845." },
+        "12-08": { title: "Inmaculada Concepción de María", desc: "Festividad religiosa católica respetada institucionalmente." },
+        "12-25": { title: "Navidad", desc: "Celebración de la Natividad y festividad de reunión familiar." }
+    };
+
+    function getColorForName(name) {
+        if (!name || name.trim() === "") return "#ffeaa7";
+        let hash = 0;
+        let str = name.trim().toUpperCase();
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const h = Math.abs(hash) % 360;
+        return `hsl(${h}, 75%, 82%)`;
+    }
+
+    function playUnlockSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+        } catch(e) {}
+    }
+
+    window.onload = function() {
+        populateUserDropdown();
+        loadNotesFromStorage();
+    };
+
+    function populateUserDropdown() {
+        const userSelect = document.getElementById("userSelect");
+        const users = JSON.parse(localStorage.getItem("minerar_users_db")) || {
+            "ALVAREZ MIGUEL": { password: "123", email: "alvarez@minerar.com.ar" },
+            "GEREZ DANIEL": { password: "123", email: "gerez@minerar.com.ar" },
+            "MARCELO": { password: "123", email: "marcelo@minerar.com.ar" }
+        };
+
+        userSelect.innerHTML = '<option value="" disabled selected>-- Selecciona Usuario / Supervisor --</option>';
+        
+        for (let username in users) {
+            let opt = document.createElement("option");
+            opt.value = username;
+            opt.innerText = username;
+            userSelect.appendChild(opt);
+        }
+
+        let newOpt = document.createElement("option");
+        newOpt.value = "NEW_USER";
+        newOpt.innerText = "➕ REGISTRAR NUEVO SUPERVISOR";
+        newOpt.style.fontWeight = "bold";
+        newOpt.style.color = "#E67E00";
+        userSelect.appendChild(newOpt);
+
+        handleUserSelectChange();
+    }
+
+    function handleUserSelectChange() {
+        const userSelect = document.getElementById("userSelect");
+        const usernameInput = document.getElementById("usernameInput");
+        const emailInput = document.getElementById("emailInput");
+        const confirmPasswordInput = document.getElementById("confirmPasswordInput");
+        const submitBtn = document.getElementById("submitBtn");
+        const infoText = document.getElementById("infoText");
+        const forgotBtn = document.getElementById("forgotBtn");
+
+        if (userSelect.value === "NEW_USER") {
+            isRegisteringNew = true;
+            usernameInput.style.display = "block";
+            emailInput.style.display = "block";
+            confirmPasswordInput.style.display = "block";
+            submitBtn.innerText = "REGISTRAR Y INGRESAR";
+            infoText.innerText = "Ingresa tu nombre completo, correo y crea tu contraseña.";
+            forgotBtn.style.display = "none";
+        } else {
+            isRegisteringNew = false;
+            usernameInput.style.display = "none";
+            emailInput.style.display = "none";
+            confirmPasswordInput.style.display = "none";
+            submitBtn.innerText = "INGRESAR AL SISTEMA";
+            infoText.innerText = "Selecciona tu usuario e ingresa tu contraseña.";
+            forgotBtn.style.display = "inline-block";
+        }
+    }
+
+    function processLogin() {
+        const userSelect = document.getElementById("userSelect");
+        const password = document.getElementById("passwordInput").value.trim();
+        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {
+            "ALVAREZ MIGUEL": { password: "123", email: "alvarez@minerar.com.ar" },
+            "GEREZ DANIEL": { password: "123", email: "gerez@minerar.com.ar" },
+            "MARCELO": { password: "123", email: "marcelo@minerar.com.ar" }
+        };
+        const lockIcon = document.getElementById("lockIcon");
+
+        const triggerShake = () => {
+            lockIcon.innerText = "🔒";
+            lockIcon.classList.remove("shake");
+            void lockIcon.offsetWidth;
+            lockIcon.classList.add("shake");
+        };
+
+        if (isRegisteringNew) {
+            const username = document.getElementById("usernameInput").value.trim().toUpperCase();
+            const email = document.getElementById("emailInput").value.trim().toLowerCase();
+            const confirmPassword = document.getElementById("confirmPasswordInput").value.trim();
+
+            if (!username) { triggerShake(); alert("Por favor ingresa un nombre."); return; }
+            if (!email || !email.includes("@")) { triggerShake(); alert("Ingresa un correo válido."); return; }
+            if (!password) { triggerShake(); alert("Ingresa una contraseña."); return; }
+            if (password !== confirmPassword) { triggerShake(); alert("Las contraseñas no coinciden."); return; }
+
+            usersDB[username] = { password: password, email: email };
+            localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
+            currentUser = username;
+
+        } else {
+            const username = userSelect.value;
+            if (!username || username === "NEW_USER") {
+                triggerShake();
+                alert("Por favor selecciona un usuario de la lista.");
+                return;
+            }
+
+            if (!password || !usersDB[username] || usersDB[username].password !== password) {
+                triggerShake();
+                alert("Contraseña incorrecta.");
+                return;
+            }
+
+            currentUser = username;
+        }
+
+        lockIcon.innerText = "🔓";
+        playUnlockSound();
+
+        setTimeout(() => {
+            document.getElementById("loginOverlay").style.display = "none";
+            document.getElementById("mainContainer").style.display = "block";
+            document.getElementById("supervisorInput").value = currentUser;
+            updateCalendar();
+        }, 300);
+    }
+
+    function recoverPassword() {
+        const userSelect = document.getElementById("userSelect").value;
+        if (!userSelect || userSelect === "NEW_USER") {
+            alert("Selecciona un usuario para recuperar su contraseña.");
+            return;
+        }
+        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        const user = usersDB[userSelect];
+        if (user) {
+            alert(`Instrucciones enviadas a: ${user.email}\n(Para demostración, tu clave es: ${user.password})`);
+        }
+    }
+
+    function logoutUser() {
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("loginOverlay").style.display = "flex";
+        document.getElementById("passwordInput").value = "";
+        document.getElementById("lockIcon").innerText = "🔒";
+    }
+
+    function loadNotesFromStorage() {
+        const saved = localStorage.getItem("minerar_calendar_notes");
+        if (saved) {
+            try { notesData = JSON.parse(saved); } catch(e) { notesData = {}; }
+        }
+    }
+
+    function saveNotesToStorage() {
+        localStorage.setItem("minerar_calendar_notes", JSON.stringify(notesData));
+    }
+
+    function changeMonth(delta) {
+        let m = parseInt(document.getElementById("monthSelect").value);
+        let y = parseInt(document.getElementById("yearSelect").value);
+
+        m += delta;
+        if (m < 0) { m = 11; y--; }
+        if (m > 11) { m = 0; y++; }
+
+        document.getElementById("monthSelect").value = m;
+        document.getElementById("yearSelect").value = y;
+        updateCalendar();
+    }
+
+    function updateCalendar() {
+        const month = parseInt(document.getElementById("monthSelect").value);
+        const year = parseInt(document.getElementById("yearSelect").value);
+        currentDate = new Date(year, month, 1);
+
+        document.getElementById("monthYearTitle").innerText = `${monthNames[month]} ${year}`;
+
+        const grid = document.getElementById("calendarGrid");
+        grid.innerHTML = "";
+
+        const dayHeaders = ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"];
+        dayHeaders.forEach(dh => {
+            const el = document.createElement("div");
+            el.className = "calendar-day-header";
+            el.innerText = dh;
+            grid.appendChild(el);
+        });
+
+        const firstDayIndex = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDayIndex; i++) {
+            const empty = document.createElement("div");
+            empty.className = "empty-day";
+            grid.appendChild(empty);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayCell = document.createElement("div");
+            dayCell.className = "calendar-day";
+
+            const mm = String(month + 1).padStart(2, '0');
+            const dd = String(day).padStart(2, '0');
+            const keyDate = `${year}-${mm}-${dd}`;
+            const keyHoliday = `${mm}-${dd}`;
+
+            let isHoliday = false;
+            if (holidayDetails[keyHoliday]) {
+                isHoliday = true;
+                dayCell.classList.add("holiday-day");
+            }
+
+            if (selectedDateStr === keyDate) {
+                dayCell.classList.add("selected");
+            }
+
+            const headerDiv = document.createElement("div");
+            headerDiv.className = "day-number";
+            headerDiv.innerHTML = `<span>${day}</span>`;
+
+            if (isHoliday) {
+                const hTag = document.createElement("span");
+                hTag.className = "holiday-tag";
+                hTag.innerText = "FERIADO";
+                headerDiv.appendChild(hTag);
+
+                // CONFIGURACIÓN DE EVENTOS HOVER PARA MODAL FUTURISTA
+                dayCell.addEventListener("mouseenter", (e) => showHoverModal(e, keyHoliday, keyDate));
+                dayCell.addEventListener("mousemove", (e) => moveHoverModal(e));
+                dayCell.addEventListener("mouseleave", () => hideHoverModal());
+            }
+
+            dayCell.appendChild(headerDiv);
+
+            if (notesData[keyDate]) {
+                const contentDiv = document.createElement("div");
+                contentDiv.className = "day-content";
+                contentDiv.innerText = notesData[keyDate];
+                contentDiv.style.backgroundColor = getColorForName(notesData[keyDate]);
+                dayCell.appendChild(contentDiv);
+            }
+
+            dayCell.onclick = (e) => {
+                e.stopPropagation();
+                selectDate(keyDate, day, monthNames[month], year);
+            };
+
+            grid.appendChild(dayCell);
+        }
+    }
+
+    function selectDate(dateKey, day, monthName, year) {
+        selectedDateStr = dateKey;
+        document.getElementById("selectedDateText").innerText = `Casilla: ${day} de ${monthName} de ${year}`;
+        document.getElementById("notes").value = notesData[dateKey] || "";
+        updateCalendar();
+    }
+
+    function saveNote() {
+        if (!selectedDateStr) {
+            alert("Por favor selecciona primero un día en el calendario.");
+            return;
+        }
+
+        const val = document.getElementById("notes").value.trim();
+        if (val) {
+            notesData[selectedDateStr] = val;
+        } else {
+            delete notesData[selectedDateStr];
+        }
+
+        saveNotesToStorage();
+        updateCalendar();
+    }
+
+    /* LÓGICA DE CONTROL DEL MODAL HOVER FUTURISTA */
+    function showHoverModal(e, keyHoliday, keyDate) {
+        const modal = document.getElementById("hoverModal");
+        const details = holidayDetails[keyHoliday];
+
+        if (!details) return;
+
+        document.getElementById("fhmDateText").innerText = `FERIADO NACIONAL (${keyDate})`;
+        document.getElementById("fhmTitle").innerText = details.title;
+        document.getElementById("fhmDesc").innerText = details.desc;
+
+        modal.classList.add("active");
+        moveHoverModal(e);
+    }
+
+    function moveHoverModal(e) {
+        const modal = document.getElementById("hoverModal");
+        const x = e.clientX + 18;
+        const y = e.clientY + 18;
+
+        // Previene desbordamiento en bordes derechos/inferiores de pantalla
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+
+        let posX = x;
+        let posY = y;
+
+        if (x + 340 > windowWidth) posX = e.clientX - 330;
+        if (y + 160 > windowHeight) posY = e.clientY - 160;
+
+        modal.style.left = `${posX}px`;
+        modal.style.top = `${posY}px`;
+    }
+
+    function hideHoverModal() {
+        const modal = document.getElementById("hoverModal");
+        modal.classList.remove("active");
+    }
+</script>
+
+</body>
+</html>
