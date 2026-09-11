@@ -625,6 +625,123 @@
         #hoverModal.active {
             display: block !important;
         }
+
+        /* CONFIGURACIÓN EXCLUSIVA PARA IMPRESIÓN Y PDF */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Ocultar elementos innecesarios al imprimir */
+            .login-overlay,
+            #hoverModal,
+            .header-actions,
+            .notes-section,
+            .nav-btn,
+            .forgot-pass-link {
+                display: none !important;
+            }
+
+            .container {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            header {
+                background: #1e272e !important;
+                color: #ffffff !important;
+                border-top: 4px solid #E67E00 !important;
+                border-bottom: 2px solid #E67E00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                margin-bottom: 15px !important;
+                padding: 15px 20px !important;
+            }
+
+            .header-logo-left {
+                top: 15px !important;
+                left: 15px !important;
+            }
+
+            .header-main-title {
+                font-size: 1.3rem !important;
+            }
+
+            .header-person-row input {
+                background: #ffffff !important;
+                color: #000000 !important;
+                border: 2px solid #E67E00 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .meta-fields select {
+                border: none !important;
+                background: transparent !important;
+                color: #ffffff !important;
+                font-size: 1rem !important;
+                font-weight: bold !important;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+
+            .main-content {
+                display: block !important;
+            }
+
+            .calendar-section {
+                width: 100% !important;
+                flex: none !important;
+                box-shadow: none !important;
+                border: 1px solid #cccccc !important;
+                padding: 10px !important;
+            }
+
+            .month-navigation {
+                background: #2d3436 !important;
+                color: #ffffff !important;
+                justify-content: center !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .calendar-grid {
+                gap: 2px !important;
+                background: #dcdde1 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .calendar-day {
+                min-height: 80px !important;
+                page-break-inside: avoid;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .day-content {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .holiday-tag, .status-badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .legend {
+                margin-top: 10px !important;
+                color: #2d3436 !important;
+            }
+        }
     </style>
 </head>
 <body>
