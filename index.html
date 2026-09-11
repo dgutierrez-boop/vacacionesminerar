@@ -655,6 +655,27 @@
         </div>
     </div>
 
+    <!-- MODAL DE RECUPERACIÓN / RESTABLECIMIENTO DE CONTRASEÑA -->
+    <div class="login-overlay" id="recoveryModal" style="display:none;">
+        <div class="login-box" style="border-top-color: #E67E00;">
+            <div style="font-size:2.5rem; margin-bottom:8px;">🔑</div>
+            <h3>Recuperar Contraseña</h3>
+            <div id="recoveryUsernameText" style="font-weight:bold; color:#fbc531; font-size:1rem; margin-bottom:8px;"></div>
+            <p id="recoveryEmailHint" style="font-size:0.8rem; color:#a4b0be; margin-bottom:12px; line-height:1.3;"></p>
+            
+            <input type="email" id="recoveryEmailInput" placeholder="Correo electrónico registrado">
+            <input type="password" id="recoveryNewPass" placeholder="Nueva contraseña">
+            <input type="password" id="recoveryConfirmPass" placeholder="Confirmar nueva contraseña">
+            
+            <div id="recoveryMsg" style="font-size:0.85rem; margin-bottom:10px; font-weight:bold; display:none; padding:8px; border-radius:6px; background:rgba(0,0,0,0.3);"></div>
+            
+            <div style="display:flex; gap:10px; margin-top:5px;">
+                <button class="login-btn" style="background:#27ae60;" onclick="confirmPasswordReset()">Actualizar Clave</button>
+                <button class="login-btn" style="background:#485460;" onclick="closeRecoveryModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL HOVER DE FERIADOS -->
     <div id="hoverModal" style="position:fixed; display:none; z-index:10000; background:#1e272e; border:2px solid #e74c3c; border-radius:8px; padding:12px; width:300px; box-shadow:0 8px 25px rgba(0,0,0,0.8); pointer-events:none;">
         <div id="fhmDateText" style="font-size:0.75rem; font-weight:bold; color:#e74c3c; margin-bottom:4px;"></div>
@@ -1276,16 +1297,94 @@
     }
 
     function recoverPassword() {
+        hideLoginError();
         const userSelect = document.getElementById("userSelect").value;
         if (!userSelect || userSelect === "NEW_USER") {
-            showLoginError("Selecciona un usuario para recuperar su contraseña.");
+            showLoginError("⚠️ Por favor selecciona tu usuario en la lista antes de recuperar la contraseña.");
             return;
         }
+        openRecoveryModal(userSelect);
+    }
+
+    function openRecoveryModal(username) {
         const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
-        const user = usersDB[userSelect];
-        if (user) {
-            showLoginError(`Información: Tu clave registrada es '${user.password}' (Enviada a: ${user.email})`);
+        const user = usersDB[username];
+        
+        document.getElementById("recoveryUsernameText").innerText = username;
+        document.getElementById("recoveryEmailInput").value = "";
+        document.getElementById("recoveryNewPass").value = "";
+        document.getElementById("recoveryConfirmPass").value = "";
+        
+        const msgEl = document.getElementById("recoveryMsg");
+        msgEl.innerText = "";
+        msgEl.style.display = "none";
+
+        const hintEl = document.getElementById("recoveryEmailHint");
+        
+        if (user && user.email) {
+            hintEl.innerText = `Ingresa el correo vinculado (${user.email}) y define tu nueva contraseña.`;
+        } else {
+            hintEl.innerText = `El usuario "${username}" aún no tiene datos de correo/clave en este navegador. Ingresa tu correo y la contraseña deseada para asignársela.`;
         }
+        
+        document.getElementById("recoveryModal").style.display = "flex";
+    }
+
+    function closeRecoveryModal() {
+        document.getElementById("recoveryModal").style.display = "none";
+    }
+
+    function confirmPasswordReset() {
+        const username = document.getElementById("recoveryUsernameText").innerText;
+        const email = document.getElementById("recoveryEmailInput").value.trim().toLowerCase();
+        const newPass = document.getElementById("recoveryNewPass").value.trim();
+        const confirmPass = document.getElementById("recoveryConfirmPass").value.trim();
+        const msgEl = document.getElementById("recoveryMsg");
+
+        msgEl.style.display = "block";
+
+        if (!email || !email.includes("@")) {
+            msgEl.style.color = "#ff6b6b";
+            msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Ingresa un correo electrónico válido.";
+            return;
+        }
+
+        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        const user = usersDB[username];
+
+        if (user && user.email && user.email.toLowerCase() !== email) {
+            msgEl.style.color = "#ff6b6b";
+            msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "El correo ingresado no coincide con el registrado.";
+            return;
+        }
+
+        if (!newPass) {
+            msgEl.style.color = "#ff6b6b";
+            msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Ingresa la nueva contraseña.";
+            return;
+        }
+
+        if (newPass !== confirmPass) {
+            msgEl.style.color = "#ff6b6b";
+            msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Las contraseñas no coinciden.";
+            return;
+        }
+
+        usersDB[username] = { password: newPass, email: email };
+        localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
+
+        msgEl.style.color = "#2ecc71";
+        msgEl.style.background = "rgba(46,204,113,0.15)";
+        msgEl.innerText = "✅ ¡Contraseña actualizada con éxito!";
+
+        setTimeout(() => {
+            closeRecoveryModal();
+            document.getElementById("passwordInput").value = newPass;
+        }, 1200);
     }
 
     function logoutUser() {
