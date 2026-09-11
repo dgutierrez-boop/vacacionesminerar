@@ -72,6 +72,12 @@
             color: white; transition: border-color 0.2s;
         }
 
+        .login-box select option {
+            background-color: #2f3640;
+            color: #ffffff;
+            padding: 10px;
+        }
+
         .login-box select:focus, .login-box input:focus { border-color: #E67E00; }
 
         .login-btn {
@@ -628,11 +634,17 @@
         <div class="login-box">
             <div class="lock-icon-container" id="lockIcon">🔒</div>
             <h3>Ingreso al Sistema</h3>
+
+            <div style="display:flex; gap:6px; margin-bottom:12px;">
+                <button type="button" id="loginModeBtn" onclick="setLoginMode('login')" style="flex:1; padding:8px; border-radius:6px; border:none; background:#E67E00; color:white; font-weight:bold; font-size:0.8rem; cursor:pointer;">👤 Iniciar Sesión</button>
+                <button type="button" id="registerModeBtn" onclick="setLoginMode('register')" style="flex:1; padding:8px; border-radius:6px; border:2px solid #E67E00; background:transparent; color:#E67E00; font-weight:bold; font-size:0.8rem; cursor:pointer;">➕ Crear Cuenta</button>
+            </div>
+
             <select id="userSelect" onchange="handleUserSelectChange()"></select>
-            <input type="text" id="usernameInput" placeholder="Nombre completo" style="display:none;">
-            <input type="email" id="emailInput" placeholder="Correo electrónico" style="display:none;">
-            <input type="password" id="passwordInput" placeholder="Contraseña">
-            <input type="password" id="confirmPasswordInput" placeholder="Confirmar contraseña" style="display:none;">
+            <input type="text" id="usernameInput" placeholder="Nombre completo" autocomplete="off" style="display:none;">
+            <input type="email" id="emailInput" placeholder="Correo electrónico" autocomplete="off" style="display:none;">
+            <input type="password" id="passwordInput" placeholder="Contraseña" autocomplete="new-password">
+            <input type="password" id="confirmPasswordInput" placeholder="Confirmar contraseña" autocomplete="new-password" style="display:none;">
             <button class="login-btn" id="submitBtn" onclick="processLogin()">INGRESAR AL SISTEMA</button>
             <div class="login-error" id="loginErrorMsg"></div>
             <div class="login-info" id="infoText">Selecciona tu usuario e ingresa tu contraseña.</div>
@@ -836,6 +848,24 @@
     let currentUser = "";
     let notesData = {}; // Puede almacenar string o { text, status, supervisorNote }
     let isRegisteringNew = false;
+    let inMemoryStore = {};
+
+    // Manejador seguro para almacenamiento (soportar iFrames restringidos)
+    function safeGetStorage(key) {
+        try {
+            return localStorage.getItem(key);
+        } catch(e) {
+            return inMemoryStore[key] || null;
+        }
+    }
+
+    function safeSetStorage(key, value) {
+        try {
+            localStorage.setItem(key, value);
+        } catch(e) {
+            inMemoryStore[key] = value;
+        }
+    }
 
     // Obtener datos estructurados de una casilla de fecha
     function getParsedDayData(dateKey) {
@@ -1176,28 +1206,48 @@
         loadNotesFromStorage();
     };
 
-    function populateUserDropdown() {
+    function populateUserDropdown(selectUser = "") {
         const userSelect = document.getElementById("userSelect");
-        const users = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        if (!userSelect) return;
+
+        let users = null;
+        try {
+            const raw = safeGetStorage("minerar_users_db");
+            if (raw) users = JSON.parse(raw);
+        } catch(e) {
+            users = null;
+        }
+
+        // Si no existen usuarios cargados, inicializamos el supervisor por defecto
+        if (!users || typeof users !== 'object' || Object.keys(users).length === 0) {
+            users = {
+                "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" }
+            };
+            safeSetStorage("minerar_users_db", JSON.stringify(users));
+        }
 
         userSelect.innerHTML = '';
         
-        const hasUsers = Object.keys(users).length > 0;
+        const usernames = Object.keys(users);
 
-        if (hasUsers) {
-            let defaultOpt = document.createElement("option");
-            defaultOpt.value = "";
-            defaultOpt.disabled = true;
-            defaultOpt.selected = true;
-            defaultOpt.innerText = "-- Selecciona Usuario / Supervisor --";
-            userSelect.appendChild(defaultOpt);
+        let defaultOpt = document.createElement("option");
+        defaultOpt.value = "";
+        defaultOpt.disabled = true;
+        defaultOpt.innerText = "👤 -- Selecciona Supervisor --";
+        userSelect.appendChild(defaultOpt);
 
-            for (let username in users) {
-                let opt = document.createElement("option");
-                opt.value = username;
-                opt.innerText = username;
-                userSelect.appendChild(opt);
+        usernames.forEach(username => {
+            let opt = document.createElement("option");
+            opt.value = username;
+            opt.innerText = `👤 ${username}`;
+            if (selectUser && username === selectUser) {
+                opt.selected = true;
             }
+            userSelect.appendChild(opt);
+        });
+
+        if (!selectUser && usernames.length > 0) {
+            userSelect.value = usernames[0];
         }
 
         let newOpt = document.createElement("option");
@@ -1205,9 +1255,28 @@
         newOpt.innerText = "➕ REGISTRAR NUEVO SUPERVISOR";
         newOpt.style.fontWeight = "bold";
         newOpt.style.color = "#E67E00";
-        if (!hasUsers) newOpt.selected = true;
         userSelect.appendChild(newOpt);
 
+        handleUserSelectChange();
+    }
+
+    function setLoginMode(mode) {
+        const userSelect = document.getElementById("userSelect");
+        if (!userSelect) return;
+
+        if (mode === 'register') {
+            userSelect.value = "NEW_USER";
+        } else {
+            if (userSelect.value === "NEW_USER" || !userSelect.value) {
+                const opts = userSelect.querySelectorAll("option");
+                for (let opt of opts) {
+                    if (opt.value && opt.value !== "NEW_USER" && !opt.disabled) {
+                        userSelect.value = opt.value;
+                        break;
+                    }
+                }
+            }
+        }
         handleUserSelectChange();
     }
 
@@ -1216,27 +1285,57 @@
         const userSelect = document.getElementById("userSelect");
         const usernameInput = document.getElementById("usernameInput");
         const emailInput = document.getElementById("emailInput");
+        const passwordInput = document.getElementById("passwordInput");
         const confirmPasswordInput = document.getElementById("confirmPasswordInput");
         const submitBtn = document.getElementById("submitBtn");
         const infoText = document.getElementById("infoText");
         const forgotBtn = document.getElementById("forgotBtn");
+        const loginModeBtn = document.getElementById("loginModeBtn");
+        const registerModeBtn = document.getElementById("registerModeBtn");
 
         if (userSelect.value === "NEW_USER") {
             isRegisteringNew = true;
             usernameInput.style.display = "block";
             emailInput.style.display = "block";
             confirmPasswordInput.style.display = "block";
+            
+            usernameInput.value = "";
+            emailInput.value = "";
+            passwordInput.value = "";
+            confirmPasswordInput.value = "";
+
             submitBtn.innerText = "REGISTRAR E INGRESAR";
-            infoText.innerText = "Bienvenido. Ingresa tu nombre completo, correo y crea tu contraseña.";
+            infoText.innerText = "Ingresa tu nombre completo, correo y contraseña para crear la cuenta.";
             forgotBtn.style.display = "none";
+
+            if (loginModeBtn && registerModeBtn) {
+                loginModeBtn.style.background = "transparent";
+                loginModeBtn.style.color = "#a4b0be";
+                loginModeBtn.style.border = "1px solid #485460";
+                
+                registerModeBtn.style.background = "#E67E00";
+                registerModeBtn.style.color = "white";
+                registerModeBtn.style.border = "none";
+            }
         } else {
             isRegisteringNew = false;
             usernameInput.style.display = "none";
             emailInput.style.display = "none";
             confirmPasswordInput.style.display = "none";
+            passwordInput.value = "";
             submitBtn.innerText = "INGRESAR AL SISTEMA";
             infoText.innerText = "Selecciona tu usuario e ingresa tu contraseña.";
             forgotBtn.style.display = "inline-block";
+
+            if (loginModeBtn && registerModeBtn) {
+                loginModeBtn.style.background = "#E67E00";
+                loginModeBtn.style.color = "white";
+                loginModeBtn.style.border = "none";
+
+                registerModeBtn.style.background = "transparent";
+                registerModeBtn.style.color = "#E67E00";
+                registerModeBtn.style.border = "2px solid #E67E00";
+            }
         }
     }
 
@@ -1244,7 +1343,13 @@
         hideLoginError();
         const userSelect = document.getElementById("userSelect");
         const password = document.getElementById("passwordInput").value.trim();
-        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        
+        let usersDB = {};
+        try {
+            const raw = safeGetStorage("minerar_users_db");
+            if (raw) usersDB = JSON.parse(raw);
+        } catch(e) { usersDB = {}; }
+
         const lockIcon = document.getElementById("lockIcon");
 
         const triggerShake = () => {
@@ -1265,14 +1370,15 @@
             if (password !== confirmPassword) { triggerShake(); showLoginError("Las contraseñas no coinciden."); return; }
 
             usersDB[username] = { password: password, email: email };
-            localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
+            safeSetStorage("minerar_users_db", JSON.stringify(usersDB));
             currentUser = username;
+            populateUserDropdown(username);
 
         } else {
             const username = userSelect.value;
             if (!username || username === "NEW_USER") {
                 triggerShake();
-                showLoginError("Por favor selecciona un usuario de la lista.");
+                showLoginError("Por favor selecciona tu usuario de la lista.");
                 return;
             }
 
@@ -1296,18 +1402,12 @@
         }, 300);
     }
 
-    function recoverPassword() {
-        hideLoginError();
-        const userSelect = document.getElementById("userSelect").value;
-        if (!userSelect || userSelect === "NEW_USER") {
-            showLoginError("⚠️ Por favor selecciona tu usuario en la lista antes de recuperar la contraseña.");
-            return;
-        }
-        openRecoveryModal(userSelect);
-    }
-
     function openRecoveryModal(username) {
-        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        let usersDB = {};
+        try {
+            const raw = safeGetStorage("minerar_users_db");
+            if (raw) usersDB = JSON.parse(raw);
+        } catch(e) {}
         const user = usersDB[username];
         
         document.getElementById("recoveryUsernameText").innerText = username;
@@ -1324,14 +1424,10 @@
         if (user && user.email) {
             hintEl.innerText = `Ingresa el correo vinculado (${user.email}) y define tu nueva contraseña.`;
         } else {
-            hintEl.innerText = `El usuario "${username}" aún no tiene datos de correo/clave en este navegador. Ingresa tu correo y la contraseña deseada para asignársela.`;
+            hintEl.innerText = `El usuario "${username}" aún no tiene datos de correo/clave. Ingresa tu correo y la contraseña deseada para asignársela.`;
         }
         
         document.getElementById("recoveryModal").style.display = "flex";
-    }
-
-    function closeRecoveryModal() {
-        document.getElementById("recoveryModal").style.display = "none";
     }
 
     function confirmPasswordReset() {
@@ -1350,7 +1446,11 @@
             return;
         }
 
-        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        let usersDB = {};
+        try {
+            const raw = safeGetStorage("minerar_users_db");
+            if (raw) usersDB = JSON.parse(raw);
+        } catch(e) {}
         const user = usersDB[username];
 
         if (user && user.email && user.email.toLowerCase() !== email) {
@@ -1375,7 +1475,7 @@
         }
 
         usersDB[username] = { password: newPass, email: email };
-        localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
+        safeSetStorage("minerar_users_db", JSON.stringify(usersDB));
 
         msgEl.style.color = "#2ecc71";
         msgEl.style.background = "rgba(46,204,113,0.15)";
@@ -1387,32 +1487,14 @@
         }, 1200);
     }
 
-    function logoutUser() {
-        document.getElementById("mainContainer").style.display = "none";
-        document.getElementById("loginOverlay").style.display = "flex";
-        document.getElementById("passwordInput").value = "";
-        document.getElementById("usernameInput").value = "";
-        document.getElementById("emailInput").value = "";
-        document.getElementById("confirmPasswordInput").value = "";
-        document.getElementById("lockIcon").innerText = "🔒";
-        populateUserDropdown();
-        hideLoginError();
-    }
-
-    function openDeleteAccountModal() {
-        document.getElementById("deleteConfirmPassword").value = "";
-        document.getElementById("deleteModalMsg").innerText = "";
-        document.getElementById("deleteAccountModal").style.display = "flex";
-    }
-
-    function closeDeleteAccountModal() {
-        document.getElementById("deleteAccountModal").style.display = "none";
-    }
-
     function confirmDeleteAccount() {
         const pass = document.getElementById("deleteConfirmPassword").value.trim();
         const msgEl = document.getElementById("deleteModalMsg");
-        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+        let usersDB = {};
+        try {
+            const raw = safeGetStorage("minerar_users_db");
+            if (raw) usersDB = JSON.parse(raw);
+        } catch(e) {}
 
         if (!pass) {
             msgEl.style.color = "#ff6b6b";
@@ -1427,7 +1509,7 @@
         }
 
         delete usersDB[currentUser];
-        localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
+        safeSetStorage("minerar_users_db", JSON.stringify(usersDB));
 
         msgEl.style.color = "#2ecc71";
         msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Cerrando sesión...`;
@@ -1439,15 +1521,55 @@
     }
 
     function loadNotesFromStorage() {
-        const saved = localStorage.getItem("minerar_calendar_notes");
+        const saved = safeGetStorage("minerar_calendar_notes");
         if (saved) {
             try { notesData = JSON.parse(saved); } catch(e) { notesData = {}; }
         }
     }
 
     function saveNotesToStorage() {
-        localStorage.setItem("minerar_calendar_notes", JSON.stringify(notesData));
+        safeSetStorage("minerar_calendar_notes", JSON.stringify(notesData));
     }
+
+    function recoverPassword() {
+        hideLoginError();
+        const userSelect = document.getElementById("userSelect").value;
+        if (!userSelect || userSelect === "NEW_USER") {
+            showLoginError("⚠️ Por favor selecciona tu usuario en la lista antes de recuperar la contraseña.");
+            return;
+        }
+        openRecoveryModal(userSelect);
+    }
+
+    function closeRecoveryModal() {
+        document.getElementById("recoveryModal").style.display = "none";
+    }
+
+    function logoutUser() {
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("loginOverlay").style.display = "flex";
+        document.getElementById("passwordInput").value = "";
+        document.getElementById("usernameInput").value = "";
+        document.getElementById("emailInput").value = "";
+        document.getElementById("confirmPasswordInput").value = "";
+        document.getElementById("lockIcon").innerText = "🔒";
+        populateUserDropdown(currentUser);
+        hideLoginError();
+    }
+
+    function openDeleteAccountModal() {
+        document.getElementById("deleteConfirmPassword").value = "";
+        document.getElementById("deleteModalMsg").innerText = "";
+        document.getElementById("deleteAccountModal").style.display = "flex";
+    }
+
+    function closeDeleteAccountModal() {
+        document.getElementById("deleteAccountModal").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        populateUserDropdown();
+    });
 
     function changeMonth(delta) {
         let m = parseInt(document.getElementById("monthSelect").value);
