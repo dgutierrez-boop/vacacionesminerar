@@ -1075,11 +1075,12 @@
                     <input type="text" id="supervisorNote" class="supervisor-note-input" placeholder="💬 Justificación / Nota del Supervisor (Opcional)">
 
                     <button class="save-btn" style="margin-top:10px;" onclick="saveNote()">Guardar Decisión</button>
+                    <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteSelectedDay()">🗑️ Eliminar Registro de esta Casilla</button>
                 </div>
 
                 <!-- TAB 2: POR RANGO DE FECHAS -->
                 <div id="tabRange" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna un período completo de vacaciones en un solo paso:</p>
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna o elimina un período completo de vacaciones en un solo paso:</p>
                     <div class="range-inputs">
                         <div>
                             <label>Desde:</label>
@@ -1090,7 +1091,7 @@
                             <input type="date" id="rangeEnd">
                         </div>
                     </div>
-                    <input type="text" id="rangeEmployeeName" placeholder="Nombre de Empleado (Ej: JUAN PEREZ)" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px;" oninput="checkRangeEquity()">
+                    <input type="text" id="rangeEmployeeName" placeholder="Nombre de Empleado (Ej: GEREZ)" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px;" oninput="checkRangeEquity()">
                     
                     <div style="margin-bottom:10px;">
                         <label style="font-size:0.75rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Estado de Asignación:</label>
@@ -1103,6 +1104,7 @@
                     <div id="rangeEquityAlert" class="equity-alert" style="display:none;"></div>
 
                     <button class="save-btn" onclick="saveRange()">Asignar Rango Completo</button>
+                    <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar Vacaciones por Rango</button>
                 </div>
 
                 <!-- TAB 3: EQUIDAD E HISTORIAL -->
@@ -1446,6 +1448,63 @@
         updateCalendar();
         alert(`✅ Se registraron ${count} días de vacaciones para ${nameVal} (${statusVal}).`);
         document.getElementById("rangeEmployeeName").value = "";
+    }
+
+    function deleteRange() {
+        const startVal = document.getElementById("rangeStart").value;
+        const endVal = document.getElementById("rangeEnd").value;
+        const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
+
+        if (!startVal || !endVal) {
+            alert("Por favor selecciona la fecha de inicio y fin del rango a eliminar.");
+            return;
+        }
+
+        let startDate = new Date(startVal + "T00:00:00");
+        let endDate = new Date(endVal + "T00:00:00");
+
+        if (startDate > endDate) {
+            alert("La fecha de inicio debe ser anterior o igual a la fecha de fin.");
+            return;
+        }
+
+        let curr = new Date(startDate);
+        let count = 0;
+
+        while (curr <= endDate) {
+            const yyyy = curr.getFullYear();
+            const mm = String(curr.getMonth() + 1).padStart(2, '0');
+            const dd = String(curr.getDate()).padStart(2, '0');
+            const dateKey = `${yyyy}-${mm}-${dd}`;
+
+            const dayData = getParsedDayData(dateKey);
+            if (!nameVal || (dayData.text && dayData.text.toUpperCase().includes(nameVal))) {
+                delete notesData[dateKey];
+                count++;
+            }
+
+            curr.setDate(curr.getDate() + 1);
+        }
+
+        saveNotesToStorage();
+        updateCalendar();
+        alert(`🗑️ Se eliminaron los registros de ${count} día(s) en el rango seleccionado.`);
+    }
+
+    function deleteSelectedDay() {
+        if (!selectedDateStr) {
+            alert("Selecciona primero una casilla en el calendario.");
+            return;
+        }
+
+        delete notesData[selectedDateStr];
+        document.getElementById("notes").value = "";
+        document.getElementById("supervisorNote").value = "";
+
+        saveNotesToStorage();
+        updateCalendar();
+        triggerEquityCheckOnSingle();
+        alert("🗑️ Registro eliminado de esta casilla.");
     }
 
     function searchEmployeeHistory() {
