@@ -1154,6 +1154,35 @@
     };
     let isRegisteringNew = false;
 
+    // PERSISTENCIA AUTOMÁTICA EN BROWSER (LOCALSTORAGE) PARA VERCEL Y GITHUB PAGES
+    const LOCAL_STORAGE_VACATIONS_KEY = 'minerar_vacations_data_v1';
+    const LOCAL_STORAGE_USERS_KEY = 'minerar_users_data_v1';
+
+    function saveLocalStorage() {
+        try {
+            localStorage.setItem(LOCAL_STORAGE_VACATIONS_KEY, JSON.stringify(notesData));
+            localStorage.setItem(LOCAL_STORAGE_USERS_KEY, JSON.stringify(usersDB));
+        } catch (e) {
+            console.warn("No se pudo guardar en localStorage:", e);
+        }
+    }
+
+    function loadLocalStorage() {
+        try {
+            const savedVacations = localStorage.getItem(LOCAL_STORAGE_VACATIONS_KEY);
+            if (savedVacations) {
+                notesData = JSON.parse(savedVacations);
+            }
+            const savedUsers = localStorage.getItem(LOCAL_STORAGE_USERS_KEY);
+            if (savedUsers) {
+                const parsedUsers = JSON.parse(savedUsers);
+                usersDB = { ...usersDB, ...parsedUsers };
+            }
+        } catch (e) {
+            console.warn("No se pudo cargar de localStorage:", e);
+        }
+    }
+
     // Helper paths for Firestore strictly matching Rule 1
     const getPublicCollection = (collName) => collection(db, 'artifacts', appId, 'public', 'data', collName);
     const getPublicDoc = (collName, docId) => doc(db, 'artifacts', appId, 'public', 'data', collName, docId);
@@ -1161,7 +1190,7 @@
     async function initCloudSync() {
         if (!firebaseConfig) {
             console.warn("No Firebase configuration provided. Running in local session mode.");
-            updateCloudBadge(false, "Modo Local (Sin Nube)");
+            updateCloudBadge(false, "Modo Local (Persistente)");
             return;
         }
 
@@ -1186,7 +1215,7 @@
 
         } catch (err) {
             console.error("Cloud connection error:", err);
-            updateCloudBadge(false, "Modo Local (Error Nube)");
+            updateCloudBadge(false, "Modo Local (Persistente)");
         }
     }
 
@@ -1226,6 +1255,7 @@
             snapshot.forEach((docSnap) => {
                 notesData[docSnap.id] = docSnap.data();
             });
+            saveLocalStorage();
             updateCalendar();
             if (document.getElementById("tabCoordination")?.classList.contains("active")) {
                 renderCoordinationSummary();
@@ -1240,6 +1270,7 @@
             snapshot.forEach((docSnap) => {
                 usersDB[docSnap.id] = docSnap.data();
             });
+            saveLocalStorage();
             const activeUser = currentUser || document.getElementById("userSelect")?.value;
             populateUserDropdown(activeUser);
         }, (err) => {
@@ -1284,6 +1315,7 @@
                 } catch(e) { console.error("Error saving doc to cloud:", e); }
             }
         }
+        saveLocalStorage();
     }
 
     // Initial setup
@@ -1884,6 +1916,7 @@
             
             // Guardar inmediatamente en la base de datos de usuarios activa
             usersDB[username] = userData;
+            saveLocalStorage();
 
             if (db && authUser) {
                 try {
@@ -1986,6 +2019,7 @@
 
         const userData = { password: newPass, email: email };
         usersDB[username] = userData;
+        saveLocalStorage();
 
         if (db && authUser) {
             try {
@@ -2020,6 +2054,7 @@
         }
 
         delete usersDB[currentUser];
+        saveLocalStorage();
 
         if (db && authUser) {
             try {
@@ -2262,6 +2297,7 @@
             notesArea.addEventListener("input", triggerEquityCheckOnSingle);
         }
         
+        loadLocalStorage();
         populateUserDropdown();
         initCloudSync();
     };
