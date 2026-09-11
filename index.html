@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CALENDARIO VACACIONAL PERSONAL DE MINERAR S.A.</title>
 
-    <!-- FAVICON (GIF ANIMADO DE MINERAR) -->
+    <!-- FAVICON ANIMADO MINERAR -->
     <link rel="icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
     <link rel="shortcut icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
 
@@ -24,7 +24,7 @@
             padding: 20px;
         }
 
-        /* ANIMACIÓN DE VIBRACIÓN EN CANDADO */
+        /* ANIMACIÓN DE VIBRACIÓN EN CANDADO AL ERRAR CLAVE */
         @keyframes vibrate {
             0% { transform: translateX(0); }
             20% { transform: translateX(-8px) rotate(-5deg); }
@@ -36,67 +36,70 @@
 
         .shake { animation: vibrate 0.4s ease-in-out; }
 
-        /* LOGIN OVERLAY */
+        /* OVERLAY DE AUTENTICACIÓN Y REGISTRO */
         .login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.92);
             display: flex; justify-content: center; align-items: center;
             z-index: 9999;
+            backdrop-filter: blur(8px);
         }
 
         .login-box {
-            background: #1e272e; padding: 30px; border-radius: 12px;
-            width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background: #1e272e; padding: 32px 28px; border-radius: 14px;
+            width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.85);
             text-align: center; border-top: 5px solid #E67E00;
             color: white;
+            position: relative;
         }
 
         .lock-icon-container {
-            font-size: 3rem; margin-bottom: 5px;
+            font-size: 3.2rem; margin-bottom: 5px;
             display: inline-block; transition: transform 0.2s;
         }
 
         .login-box h3 {
-            color: #f5f6fa; font-size: 1.1rem; margin-bottom: 15px;
+            color: #f5f6fa; font-size: 1.15rem; margin-bottom: 16px;
             font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .login-box select, .login-box input {
-            width: 100%; padding: 10px; margin-bottom: 10px;
-            border: 2px solid #485460; border-radius: 6px;
+            width: 100%; padding: 11px; margin-bottom: 12px;
+            border: 2px solid #485460; border-radius: 8px;
             font-size: 0.95rem; outline: none; background-color: #2f3640;
-            color: white;
+            color: white; transition: border-color 0.2s;
         }
 
         .login-box select:focus, .login-box input:focus { border-color: #E67E00; }
 
         .login-btn {
             width: 100%; padding: 12px; background: #E67E00;
-            color: white; border: none; border-radius: 6px;
+            color: white; border: none; border-radius: 8px;
             font-weight: bold; font-size: 1rem; cursor: pointer;
-            transition: background 0.2s; margin-top: 5px;
+            transition: background 0.2s, transform 0.1s; margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(230, 126, 0, 0.3);
         }
 
-        .login-btn:hover { background: #c66c00; }
+        .login-btn:hover { background: #d67200; transform: translateY(-1px); }
 
         .forgot-pass-link {
-            display: inline-block; margin-top: 12px; font-size: 0.8rem;
+            display: inline-block; margin-top: 14px; font-size: 0.8rem;
             color: #E67E00; text-decoration: underline; cursor: pointer; font-weight: bold;
         }
 
-        .login-info { font-size: 0.75rem; color: #aaa; margin-top: 10px; line-height: 1.3; }
+        .login-info { font-size: 0.82rem; color: #a4b0be; margin-top: 12px; line-height: 1.4; }
+        .login-error { font-size: 0.85rem; color: #ff6b6b; font-weight: bold; margin-top: 10px; display: none; background: rgba(255,107,107,0.1); padding: 8px; border-radius: 6px; }
 
-        /* CONTENEDOR PRINCIPAL - DESPLAZADO HACIA ABAJO */
         .container {
             width: 100%; max-width: 1550px; margin: 0 auto;
             background: rgba(255, 255, 255, 0.03); border-radius: 12px;
             padding: 25px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
             display: none;
-            margin-top: 80px; /* BAJADO SIGNIFICATIVAMENTE COMO SE SOLICITÓ */
+            margin-top: 10px;
         }
         
-        /* HEADER EN ESTILO OSCURO (TEMA LATERAL) */
         header {
             background: #1e272e;
             color: #ffffff;
@@ -109,7 +112,6 @@
             position: relative;
         }
 
-        /* LOGO INSERTADO EN EL LATERAL IZQUIERDO */
         .header-logo-left {
             position: absolute;
             top: 20px;
@@ -126,13 +128,12 @@
             width: 55px; height: 55px; object-fit: contain;
         }
 
-        /* BLOQUE CENTRAL CON TÍTULOS Y CAMPO DE PERSONA */
         .header-center-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 5px;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -160,7 +161,6 @@
             text-transform: uppercase;
         }
 
-        /* ÁREAS DE ESCRITURA EN BLANCO/CLARO PARA FÁCIL LECTURA */
         .header-person-row input {
             font-size: 1.1rem;
             font-weight: 900;
@@ -176,7 +176,6 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* FILA INFERIOR DE METADATOS Y ACCIONES */
         .header-bottom-row {
             display: flex;
             justify-content: space-between;
@@ -191,6 +190,7 @@
             display: flex;
             gap: 20px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .field-group {
@@ -206,15 +206,13 @@
             text-transform: uppercase;
         }
 
-        /* CAMPOS DE TEXTO EDITABLES BLANCOS */
-        .field-group input {
+        .field-group input, .field-group select {
             font-size: 0.9rem;
             font-weight: bold;
             border: 1px solid #ccc;
             border-radius: 6px;
             padding: 6px 10px;
             outline: none;
-            text-transform: uppercase;
             color: #000000;
             background: #ffffff;
         }
@@ -224,8 +222,8 @@
             gap: 10px;
         }
 
-        .print-btn, .logout-btn {
-            padding: 9px 16px;
+        .print-btn, .logout-btn, .delete-user-btn {
+            padding: 9px 14px;
             border: none;
             border-radius: 6px;
             color: white;
@@ -233,13 +231,18 @@
             font-size: 0.85rem;
             cursor: pointer;
             transition: transform 0.1s, background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .print-btn { background: #27ae60; }
         .print-btn:hover { background: #219653; transform: translateY(-1px); }
-        .logout-btn { background: #c0392b; }
-        .logout-btn:hover { background: #a93226; transform: translateY(-1px); }
-        
+        .logout-btn { background: #e67e22; }
+        .logout-btn:hover { background: #d35400; transform: translateY(-1px); }
+        .delete-user-btn { background: #c0392b; }
+        .delete-user-btn:hover { background: #a93226; transform: translateY(-1px); }
+
         .main-content {
             display: flex;
             gap: 15px;
@@ -282,11 +285,10 @@
         
         .current-month {
             text-align: center;
-            color: #000;
-            font-size: 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 10px;
         }
 
         .calendar-grid {
@@ -338,7 +340,6 @@
             align-items: center;
         }
 
-        /* FERIADOS DESTACADOS */
         .calendar-day.holiday-day {
             background-color: #fff0f0 !important;
             border: 1px solid #ff7675;
@@ -376,7 +377,6 @@
             min-height: 100px;
         }
 
-        /* PANEL DE CARGA LATERAL OSCURO */
         .notes-section {
             flex: 1;
             min-width: 320px;
@@ -402,6 +402,104 @@
             letter-spacing: 0.5px;
         }
 
+        .panel-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 12px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 5px;
+            background: transparent;
+            color: #a4b0be;
+            border: none;
+            font-weight: bold;
+            font-size: 0.78rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: #E67E00;
+            color: white;
+            box-shadow: 0 2px 6px rgba(230,126,0,0.4);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .equity-alert {
+            background: rgba(230, 126, 0, 0.15);
+            border-left: 4px solid #f39c12;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: #f1c40f;
+        }
+
+        .equity-alert.warning {
+            background: rgba(231, 76, 60, 0.2);
+            border-left-color: #e74c3c;
+            color: #ff7675;
+        }
+
+        .equity-alert.success {
+            background: rgba(46, 204, 113, 0.2);
+            border-left-color: #2ecc71;
+            color: #55efc4;
+        }
+
+        .range-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .range-inputs label {
+            font-size: 0.75rem;
+            color: #a4b0be;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .range-inputs input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #485460;
+            background: #2f3640;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .history-list {
+            max-height: 250px;
+            overflow-y: auto;
+            background: #2f3640;
+            border-radius: 8px;
+            padding: 8px;
+            margin-top: 10px;
+        }
+
+        .history-item {
+            padding: 8px;
+            border-bottom: 1px solid #485460;
+            font-size: 0.8rem;
+        }
+        .history-item:last-child { border-bottom: none; }
+        .history-item-name { font-weight: bold; color: #fbc531; }
+        .history-item-dates { color: #dcdde1; font-size: 0.75rem; }
+
         .selected-date-info {
             font-weight: bold;
             color: #fbc531;
@@ -417,7 +515,7 @@
         #notes {
             flex-grow: 1;
             width: 100%;
-            min-height: 180px;
+            min-height: 120px;
             padding: 12px;
             border: 2px solid #485460;
             background-color: #2f3640;
@@ -425,7 +523,7 @@
             border-radius: 8px;
             font-size: 0.95rem;
             resize: vertical;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             outline: none;
             line-height: 1.4;
         }
@@ -453,6 +551,60 @@
             transform: translateY(-1px);
         }
 
+        .btn-secondary {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+        .btn-secondary:hover { background: #2c3e50; }
+
+        .status-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        .status-badge.approved {
+            background-color: #27ae60;
+            color: #ffffff;
+        }
+
+        .status-badge.pending {
+            background-color: #e67e22;
+            color: #ffffff;
+        }
+
+        .supervisor-note-input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #f39c12;
+            background: #222f3e;
+            color: #f1c40f;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            outline: none;
+        }
+
+        .coordination-card {
+            background: #2d3436;
+            border-left: 4px solid #3498db;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
         .legend {
             display: flex;
             justify-content: center;
@@ -461,226 +613,248 @@
             font-size: 11px;
             font-weight: bold;
             color: #555;
+            flex-wrap: wrap;
         }
 
-        /* MODAL TRANSPARENTE FLOTANTE FUTURISTA AL PASAR EL PUNTERO (HOVER) */
-        .futuristic-hover-modal {
-            position: fixed;
-            pointer-events: none; /* No interfiere con la navegación del mouse */
-            background: rgba(15, 23, 42, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(230, 126, 0, 0.6);
-            border-radius: 12px;
-            padding: 16px 20px;
-            color: #ffffff;
-            width: 320px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(230, 126, 0, 0.25);
-            z-index: 10000;
-            opacity: 0;
-            transform: scale(0.92) translateY(10px);
-            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .futuristic-hover-modal.active {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        .fhm-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: #E67E00;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        .fhm-title {
-            font-size: 1.05rem;
-            font-weight: 900;
-            color: #00d2d3;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .fhm-desc {
-            font-size: 0.85rem;
-            color: #c8d6e5;
-            line-height: 1.4;
-        }
-
-        /* IMPRESIÓN LIMPIA EN A4 */
-        @media print {
-            @page { size: A4 portrait; margin: 0; }
-            body { background: white !important; color: black !important; padding: 8mm !important; }
-            .login-overlay, .futuristic-hover-modal { display: none !important; }
-            .container { display: block !important; box-shadow: none !important; padding: 0 !important; width: 100% !important; background: transparent !important; margin-top: 0 !important; }
-            header { background: white !important; border: none !important; padding: 0 !important; margin-bottom: 10px !important; box-shadow: none !important; border-bottom: 2px solid #000 !important; color: black !important; }
-            .header-main-title { color: black !important; text-shadow: none !important; }
-            .header-person-row label, .field-group span { color: black !important; }
-            .header-person-row input, .field-group input { border: none !important; font-size: 1rem !important; background: transparent !important; }
-            .month-navigation, .notes-section, .header-actions { display: none !important; }
-            .main-content { display: block !important; }
-            .calendar-section { border: none !important; box-shadow: none !important; padding: 0 !important; }
-            .current-month { color: black !important; font-size: 1.6rem !important; margin: 5px 0 10px 0 !important; }
-            .calendar-grid { gap: 1px !important; background: #000 !important; }
-            .calendar-day-header { background: #fff !important; color: #000 !important; padding: 4px !important; font-size: 0.85rem !important; font-weight: bold !important; }
-            .calendar-day { min-height: 115px !important; border: 1px solid #777 !important; padding: 4px !important; }
-            .day-content { background: #f0f0f0 !important; border-left: 2px solid #000 !important; font-size: 0.7rem !important; padding: 2px !important; color: #000 !important; }
-            .legend { margin-top: 8px !important; }
+        #hoverModal.active {
+            display: block !important;
         }
     </style>
 </head>
 <body>
 
-<!-- PANTALLA DE LOGIN -->
-<div class="login-overlay" id="loginOverlay">
-    <div class="login-box">
-        <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Minerar" style="width:55px;height:55px;object-fit:contain; background:white; border-radius:12px; padding:3px; margin-bottom: 5px;">
-        <br>
-        <div class="lock-icon-container" id="lockIcon">🔒</div>
-
-        <h3 id="formTitle">Control de Vacaciones</h3>
-
-        <select id="userSelect" onchange="handleUserSelectChange()"></select>
-
-        <input type="text" id="usernameInput" placeholder="Nombre completo (ej: MARCELO)" style="display:none;">
-        <input type="email" id="emailInput" placeholder="Correo Electrónico" style="display:none;">
-
-        <input type="password" id="passwordInput" placeholder="Contraseña">
-        <input type="password" id="confirmPasswordInput" placeholder="Confirmar Contraseña" style="display:none;">
-
-        <button class="login-btn" id="submitBtn" onclick="processLogin()">INGRESAR AL SISTEMA</button>
-
-        <span class="forgot-pass-link" id="forgotBtn" onclick="recoverPassword()">¿Olvidaste tu contraseña?</span>
-
-        <p class="login-info" id="infoText">Selecciona tu usuario e ingresa tu contraseña.</p>
-    </div>
-</div>
-
-<!-- MODAL FLOTANTE FUTURISTA AL PASAR EL PUNTERO -->
-<div class="futuristic-hover-modal" id="hoverModal">
-    <div class="fhm-header">
-        <span>🇦🇷</span> <span id="fhmDateText">FERIADO NACIONAL</span>
-    </div>
-    <div class="fhm-title" id="fhmTitle">Título del Feriado</div>
-    <div class="fhm-desc" id="fhmDesc">Descripción corta de la conmemoración.</div>
-</div>
-
-<!-- CONTENEDOR PRINCIPAL - BAJADO SEGÚN EL INDICADOR AMARILLO -->
-<div class="container" id="mainContainer">
-    <header>
-        <!-- LOGO EN LATERAL IZQUIERDO -->
-        <div class="header-logo-left">
-            <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Minerar S.A.">
-        </div>
-
-        <!-- CENTRO DE ENCABEZADO -->
-        <div class="header-center-content">
-            <div class="header-main-title">
-                CALENDARIO VACACIONAL PERSONAL DE MINERAR S.A.
-            </div>
-
-            <div class="header-person-row">
-                <label>VACACIONES:</label>
-                <input type="text" id="titularName" value="ALVAREZ MIGUEL" placeholder="NOMBRE EMPLEADO" oninput="updateCalendar()">
-            </div>
-        </div>
-
-        <!-- FILA INFERIOR DE DATOS EDITABLES -->
-        <div class="header-bottom-row">
-            <div class="meta-fields">
-                <div class="field-group">
-                    <span>SECTOR:</span>
-                    <input type="text" id="sectorInput" value="TALLER">
-                </div>
-                <div class="field-group">
-                    <span>SUPERVISOR A CARGO:</span>
-                    <input type="text" id="supervisorInput" value="ALVAREZ MIGUEL">
-                </div>
-                <div class="field-group">
-                    <span>EMPRESA:</span>
-                    <input type="text" id="empresaInput" value="MINERAR S.A.">
-                </div>
-            </div>
-
-            <div class="header-actions">
-                <button class="print-btn" onclick="window.print()">🖨️ IMPRIMIR A4</button>
-                <button class="logout-btn" onclick="logoutUser()">🔒 SALIR</button>
-            </div>
-        </div>
-    </header>
-
-    <div class="main-content">
-        <div class="calendar-section">
-            <div class="month-navigation">
-                <button class="nav-btn" onclick="changeMonth(-1)">&#10094; Ant.</button>
-                <div class="month-selector">
-                    <select id="monthSelect" onchange="updateCalendar()" style="padding: 5px; font-weight: bold; border-radius:4px;">
-                        <option value="0">Enero</option>
-                        <option value="1">Febrero</option>
-                        <option value="2">Marzo</option>
-                        <option value="3">Abril</option>
-                        <option value="4" selected>Mayo</option>
-                        <option value="5">Junio</option>
-                        <option value="6">Julio</option>
-                        <option value="7">Agosto</option>
-                        <option value="8">Septiembre</option>
-                        <option value="9">Octubre</option>
-                        <option value="10">Noviembre</option>
-                        <option value="11">Diciembre</option>
-                    </select>
-                    <select id="yearSelect" onchange="updateCalendar()" style="padding: 5px; font-weight: bold; border-radius:4px;">
-                        <option value="2026" selected>2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
-                    </select>
-                </div>
-                <button class="nav-btn" onclick="changeMonth(1)">Sig. &#10095;</button>
-            </div>
-
-            <div class="current-month" id="monthYearTitle">MAYO 2026</div>
-
-            <div class="calendar-grid" id="calendarGrid"></div>
-
-            <div class="legend">
-                <span><span>&#9632;</span> Seleccionado</span>
-                <span><span style="color:#d63031;">&#9632;</span> Feriado Nacional (Pasa el mouse para ver)</span>
-                <span><span style="color:#e67e22;">&#9632;</span> Vacaciones por Empleado</span>
-            </div>
-        </div>
-
-        <!-- PANEL DE CARGA LATERAL OSCURO -->
-        <div class="notes-section">
-            <h2>Panel de Carga</h2>
-            <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla del calendario</div>
-
-            <textarea id="notes" placeholder="Escribe el nombre del empleado o detalles:&#10;&#10;Ej: Alvarez Miguel comienza vacaciones"></textarea>
-            <button class="save-btn" onclick="saveNote()">Guardar en Casilla</button>
+    <!-- OVERLAY DE AUTENTICACIÓN -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="lock-icon-container" id="lockIcon">🔒</div>
+            <h3>Ingreso al Sistema</h3>
+            <select id="userSelect" onchange="handleUserSelectChange()"></select>
+            <input type="text" id="usernameInput" placeholder="Nombre completo" style="display:none;">
+            <input type="email" id="emailInput" placeholder="Correo electrónico" style="display:none;">
+            <input type="password" id="passwordInput" placeholder="Contraseña">
+            <input type="password" id="confirmPasswordInput" placeholder="Confirmar contraseña" style="display:none;">
+            <button class="login-btn" id="submitBtn" onclick="processLogin()">INGRESAR AL SISTEMA</button>
+            <div class="login-error" id="loginErrorMsg"></div>
+            <div class="login-info" id="infoText">Selecciona tu usuario e ingresa tu contraseña.</div>
+            <a class="forgot-pass-link" id="forgotBtn" onclick="recoverPassword()">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
-</div>
+
+    <!-- MODAL DE ELIMINACIÓN DE CUENTA -->
+    <div class="login-overlay" id="deleteAccountModal" style="display:none;">
+        <div class="login-box" style="border-top-color: #e74c3c;">
+            <div style="font-size:2.5rem; margin-bottom:10px;">⚠️</div>
+            <h3 style="color:#e74c3c;">Eliminar Cuenta de Supervisor</h3>
+            <p style="font-size:0.85rem; color:#a4b0be; margin-bottom:15px;">Esta acción eliminará tu usuario del sistema. Ingresa tu contraseña para confirmar.</p>
+            <input type="password" id="deleteConfirmPassword" placeholder="Contraseña actual">
+            <div id="deleteModalMsg" style="font-size:0.85rem; margin-bottom:10px; font-weight:bold;"></div>
+            <div style="display:flex; gap:10px;">
+                <button class="login-btn" style="background:#c0392b;" onclick="confirmDeleteAccount()">Eliminar</button>
+                <button class="login-btn" style="background:#485460;" onclick="closeDeleteAccountModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HOVER DE FERIADOS -->
+    <div id="hoverModal" style="position:fixed; display:none; z-index:10000; background:#1e272e; border:2px solid #e74c3c; border-radius:8px; padding:12px; width:300px; box-shadow:0 8px 25px rgba(0,0,0,0.8); pointer-events:none;">
+        <div id="fhmDateText" style="font-size:0.75rem; font-weight:bold; color:#e74c3c; margin-bottom:4px;"></div>
+        <div id="fhmTitle" style="font-size:0.95rem; font-weight:bold; color:#ffffff; margin-bottom:6px;"></div>
+        <div id="fhmDesc" style="font-size:0.8rem; color:#dcdde1; line-height:1.3;"></div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="container" id="mainContainer">
+        <header>
+            <div class="header-logo-left">
+                <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo Minerar" onerror="this.src='https://placehold.co/55x55/E67E00/white?text=M'">
+            </div>
+            <div class="header-center-content">
+                <div class="header-main-title">CALENDARIO VACACIONAL PERSONAL DE MINERAR S.A.</div>
+                <div class="header-person-row">
+                    <label for="supervisorInput">SUPERVISOR / USUARIO:</label>
+                    <input type="text" id="supervisorInput" readonly>
+                </div>
+            </div>
+            <div class="header-bottom-row">
+                <div class="meta-fields">
+                    <div class="field-group">
+                        <span>MES:</span>
+                        <select id="monthSelect" onchange="updateCalendar()">
+                            <option value="0">Enero</option>
+                            <option value="1">Febrero</option>
+                            <option value="2">Marzo</option>
+                            <option value="3">Abril</option>
+                            <option value="4">Mayo</option>
+                            <option value="5">Junio</option>
+                            <option value="6">Julio</option>
+                            <option value="7">Agosto</option>
+                            <option value="8">Septiembre</option>
+                            <option value="9">Octubre</option>
+                            <option value="10">Noviembre</option>
+                            <option value="11">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <span>AÑO:</span>
+                        <select id="yearSelect" onchange="updateCalendar()">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
+                    <button class="logout-btn" onclick="logoutUser()">🚪 Cerrar Sesión</button>
+                    <button class="delete-user-btn" onclick="openDeleteAccountModal()">🗑️ Eliminar Cuenta</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="calendar-section">
+                <div class="month-navigation">
+                    <button class="nav-btn" onclick="changeMonth(-1)">◀ Anterior</button>
+                    <div class="current-month" id="monthYearTitle">Cargando...</div>
+                    <button class="nav-btn" onclick="changeMonth(1)">Siguiente ▶</button>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid"></div>
+
+                <div class="legend">
+                    <span><span style="color:#E67E00;">&#9632;</span> Seleccionado</span>
+                    <span><span style="color:#d63031;">&#9632;</span> Feriado Nacional</span>
+                    <span><span style="color:#e67e22;">&#9632;</span> Vacaciones por Empleado</span>
+                    <span><span style="color:#e74c3c;">&#9632;</span> Superposición (Coincidencia de Personal)</span>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <h2>Gestión y Coordinación</h2>
+
+                <div class="panel-tabs">
+                    <button class="tab-btn active" onclick="switchTab('single')">📌 Casilla</button>
+                    <button class="tab-btn" onclick="switchTab('range')">🗓️ Por Rango</button>
+                    <button class="tab-btn" onclick="switchTab('equity')">⚖️ Historial</button>
+                    <button class="tab-btn" onclick="switchTab('coordination')">🤝 Coordinación</button>
+                </div>
+
+                <!-- TAB 1: CASILLA INDIVIDUAL -->
+                <div id="tabSingle" class="tab-content active">
+                    <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla del calendario</div>
+                    
+                    <div id="singleEquityAlert" class="equity-alert" style="display:none;"></div>
+
+                    <textarea id="notes" placeholder="Escribe el nombre del empleado o detalles:&#10;&#10;Ej: PEDRO"></textarea>
+                    
+                    <div style="margin-bottom:10px;">
+                        <label style="font-size:0.75rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Decisión / Estado del Supervisor:</label>
+                        <select id="singleApprovalStatus" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;" onchange="triggerEquityCheckOnSingle()">
+                            <option value="APROBADO">✅ APROBADO POR SUPERVISOR</option>
+                            <option value="PENDIENTE">⏳ EN REVISIÓN / PENDIENTE DE COORDINACIÓN</option>
+                        </select>
+                    </div>
+
+                    <input type="text" id="supervisorNote" class="supervisor-note-input" placeholder="💬 Justificación / Nota del Supervisor (Opcional)">
+
+                    <button class="save-btn" style="margin-top:10px;" onclick="saveNote()">Guardar Decisión</button>
+                </div>
+
+                <!-- TAB 2: POR RANGO DE FECHAS -->
+                <div id="tabRange" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna un período completo de vacaciones en un solo paso:</p>
+                    <div class="range-inputs">
+                        <div>
+                            <label>Desde:</label>
+                            <input type="date" id="rangeStart">
+                        </div>
+                        <div>
+                            <label>Hasta:</label>
+                            <input type="date" id="rangeEnd">
+                        </div>
+                    </div>
+                    <input type="text" id="rangeEmployeeName" placeholder="Nombre de Empleado (Ej: JUAN PEREZ)" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px;" oninput="checkRangeEquity()">
+                    
+                    <div style="margin-bottom:10px;">
+                        <label style="font-size:0.75rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Estado de Asignación:</label>
+                        <select id="rangeApprovalStatus" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;">
+                            <option value="APROBADO">✅ APROBADO POR SUPERVISOR</option>
+                            <option value="PENDIENTE">⏳ PENDIENTE DE REVISIÓN Y COBERTURA</option>
+                        </select>
+                    </div>
+
+                    <div id="rangeEquityAlert" class="equity-alert" style="display:none;"></div>
+
+                    <button class="save-btn" onclick="saveRange()">Asignar Rango Completo</button>
+                </div>
+
+                <!-- TAB 3: EQUIDAD E HISTORIAL -->
+                <div id="tabEquity" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:8px;">Buscar historial de vacaciones por empleado para analizar prioridad:</p>
+                    <input type="text" id="searchWorkerInput" placeholder="Escribe el nombre (Ej: PEDRO)" style="width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem; margin-bottom:8px;" oninput="searchEmployeeHistory()">
+                    
+                    <div id="historyResults" class="history-list">
+                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas en años anteriores y actuales.</p>
+                    </div>
+                </div>
+
+                <!-- TAB 4: COORDINACIÓN Y COINCIDENCIAS -->
+                <div id="tabCoordination" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Panel de Coincidencias de Personal en el mes actual:</p>
+                    <div id="coordinationSummary" class="history-list" style="max-height:360px;">
+                        <!-- Se carga dinámicamente -->
+                    </div>
+                    <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar Análisis de Coincidencias</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
     let currentUser = "";
-    let notesData = {};
+    let notesData = {}; // Puede almacenar string o { text, status, supervisorNote }
     let isRegisteringNew = false;
-    let currentDate = new Date(2026, 4, 1); // Mayo 2026
+
+    // Obtener datos estructurados de una casilla de fecha
+    function getParsedDayData(dateKey) {
+        const raw = notesData[dateKey];
+        if (!raw) return { text: "", status: "APROBADO", supervisorNote: "" };
+        if (typeof raw === "object") {
+            return {
+                text: raw.text || "",
+                status: raw.status || "APROBADO",
+                supervisorNote: raw.supervisorNote || ""
+            };
+        }
+        return { text: raw, status: "APROBADO", supervisorNote: "" };
+    }
+
+    // Guardar datos estructurados
+    function setParsedDayData(dateKey, text, status, supervisorNote) {
+        if (!text || text.trim() === "") {
+            delete notesData[dateKey];
+        } else {
+            notesData[dateKey] = {
+                text: text.trim(),
+                status: status || "APROBADO",
+                supervisorNote: supervisorNote ? supervisorNote.trim() : ""
+            };
+        }
+    }
+    
+    // Iniciar con la fecha actual del sistema
+    const today = new Date();
+    let currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
     let selectedDateStr = "";
     
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-    // DETALLE DE FERIADOS
+    // Base de datos de feriados nacionales de Argentina
     const holidayDetails = {
         "01-01": { title: "Año Nuevo", desc: "Inicio del año calendario. Feriado inamovible para compartir en familia y descansar." },
         "03-24": { title: "Día de la Memoria por la Verdad y la Justicia", desc: "Conmemoración a las víctimas de la última dictadura militar en Argentina." },
-        "04-02": { title: "Día del Veterano y Caídos en Malvinas", desc: "Homenaje a los combatientes y fallecidos en el conflicto de Malvinas en 1982." },
+        "04-02": { title: "Día del Veterano y Caídos en Malvinas", desc: "Homenaje a los combatientes y fallecidos en el conflicto de Malvinas de 1982." },
         "05-01": { title: "Día del Trabajador", desc: "Conmemoración internacional del movimiento obrero y derechos laborales." },
         "05-25": { title: "Día de la Revolución de Mayo", desc: "Conmemoración del establecimiento del primer gobierno patrio en 1810." },
         "06-20": { title: "Paso a la Inmortalidad del Gral. Manuel Belgrano", desc: "Día de la Bandera Argentina en tributo a su creador." },
@@ -703,6 +877,259 @@
         return `hsl(${h}, 75%, 82%)`;
     }
 
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        if (tabName === 'single') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.getElementById('tabSingle').classList.add('active');
+        } else if (tabName === 'range') {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.getElementById('tabRange').classList.add('active');
+        } else if (tabName === 'equity') {
+            document.querySelectorAll('.tab-btn')[2].classList.add('active');
+            document.getElementById('tabEquity').classList.add('active');
+        } else if (tabName === 'coordination') {
+            document.querySelectorAll('.tab-btn')[3].classList.add('active');
+            document.getElementById('tabCoordination').classList.add('active');
+            renderCoordinationSummary();
+        }
+    }
+
+    function checkEquityForDateAndName(dateStr, workerName) {
+        if (!dateStr || !workerName || workerName.trim().length < 2) return null;
+        
+        const cleanName = workerName.trim().toUpperCase();
+        const parts = dateStr.split("-");
+        if (parts.length !== 3) return null;
+
+        const currentYear = parts[0];
+
+        let pastMatches = [];
+
+        for (let key in notesData) {
+            const data = getParsedDayData(key);
+            if (data.text && data.text.toUpperCase().includes(cleanName)) {
+                const kParts = key.split("-");
+                if (kParts.length === 3) {
+                    const kYear = kParts[0];
+                    if (kYear !== currentYear && kParts[1] === parts[1]) {
+                        pastMatches.push({ year: kYear, date: key });
+                    }
+                }
+            }
+        }
+
+        return pastMatches;
+    }
+
+    function triggerEquityCheckOnSingle() {
+        const nameVal = document.getElementById("notes").value.trim();
+        const statusVal = document.getElementById("singleApprovalStatus").value;
+        const alertEl = document.getElementById("singleEquityAlert");
+
+        if (!selectedDateStr || !nameVal) {
+            alertEl.style.display = "none";
+            return;
+        }
+
+        const matches = checkEquityForDateAndName(selectedDateStr, nameVal);
+        if (matches && matches.length > 0) {
+            const years = [...new Set(matches.map(m => m.year))].join(", ");
+            alertEl.className = "equity-alert warning";
+            alertEl.innerHTML = `⚠️ <b>Atención - Rotación de Vacaciones:</b><br>${nameVal.toUpperCase()} ya tomó vacaciones en este mes en el/los año(s) <b>${years}</b>.<br>💡 <i>Sugerencia:</i> El supervisor puede mantener o reasignar la fecha. Estado actual: <b>${statusVal}</b>.`;
+            alertEl.style.display = "block";
+        } else {
+            alertEl.className = "equity-alert success";
+            alertEl.innerHTML = `✅ <b>Sin repeticiones previas:</b><br>${nameVal.toUpperCase()} no registra vacaciones en este mes en años anteriores. Concesión fluida sin conflicto de rotación.`;
+            alertEl.style.display = "block";
+        }
+    }
+
+    function checkRangeEquity() {
+        const nameVal = document.getElementById("rangeEmployeeName").value.trim();
+        const startVal = document.getElementById("rangeStart").value;
+        const alertEl = document.getElementById("rangeEquityAlert");
+
+        if (!startVal || !nameVal) {
+            alertEl.style.display = "none";
+            return;
+        }
+
+        const matches = checkEquityForDateAndName(startVal, nameVal);
+        if (matches && matches.length > 0) {
+            const years = [...new Set(matches.map(m => m.year))].join(", ");
+            alertEl.className = "equity-alert warning";
+            alertEl.innerHTML = `⚠️ <b>Advertencia de Equidad:</b><br>${nameVal.toUpperCase()} registra vacaciones en esta misma época en el/los año(s) <b>${years}</b>.<br>Considera rotar esta fecha o registrar justificación de supervisor.`;
+            alertEl.style.display = "block";
+        } else {
+            alertEl.className = "equity-alert success";
+            alertEl.innerHTML = `✅ <b>Período Libre:</b> ${nameVal.toUpperCase()} no ha usado este mes anteriormente.`;
+            alertEl.style.display = "block";
+        }
+    }
+
+    function saveRange() {
+        const startVal = document.getElementById("rangeStart").value;
+        const endVal = document.getElementById("rangeEnd").value;
+        const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
+        const statusVal = document.getElementById("rangeApprovalStatus").value;
+
+        if (!startVal || !endVal || !nameVal) {
+            alert("Por favor completa la fecha de inicio, fin y el nombre del empleado.");
+            return;
+        }
+
+        let startDate = new Date(startVal + "T00:00:00");
+        let endDate = new Date(endVal + "T00:00:00");
+
+        if (startDate > endDate) {
+            alert("La fecha de inicio debe ser anterior o igual a la fecha de fin.");
+            return;
+        }
+
+        let curr = new Date(startDate);
+        let count = 0;
+
+        while (curr <= endDate) {
+            const yyyy = curr.getFullYear();
+            const mm = String(curr.getMonth() + 1).padStart(2, '0');
+            const dd = String(curr.getDate()).padStart(2, '0');
+            const dateKey = `${yyyy}-${mm}-${dd}`;
+
+            setParsedDayData(dateKey, nameVal, statusVal, `Asignado por rango el ${new Date().toLocaleDateString()}`);
+            curr.setDate(curr.getDate() + 1);
+            count++;
+        }
+
+        saveNotesToStorage();
+        updateCalendar();
+        alert(`✅ Se registraron ${count} días de vacaciones para ${nameVal} (${statusVal}).`);
+        document.getElementById("rangeEmployeeName").value = "";
+    }
+
+    function searchEmployeeHistory() {
+        const query = document.getElementById("searchWorkerInput").value.trim().toUpperCase();
+        const container = document.getElementById("historyResults");
+
+        if (!query) {
+            container.innerHTML = `<p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas en años anteriores y actuales.</p>`;
+            return;
+        }
+
+        let found = {};
+
+        for (let key in notesData) {
+            const data = getParsedDayData(key);
+            if (data.text && data.text.toUpperCase().includes(query)) {
+                const parts = key.split("-");
+                const year = parts[0];
+                if (!found[year]) found[year] = [];
+                found[year].push(key);
+            }
+        }
+
+        const yearsList = Object.keys(found).sort();
+
+        if (yearsList.length === 0) {
+            container.innerHTML = `<p style="font-size:0.8rem; color:#e74c3c; text-align:center;">No se encontraron registros de vacaciones para "${query}".</p>`;
+            return;
+        }
+
+        let html = "";
+        yearsList.forEach(yr => {
+            const dates = found[yr].sort();
+            const minDate = dates[0];
+            const maxDate = dates[dates.length - 1];
+            html += `
+                <div class="history-item">
+                    <div class="history-item-name">🗓️ Año ${yr} - (${dates.length} días)</div>
+                    <div class="history-item-dates">Desde ${minDate} hasta ${maxDate}</div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function renderCoordinationSummary() {
+        const container = document.getElementById("coordinationSummary");
+        const month = parseInt(document.getElementById("monthSelect").value);
+        const year = parseInt(document.getElementById("yearSelect").value);
+        const mm = String(month + 1).padStart(2, '0');
+
+        let daysWithVacations = [];
+
+        for (let key in notesData) {
+            if (key.startsWith(`${year}-${mm}`)) {
+                const data = getParsedDayData(key);
+                if (data.text) {
+                    daysWithVacations.push({ date: key, data: data });
+                }
+            }
+        }
+
+        if (daysWithVacations.length === 0) {
+            container.innerHTML = `<p style="font-size:0.8rem; color:#a4b0be; text-align:center;">No hay vacaciones cargadas en ${monthNames[month]} ${year}.</p>`;
+            return;
+        }
+
+        daysWithVacations.sort((a, b) => a.date.localeCompare(b.date));
+
+        let html = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">Resumen ${monthNames[month]} ${year} (${daysWithVacations.length} días ocupados):</div>`;
+
+        daysWithVacations.forEach(item => {
+            const dateParts = item.date.split("-");
+            const dayNum = dateParts[2];
+            const statusClass = item.data.status === 'APROBADO' ? 'approved' : 'pending';
+            const statusText = item.data.status === 'APROBADO' ? 'Aprobado' : 'En Revisión';
+
+            html += `
+                <div class="coordination-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>Día ${dayNum} - ${item.data.text}</strong>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    ${item.data.supervisorNote ? `<div style="font-size:0.72rem; color:#f1c40f; margin-top:4px;">💬 <i>Note: ${item.data.supervisorNote}</i></div>` : ''}
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function selectDate(dateKey, day, monthName, year) {
+        selectedDateStr = dateKey;
+        document.getElementById("selectedDateText").innerText = `Casilla: ${day} de ${monthName} de ${year}`;
+        
+        const data = getParsedDayData(dateKey);
+        document.getElementById("notes").value = data.text;
+        document.getElementById("singleApprovalStatus").value = data.status || "APROBADO";
+        document.getElementById("supervisorNote").value = data.supervisorNote || "";
+
+        triggerEquityCheckOnSingle();
+        updateCalendar();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const notesArea = document.getElementById("notes");
+        if (notesArea) {
+            notesArea.addEventListener("input", triggerEquityCheckOnSingle);
+        }
+    });
+
+    function showLoginError(msg) {
+        const errEl = document.getElementById("loginErrorMsg");
+        errEl.innerText = msg;
+        errEl.style.display = "block";
+    }
+
+    function hideLoginError() {
+        const errEl = document.getElementById("loginErrorMsg");
+        errEl.style.display = "none";
+    }
+
     function playUnlockSound() {
         try {
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -721,24 +1148,35 @@
     }
 
     window.onload = function() {
+        document.getElementById("monthSelect").value = today.getMonth();
+        document.getElementById("yearSelect").value = today.getFullYear();
+        
         populateUserDropdown();
         loadNotesFromStorage();
     };
 
     function populateUserDropdown() {
         const userSelect = document.getElementById("userSelect");
-        const users = JSON.parse(localStorage.getItem("minerar_users_db")) || {
-            "ALVAREZ MIGUEL": { password: "1234", email: "alvarez@minerar.com.ar" },
-          
-        };
+        const users = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
 
-        userSelect.innerHTML = '<option value="" disabled selected>-- Selecciona Usuario / Supervisor --</option>';
+        userSelect.innerHTML = '';
         
-        for (let username in users) {
-            let opt = document.createElement("option");
-            opt.value = username;
-            opt.innerText = username;
-            userSelect.appendChild(opt);
+        const hasUsers = Object.keys(users).length > 0;
+
+        if (hasUsers) {
+            let defaultOpt = document.createElement("option");
+            defaultOpt.value = "";
+            defaultOpt.disabled = true;
+            defaultOpt.selected = true;
+            defaultOpt.innerText = "-- Selecciona Usuario / Supervisor --";
+            userSelect.appendChild(defaultOpt);
+
+            for (let username in users) {
+                let opt = document.createElement("option");
+                opt.value = username;
+                opt.innerText = username;
+                userSelect.appendChild(opt);
+            }
         }
 
         let newOpt = document.createElement("option");
@@ -746,12 +1184,14 @@
         newOpt.innerText = "➕ REGISTRAR NUEVO SUPERVISOR";
         newOpt.style.fontWeight = "bold";
         newOpt.style.color = "#E67E00";
+        if (!hasUsers) newOpt.selected = true;
         userSelect.appendChild(newOpt);
 
         handleUserSelectChange();
     }
 
     function handleUserSelectChange() {
+        hideLoginError();
         const userSelect = document.getElementById("userSelect");
         const usernameInput = document.getElementById("usernameInput");
         const emailInput = document.getElementById("emailInput");
@@ -765,8 +1205,8 @@
             usernameInput.style.display = "block";
             emailInput.style.display = "block";
             confirmPasswordInput.style.display = "block";
-            submitBtn.innerText = "REGISTRAR Y INGRESAR";
-            infoText.innerText = "Ingresa tu nombre completo, correo y crea tu contraseña.";
+            submitBtn.innerText = "REGISTRAR E INGRESAR";
+            infoText.innerText = "Bienvenido. Ingresa tu nombre completo, correo y crea tu contraseña.";
             forgotBtn.style.display = "none";
         } else {
             isRegisteringNew = false;
@@ -780,11 +1220,10 @@
     }
 
     function processLogin() {
+        hideLoginError();
         const userSelect = document.getElementById("userSelect");
         const password = document.getElementById("passwordInput").value.trim();
-        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {
-            "ALVAREZ MIGUEL": { password: "1234", email: "alvarez@minerar.com.ar" },
-            };
+        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
         const lockIcon = document.getElementById("lockIcon");
 
         const triggerShake = () => {
@@ -799,10 +1238,10 @@
             const email = document.getElementById("emailInput").value.trim().toLowerCase();
             const confirmPassword = document.getElementById("confirmPasswordInput").value.trim();
 
-            if (!username) { triggerShake(); alert("Por favor ingresa un nombre."); return; }
-            if (!email || !email.includes("@")) { triggerShake(); alert("Ingresa un correo válido."); return; }
-            if (!password) { triggerShake(); alert("Ingresa una contraseña."); return; }
-            if (password !== confirmPassword) { triggerShake(); alert("Las contraseñas no coinciden."); return; }
+            if (!username) { triggerShake(); showLoginError("Por favor ingresa un nombre."); return; }
+            if (!email || !email.includes("@")) { triggerShake(); showLoginError("Ingresa un correo válido."); return; }
+            if (!password) { triggerShake(); showLoginError("Ingresa una contraseña."); return; }
+            if (password !== confirmPassword) { triggerShake(); showLoginError("Las contraseñas no coinciden."); return; }
 
             usersDB[username] = { password: password, email: email };
             localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
@@ -812,13 +1251,13 @@
             const username = userSelect.value;
             if (!username || username === "NEW_USER") {
                 triggerShake();
-                alert("Por favor selecciona un usuario de la lista.");
+                showLoginError("Por favor selecciona un usuario de la lista.");
                 return;
             }
 
             if (!password || !usersDB[username] || usersDB[username].password !== password) {
                 triggerShake();
-                alert("Contraseña incorrecta.");
+                showLoginError("Contraseña incorrecta.");
                 return;
             }
 
@@ -839,13 +1278,13 @@
     function recoverPassword() {
         const userSelect = document.getElementById("userSelect").value;
         if (!userSelect || userSelect === "NEW_USER") {
-            alert("Selecciona un usuario para recuperar su contraseña.");
+            showLoginError("Selecciona un usuario para recuperar su contraseña.");
             return;
         }
         const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
         const user = usersDB[userSelect];
         if (user) {
-            alert(`Instrucciones enviadas a: ${user.email}\n(Para demostración, tu clave es: ${user.password})`);
+            showLoginError(`Información: Tu clave registrada es '${user.password}' (Enviada a: ${user.email})`);
         }
     }
 
@@ -853,7 +1292,51 @@
         document.getElementById("mainContainer").style.display = "none";
         document.getElementById("loginOverlay").style.display = "flex";
         document.getElementById("passwordInput").value = "";
+        document.getElementById("usernameInput").value = "";
+        document.getElementById("emailInput").value = "";
+        document.getElementById("confirmPasswordInput").value = "";
         document.getElementById("lockIcon").innerText = "🔒";
+        populateUserDropdown();
+        hideLoginError();
+    }
+
+    function openDeleteAccountModal() {
+        document.getElementById("deleteConfirmPassword").value = "";
+        document.getElementById("deleteModalMsg").innerText = "";
+        document.getElementById("deleteAccountModal").style.display = "flex";
+    }
+
+    function closeDeleteAccountModal() {
+        document.getElementById("deleteAccountModal").style.display = "none";
+    }
+
+    function confirmDeleteAccount() {
+        const pass = document.getElementById("deleteConfirmPassword").value.trim();
+        const msgEl = document.getElementById("deleteModalMsg");
+        const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {};
+
+        if (!pass) {
+            msgEl.style.color = "#ff6b6b";
+            msgEl.innerText = "Ingresa tu contraseña para confirmar.";
+            return;
+        }
+
+        if (!usersDB[currentUser] || usersDB[currentUser].password !== pass) {
+            msgEl.style.color = "#ff6b6b";
+            msgEl.innerText = "Contraseña incorrecta. No se pudo eliminar la cuenta.";
+            return;
+        }
+
+        delete usersDB[currentUser];
+        localStorage.setItem("minerar_users_db", JSON.stringify(usersDB));
+
+        msgEl.style.color = "#2ecc71";
+        msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Cerrando sesión...`;
+
+        setTimeout(() => {
+            closeDeleteAccountModal();
+            logoutUser();
+        }, 1200);
     }
 
     function loadNotesFromStorage() {
@@ -936,7 +1419,6 @@
                 hTag.innerText = "FERIADO";
                 headerDiv.appendChild(hTag);
 
-                // CONFIGURACIÓN DE EVENTOS HOVER PARA MODAL FUTURISTA
                 dayCell.addEventListener("mouseenter", (e) => showHoverModal(e, keyHoliday, keyDate));
                 dayCell.addEventListener("mousemove", (e) => moveHoverModal(e));
                 dayCell.addEventListener("mouseleave", () => hideHoverModal());
@@ -944,11 +1426,17 @@
 
             dayCell.appendChild(headerDiv);
 
-            if (notesData[keyDate]) {
+            const dayData = getParsedDayData(keyDate);
+            if (dayData.text) {
                 const contentDiv = document.createElement("div");
                 contentDiv.className = "day-content";
-                contentDiv.innerText = notesData[keyDate];
-                contentDiv.style.backgroundColor = getColorForName(notesData[keyDate]);
+                
+                const statusBadge = dayData.status === 'APROBADO' 
+                    ? '<span class="status-badge approved">✔ Aprobado</span>' 
+                    : '<span class="status-badge pending">⏳ En Revisión</span>';
+
+                contentDiv.innerHTML = `<div>${dayData.text}</div>${statusBadge}`;
+                contentDiv.style.backgroundColor = getColorForName(dayData.text);
                 dayCell.appendChild(contentDiv);
             }
 
@@ -961,31 +1449,27 @@
         }
     }
 
-    function selectDate(dateKey, day, monthName, year) {
-        selectedDateStr = dateKey;
-        document.getElementById("selectedDateText").innerText = `Casilla: ${day} de ${monthName} de ${year}`;
-        document.getElementById("notes").value = notesData[dateKey] || "";
-        updateCalendar();
-    }
-
     function saveNote() {
         if (!selectedDateStr) {
-            alert("Por favor selecciona primero un día en el calendario.");
+            document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
             return;
         }
 
         const val = document.getElementById("notes").value.trim();
+        const status = document.getElementById("singleApprovalStatus").value;
+        const supervisorNote = document.getElementById("supervisorNote").value.trim();
+
         if (val) {
-            notesData[selectedDateStr] = val;
+            setParsedDayData(selectedDateStr, val, status, supervisorNote);
         } else {
             delete notesData[selectedDateStr];
         }
 
         saveNotesToStorage();
         updateCalendar();
+        triggerEquityCheckOnSingle();
     }
 
-    /* LÓGICA DE CONTROL DEL MODAL HOVER FUTURISTA */
     function showHoverModal(e, keyHoliday, keyDate) {
         const modal = document.getElementById("hoverModal");
         const details = holidayDetails[keyHoliday];
@@ -1005,7 +1489,6 @@
         const x = e.clientX + 18;
         const y = e.clientY + 18;
 
-        // Previene desbordamiento en bordes derechos/inferiores de pantalla
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
 
@@ -1024,6 +1507,5 @@
         modal.classList.remove("active");
     }
 </script>
-
 </body>
 </html>
