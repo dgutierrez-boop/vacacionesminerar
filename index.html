@@ -728,9 +728,8 @@
     function populateUserDropdown() {
         const userSelect = document.getElementById("userSelect");
         const users = JSON.parse(localStorage.getItem("minerar_users_db")) || {
-            "ALVAREZ MIGUEL": { password: "123", email: "alvarez@minerar.com.ar" },
-            "GEREZ DANIEL": { password: "123", email: "gerez@minerar.com.ar" },
-            "MARCELO": { password: "123", email: "marcelo@minerar.com.ar" }
+            "ALVAREZ MIGUEL": { password: "1234", email: "alvarez@minerar.com.ar" },
+          
         };
 
         userSelect.innerHTML = '<option value="" disabled selected>-- Selecciona Usuario / Supervisor --</option>';
@@ -784,10 +783,8 @@
         const userSelect = document.getElementById("userSelect");
         const password = document.getElementById("passwordInput").value.trim();
         const usersDB = JSON.parse(localStorage.getItem("minerar_users_db")) || {
-            "ALVAREZ MIGUEL": { password: "123", email: "alvarez@minerar.com.ar" },
-            "GEREZ DANIEL": { password: "123", email: "gerez@minerar.com.ar" },
-            "MARCELO": { password: "123", email: "marcelo@minerar.com.ar" }
-        };
+            "ALVAREZ MIGUEL": { password: "1234", email: "alvarez@minerar.com.ar" },
+            };
         const lockIcon = document.getElementById("lockIcon");
 
         const triggerShake = () => {
