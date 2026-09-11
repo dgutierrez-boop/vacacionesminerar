@@ -127,42 +127,46 @@
         .header-top-row {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 20px;
             margin-bottom: 15px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            width: 100%;
         }
 
         .header-logo-left {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 6px 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
             flex-shrink: 0;
         }
 
         .header-logo-left img {
-            width: 60px; height: 60px; object-fit: contain;
+            width: 60px; height: 60px; object-fit: contain; display: block;
         }
 
         .header-center-content {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            text-align: center;
+            text-align: left;
+            flex: 1;
         }
 
         .header-main-title {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 900;
             color: #fbc531;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
         }
 
         .header-person-row {
@@ -701,6 +705,11 @@
 
         /* CONFIGURACIÓN EXCLUSIVA PARA IMPRESIÓN Y PDF */
         @media print {
+            @page {
+                size: portrait;
+                margin: 8mm 10mm;
+            }
+
             body {
                 background: #ffffff !important;
                 color: #000000 !important;
@@ -740,36 +749,78 @@
             }
 
             .header-top-row {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
                 justify-content: flex-start !important;
-                gap: 15px !important;
+                gap: 18px !important;
                 margin-bottom: 10px !important;
+                flex-wrap: nowrap !important;
+                width: 100% !important;
             }
 
             .header-logo-left {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 background: transparent !important;
                 border: none !important;
                 padding: 0 !important;
+                margin: 0 !important;
+                flex-shrink: 0 !important;
             }
 
             .header-logo-left img {
                 width: 50px !important;
                 height: 50px !important;
+                object-fit: contain !important;
+                display: block !important;
             }
 
             .header-center-content {
+                display: flex !important;
+                flex-direction: column !important;
                 align-items: flex-start !important;
+                justify-content: center !important;
                 text-align: left !important;
+                flex: 1 !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
 
             .header-main-title {
-                font-size: 1.25rem !important;
+                font-size: 1.15rem !important;
+                font-weight: 900 !important;
+                color: #fbc531 !important;
                 margin-bottom: 4px !important;
+                line-height: 1.2 !important;
+                text-align: left !important;
+                white-space: normal !important;
+            }
+
+            .header-person-row {
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                justify-content: flex-start !important;
+            }
+
+            .header-person-row label {
+                font-size: 0.85rem !important;
+                font-weight: 800 !important;
+                color: #ffffff !important;
+                white-space: nowrap !important;
             }
 
             .header-person-row input {
                 background: #ffffff !important;
                 color: #000000 !important;
                 border: 2px solid #E67E00 !important;
+                padding: 3px 8px !important;
+                font-size: 0.9rem !important;
+                font-weight: 900 !important;
+                width: 250px !important;
+                text-align: center !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
