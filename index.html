@@ -1016,6 +1016,10 @@
                             <option value="2027">2027</option>
                         </select>
                     </div>
+                    <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background:rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);">
+                        <span style="display:inline-block; width:8px; height:8px; background:#2ecc71; border-radius:50%; box-shadow:0 0 8px #2ecc71;"></span>
+                        <span id="cloudStatusText">Nube Conectada</span>
+                    </div>
                 </div>
                 <div class="header-actions">
                     <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
@@ -1129,135 +1133,115 @@
         </div>
     </div>
 
-<script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Application Environment & Cloud Variables
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'minerar-vacaciones-app';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+    let db = null;
+    let auth = null;
+    let authUser = null;
+
     let currentUser = "";
-    let notesData = {}; // Puede almacenar string o { text, status, supervisorNote }
+    let notesData = {};
+    let usersDB = {
+        "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" }
+    };
     let isRegisteringNew = false;
-    let inMemoryStore = {};
 
-    // Manejador seguro para almacenamiento (soportar iFrames restringidos)
-    function safeGetStorage(key) {
-        try {
-            return localStorage.getItem(key);
-        } catch(e) {
-            return inMemoryStore[key] || null;
-        }
-    }
+    // Helper paths for Firestore strictly matching Rule 1
+    const getPublicCollection = (collName) => collection(db, 'artifacts', appId, 'public', 'data', collName);
+    const getPublicDoc = (collName, docId) => doc(db, 'artifacts', appId, 'public', 'data', collName, docId);
 
-    function safeSetStorage(key, value) {
-        try {
-            localStorage.setItem(key, value);
-        } catch(e) {
-            inMemoryStore[key] = value;
-        }
-    }
-
-    // Generar resumen formal de personal con vacaciones para la vista de impresión / informe
-    function renderPrintVacationSummary() {
-        const summaryContainer = document.getElementById("printSummaryContainer");
-        if (!summaryContainer) return;
-
-        const month = parseInt(document.getElementById("monthSelect").value);
-        const year = parseInt(document.getElementById("yearSelect").value);
-        const mm = String(month + 1).padStart(2, '0');
-
-        let employeeDays = {};
-
-        for (let key in notesData) {
-            if (key.startsWith(`${year}-${mm}`)) {
-                const data = getParsedDayData(key);
-                if (data.text) {
-                    const empName = data.text.toUpperCase().trim();
-                    if (!employeeDays[empName]) {
-                        employeeDays[empName] = [];
-                    }
-                    employeeDays[empName].push({ date: key, status: data.status || 'APROBADO' });
-                }
-            }
-        }
-
-        const empNames = Object.keys(employeeDays);
-
-        if (empNames.length === 0) {
-            summaryContainer.innerHTML = `
-                <div class="summary-card">
-                    <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year}</div>
-                    <div class="summary-sub">SUPERVISOR A CARGO: <strong>${currentUser || 'NO ESPECIFICADO'}</strong></div>
-                    <p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No se registraron vacaciones asignadas en el presente mes.</p>
-                </div>`;
+    async function initCloudSync() {
+        if (!firebaseConfig) {
+            console.warn("No Firebase configuration provided. Running in local session mode.");
+            updateCloudBadge(false, "Modo Local");
             return;
         }
 
-        let html = `
-            <div class="summary-card">
-                <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year}</div>
-                <div class="summary-sub">SUPERVISOR A CARGO: <strong>${currentUser || 'GUTIERREZ'}</strong></div>
-                <table class="summary-table">
-                    <thead>
-                        <tr>
-                            <th>EMPLEADO / BENEFICIARIO</th>
-                            <th>FECHA DESDE</th>
-                            <th>FECHA HASTA</th>
-                            <th>DÍAS DE GOCE</th>
-                            <th>ESTADO</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
 
-        empNames.forEach(emp => {
-            let items = employeeDays[emp];
-            items.sort((a, b) => a.date.localeCompare(b.date));
+            // RULE 3 - Authenticate first before making Firestore calls
+            if (initialAuthToken) {
+                const cred = await signInWithCustomToken(auth, initialAuthToken);
+                authUser = cred.user;
+            } else {
+                const cred = await signInAnonymously(auth);
+                authUser = cred.user;
+            }
 
-            // Agrupar fechas continuas en períodos (Desde - Hasta)
-            let periods = [];
-            let currentPeriod = null;
+            updateCloudBadge(true, "Nube Sincronizada");
 
-            items.forEach(item => {
-                const d = new Date(item.date + "T00:00:00");
-                if (!currentPeriod) {
-                    currentPeriod = { start: d, end: d, count: 1, status: item.status };
-                } else {
-                    let prevEnd = new Date(currentPeriod.end);
-                    prevEnd.setDate(prevEnd.getDate() + 1);
-                    
-                    if (d.getTime() === prevEnd.getTime()) {
-                        currentPeriod.end = d;
-                        currentPeriod.count++;
-                    } else {
-                        periods.push(currentPeriod);
-                        currentPeriod = { start: d, end: d, count: 1, status: item.status };
-                    }
-                }
-            });
-            if (currentPeriod) periods.push(currentPeriod);
+            // Setup Realtime Listeners for Users and Vacation Records
+            setupRealtimeListeners();
 
-            periods.forEach(p => {
-                const startStr = `${String(p.start.getDate()).padStart(2,'0')}/${String(p.start.getMonth()+1).padStart(2,'0')}/${p.start.getFullYear()}`;
-                const endStr = `${String(p.end.getDate()).padStart(2,'0')}/${String(p.end.getMonth()+1).padStart(2,'0')}/${p.end.getFullYear()}`;
-                const statusBadge = p.status === 'APROBADO' 
-                    ? '<span class="status-badge approved">APROBADO</span>' 
-                    : '<span class="status-badge pending">EN REVISIÓN</span>';
-
-                html += `
-                    <tr>
-                        <td class="emp-name">${emp}</td>
-                        <td><strong>${startStr}</strong></td>
-                        <td><strong>${endStr}</strong></td>
-                        <td><strong>${p.count} día(s)</strong></td>
-                        <td>${statusBadge}</td>
-                    </tr>`;
-            });
-        });
-
-        html += `
-                    </tbody>
-                </table>
-            </div>`;
-
-        summaryContainer.innerHTML = html;
+        } catch (err) {
+            console.error("Cloud connection error:", err);
+            updateCloudBadge(false, "Error de Conexión");
+        }
     }
 
-    // Obtener datos estructurados de una casilla de fecha
+    function updateCloudBadge(isConnected, labelText) {
+        const textEl = document.getElementById("cloudStatusText");
+        const badgeEl = document.getElementById("cloudStatusBadge");
+        if (!textEl || !badgeEl) return;
+
+        textEl.innerText = labelText;
+        if (isConnected) {
+            badgeEl.style.background = "rgba(46,204,113,0.15)";
+            badgeEl.style.color = "#2ecc71";
+            badgeEl.style.borderColor = "rgba(46,204,113,0.4)";
+        } else {
+            badgeEl.style.background = "rgba(231,76,60,0.15)";
+            badgeEl.style.color = "#e74c3c";
+            badgeEl.style.borderColor = "rgba(231,76,60,0.4)";
+        }
+    }
+
+    function setupRealtimeListeners() {
+        if (!db || !authUser) return;
+
+        // 1. Synchronize Vacation Notes
+        const vacationsCol = getPublicCollection('vacations');
+        onSnapshot(vacationsCol, (snapshot) => {
+            notesData = {};
+            snapshot.forEach((docSnap) => {
+                notesData[docSnap.id] = docSnap.data();
+            });
+            updateCalendar();
+            if (document.getElementById("tabCoordination")?.classList.contains("active")) {
+                renderCoordinationSummary();
+            }
+        }, (err) => {
+            console.error("Error subscribing to vacations cloud data:", err);
+        });
+
+        // 2. Synchronize Supervisor Accounts
+        const usersCol = getPublicCollection('users');
+        onSnapshot(usersCol, (snapshot) => {
+            let cloudUsers = {
+                "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" }
+            };
+            snapshot.forEach((docSnap) => {
+                cloudUsers[docSnap.id] = docSnap.data();
+            });
+            usersDB = cloudUsers;
+            populateUserDropdown(currentUser);
+        }, (err) => {
+            console.error("Error subscribing to users cloud data:", err);
+        });
+    }
+
+    // Helper functions for parsed data
     function getParsedDayData(dateKey) {
         const raw = notesData[dateKey];
         if (!raw) return { text: "", status: "APROBADO", supervisorNote: "" };
@@ -1271,27 +1255,38 @@
         return { text: raw, status: "APROBADO", supervisorNote: "" };
     }
 
-    // Guardar datos estructurados
-    function setParsedDayData(dateKey, text, status, supervisorNote) {
+    async function setParsedDayData(dateKey, text, status, supervisorNote) {
         if (!text || text.trim() === "") {
             delete notesData[dateKey];
+            if (db && authUser) {
+                try {
+                    await deleteDoc(getPublicDoc('vacations', dateKey));
+                } catch(e) { console.error("Error deleting doc from cloud:", e); }
+            }
         } else {
-            notesData[dateKey] = {
+            const entry = {
                 text: text.trim(),
                 status: status || "APROBADO",
-                supervisorNote: supervisorNote ? supervisorNote.trim() : ""
+                supervisorNote: supervisorNote ? supervisorNote.trim() : "",
+                updatedBy: currentUser || "SUPERVISOR",
+                updatedAt: new Date().toISOString()
             };
+            notesData[dateKey] = entry;
+            if (db && authUser) {
+                try {
+                    await setDoc(getPublicDoc('vacations', dateKey), entry);
+                } catch(e) { console.error("Error saving doc to cloud:", e); }
+            }
         }
     }
-    
-    // Iniciar con la fecha actual del sistema
+
+    // Initial setup
     const today = new Date();
     let currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
     let selectedDateStr = "";
     
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-    // Base de datos de feriados nacionales de Argentina
     const holidayDetails = {
         "01-01": { title: "Año Nuevo", desc: "Inicio del año calendario. Feriado inamovible para compartir en familia y descansar." },
         "03-24": { title: "Día de la Memoria por la Verdad y la Justicia", desc: "Conmemoración a las víctimas de la última dictadura militar en Argentina." },
@@ -1411,7 +1406,7 @@
         }
     }
 
-    function saveRange() {
+    async function saveRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
         const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
@@ -1439,18 +1434,17 @@
             const dd = String(curr.getDate()).padStart(2, '0');
             const dateKey = `${yyyy}-${mm}-${dd}`;
 
-            setParsedDayData(dateKey, nameVal, statusVal, `Asignado por rango el ${new Date().toLocaleDateString()}`);
+            await setParsedDayData(dateKey, nameVal, statusVal, `Asignado por rango el ${new Date().toLocaleDateString()}`);
             curr.setDate(curr.getDate() + 1);
             count++;
         }
 
-        saveNotesToStorage();
         updateCalendar();
         alert(`✅ Se registraron ${count} días de vacaciones para ${nameVal} (${statusVal}).`);
         document.getElementById("rangeEmployeeName").value = "";
     }
 
-    function deleteRange() {
+    async function deleteRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
         const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
@@ -1479,29 +1473,27 @@
 
             const dayData = getParsedDayData(dateKey);
             if (!nameVal || (dayData.text && dayData.text.toUpperCase().includes(nameVal))) {
-                delete notesData[dateKey];
+                await setParsedDayData(dateKey, "", "", "");
                 count++;
             }
 
             curr.setDate(curr.getDate() + 1);
         }
 
-        saveNotesToStorage();
         updateCalendar();
         alert(`🗑️ Se eliminaron los registros de ${count} día(s) en el rango seleccionado.`);
     }
 
-    function deleteSelectedDay() {
+    async function deleteSelectedDay() {
         if (!selectedDateStr) {
             alert("Selecciona primero una casilla en el calendario.");
             return;
         }
 
-        delete notesData[selectedDateStr];
+        await setParsedDayData(selectedDateStr, "", "", "");
         document.getElementById("notes").value = "";
         document.getElementById("supervisorNote").value = "";
 
-        saveNotesToStorage();
         updateCalendar();
         triggerEquityCheckOnSingle();
         alert("🗑️ Registro eliminado de esta casilla.");
@@ -1553,6 +1545,8 @@
 
     function renderCoordinationSummary() {
         const container = document.getElementById("coordinationSummary");
+        if (!container) return;
+
         const month = parseInt(document.getElementById("monthSelect").value);
         const year = parseInt(document.getElementById("yearSelect").value);
         const mm = String(month + 1).padStart(2, '0');
@@ -1589,12 +1583,115 @@
                         <strong>Día ${dayNum} - ${item.data.text}</strong>
                         <span class="status-badge ${statusClass}">${statusText}</span>
                     </div>
-                    ${item.data.supervisorNote ? `<div style="font-size:0.72rem; color:#f1c40f; margin-top:4px;">💬 <i>Note: ${item.data.supervisorNote}</i></div>` : ''}
+                    ${item.data.supervisorNote ? `<div style="font-size:0.72rem; color:#f1c40f; margin-top:4px;">💬 <i>Nota: ${item.data.supervisorNote}</i></div>` : ''}
                 </div>
             `;
         });
 
         container.innerHTML = html;
+    }
+
+    function renderPrintVacationSummary() {
+        const summaryContainer = document.getElementById("printSummaryContainer");
+        if (!summaryContainer) return;
+
+        const month = parseInt(document.getElementById("monthSelect").value);
+        const year = parseInt(document.getElementById("yearSelect").value);
+        const mm = String(month + 1).padStart(2, '0');
+
+        let employeeDays = {};
+
+        for (let key in notesData) {
+            if (key.startsWith(`${year}-${mm}`)) {
+                const data = getParsedDayData(key);
+                if (data.text) {
+                    const empName = data.text.toUpperCase().trim();
+                    if (!employeeDays[empName]) {
+                        employeeDays[empName] = [];
+                    }
+                    employeeDays[empName].push({ date: key, status: data.status || 'APROBADO' });
+                }
+            }
+        }
+
+        const empNames = Object.keys(employeeDays);
+
+        if (empNames.length === 0) {
+            summaryContainer.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year}</div>
+                    <div class="summary-sub">SUPERVISOR A CARGO: <strong>${currentUser || 'NO ESPECIFICADO'}</strong></div>
+                    <p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No se registraron vacaciones asignadas en el presente mes.</p>
+                </div>`;
+            return;
+        }
+
+        let html = `
+            <div class="summary-card">
+                <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year}</div>
+                <div class="summary-sub">SUPERVISOR A CARGO: <strong>${currentUser || 'GUTIERREZ'}</strong></div>
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>EMPLEADO / BENEFICIARIO</th>
+                            <th>FECHA DESDE</th>
+                            <th>FECHA HASTA</th>
+                            <th>DÍAS DE GOCE</th>
+                            <th>ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+        empNames.forEach(emp => {
+            let items = employeeDays[emp];
+            items.sort((a, b) => a.date.localeCompare(b.date));
+
+            let periods = [];
+            let currentPeriod = null;
+
+            items.forEach(item => {
+                const d = new Date(item.date + "T00:00:00");
+                if (!currentPeriod) {
+                    currentPeriod = { start: d, end: d, count: 1, status: item.status };
+                } else {
+                    let prevEnd = new Date(currentPeriod.end);
+                    prevEnd.setDate(prevEnd.getDate() + 1);
+                    
+                    if (d.getTime() === prevEnd.getTime()) {
+                        currentPeriod.end = d;
+                        currentPeriod.count++;
+                    } else {
+                        periods.push(currentPeriod);
+                        currentPeriod = { start: d, end: d, count: 1, status: item.status };
+                    }
+                }
+            });
+            if (currentPeriod) periods.push(currentPeriod);
+
+            periods.forEach(p => {
+                const startStr = `${String(p.start.getDate()).padStart(2,'0')}/${String(p.start.getMonth()+1).padStart(2,'0')}/${p.start.getFullYear()}`;
+                const endStr = `${String(p.end.getDate()).padStart(2,'0')}/${String(p.end.getMonth()+1).padStart(2,'0')}/${p.end.getFullYear()}`;
+                const statusBadge = p.status === 'APROBADO' 
+                    ? '<span class="status-badge approved">APROBADO</span>' 
+                    : '<span class="status-badge pending">EN REVISIÓN</span>';
+
+                html += `
+                    <tr>
+                        <td class="emp-name">${emp}</td>
+                        <td><strong>${startStr}</strong></td>
+                        <td><strong>${endStr}</strong></td>
+                        <td><strong>${p.count} día(s)</strong></td>
+                        <td>${statusBadge}</td>
+                    </tr>`;
+            });
+        });
+
+        html += `
+                    </tbody>
+                </table>
+            </div>`;
+
+        summaryContainer.innerHTML = html;
     }
 
     function selectDate(dateKey, day, monthName, year) {
@@ -1609,13 +1706,6 @@
         triggerEquityCheckOnSingle();
         updateCalendar();
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const notesArea = document.getElementById("notes");
-        if (notesArea) {
-            notesArea.addEventListener("input", triggerEquityCheckOnSingle);
-        }
-    });
 
     function showLoginError(msg) {
         const errEl = document.getElementById("loginErrorMsg");
@@ -1645,37 +1735,12 @@
         } catch(e) {}
     }
 
-    window.onload = function() {
-        document.getElementById("monthSelect").value = today.getMonth();
-        document.getElementById("yearSelect").value = today.getFullYear();
-        
-        populateUserDropdown();
-        loadNotesFromStorage();
-    };
-
     function populateUserDropdown(selectUser = "") {
         const userSelect = document.getElementById("userSelect");
         if (!userSelect) return;
 
-        let users = null;
-        try {
-            const raw = safeGetStorage("minerar_users_db");
-            if (raw) users = JSON.parse(raw);
-        } catch(e) {
-            users = null;
-        }
-
-        // Si no existen usuarios cargados, inicializamos el supervisor por defecto
-        if (!users || typeof users !== 'object' || Object.keys(users).length === 0) {
-            users = {
-                "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" }
-            };
-            safeSetStorage("minerar_users_db", JSON.stringify(users));
-        }
-
         userSelect.innerHTML = '';
-        
-        const usernames = Object.keys(users);
+        const usernames = Object.keys(usersDB);
 
         let defaultOpt = document.createElement("option");
         defaultOpt.value = "";
@@ -1786,17 +1851,10 @@
         }
     }
 
-    function processLogin() {
+    async function processLogin() {
         hideLoginError();
         const userSelect = document.getElementById("userSelect");
         const password = document.getElementById("passwordInput").value.trim();
-        
-        let usersDB = {};
-        try {
-            const raw = safeGetStorage("minerar_users_db");
-            if (raw) usersDB = JSON.parse(raw);
-        } catch(e) { usersDB = {}; }
-
         const lockIcon = document.getElementById("lockIcon");
 
         const triggerShake = () => {
@@ -1816,8 +1874,15 @@
             if (!password) { triggerShake(); showLoginError("Ingresa una contraseña."); return; }
             if (password !== confirmPassword) { triggerShake(); showLoginError("Las contraseñas no coinciden."); return; }
 
-            usersDB[username] = { password: password, email: email };
-            safeSetStorage("minerar_users_db", JSON.stringify(usersDB));
+            const userData = { password: password, email: email };
+            usersDB[username] = userData;
+
+            if (db && authUser) {
+                try {
+                    await setDoc(getPublicDoc('users', username), userData);
+                } catch(e) { console.error("Error saving user to cloud:", e); }
+            }
+
             currentUser = username;
             populateUserDropdown(username);
 
@@ -1850,11 +1915,6 @@
     }
 
     function openRecoveryModal(username) {
-        let usersDB = {};
-        try {
-            const raw = safeGetStorage("minerar_users_db");
-            if (raw) usersDB = JSON.parse(raw);
-        } catch(e) {}
         const user = usersDB[username];
         
         document.getElementById("recoveryUsernameText").innerText = username;
@@ -1877,7 +1937,7 @@
         document.getElementById("recoveryModal").style.display = "flex";
     }
 
-    function confirmPasswordReset() {
+    async function confirmPasswordReset() {
         const username = document.getElementById("recoveryUsernameText").innerText;
         const email = document.getElementById("recoveryEmailInput").value.trim().toLowerCase();
         const newPass = document.getElementById("recoveryNewPass").value.trim();
@@ -1893,11 +1953,6 @@
             return;
         }
 
-        let usersDB = {};
-        try {
-            const raw = safeGetStorage("minerar_users_db");
-            if (raw) usersDB = JSON.parse(raw);
-        } catch(e) {}
         const user = usersDB[username];
 
         if (user && user.email && user.email.toLowerCase() !== email) {
@@ -1921,8 +1976,14 @@
             return;
         }
 
-        usersDB[username] = { password: newPass, email: email };
-        safeSetStorage("minerar_users_db", JSON.stringify(usersDB));
+        const userData = { password: newPass, email: email };
+        usersDB[username] = userData;
+
+        if (db && authUser) {
+            try {
+                await setDoc(getPublicDoc('users', username), userData);
+            } catch(e) { console.error("Error resetting password in cloud:", e); }
+        }
 
         msgEl.style.color = "#2ecc71";
         msgEl.style.background = "rgba(46,204,113,0.15)";
@@ -1934,14 +1995,9 @@
         }, 1200);
     }
 
-    function confirmDeleteAccount() {
+    async function confirmDeleteAccount() {
         const pass = document.getElementById("deleteConfirmPassword").value.trim();
         const msgEl = document.getElementById("deleteModalMsg");
-        let usersDB = {};
-        try {
-            const raw = safeGetStorage("minerar_users_db");
-            if (raw) usersDB = JSON.parse(raw);
-        } catch(e) {}
 
         if (!pass) {
             msgEl.style.color = "#ff6b6b";
@@ -1956,7 +2012,12 @@
         }
 
         delete usersDB[currentUser];
-        safeSetStorage("minerar_users_db", JSON.stringify(usersDB));
+
+        if (db && authUser) {
+            try {
+                await deleteDoc(getPublicDoc('users', currentUser));
+            } catch(e) { console.error("Error deleting user from cloud:", e); }
+        }
 
         msgEl.style.color = "#2ecc71";
         msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Cerrando sesión...`;
@@ -1965,17 +2026,6 @@
             closeDeleteAccountModal();
             logoutUser();
         }, 1200);
-    }
-
-    function loadNotesFromStorage() {
-        const saved = safeGetStorage("minerar_calendar_notes");
-        if (saved) {
-            try { notesData = JSON.parse(saved); } catch(e) { notesData = {}; }
-        }
-    }
-
-    function saveNotesToStorage() {
-        safeSetStorage("minerar_calendar_notes", JSON.stringify(notesData));
     }
 
     function recoverPassword() {
@@ -2014,10 +2064,6 @@
         document.getElementById("deleteAccountModal").style.display = "none";
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        populateUserDropdown();
-    });
-
     function changeMonth(delta) {
         let m = parseInt(document.getElementById("monthSelect").value);
         let y = parseInt(document.getElementById("yearSelect").value);
@@ -2032,8 +2078,12 @@
     }
 
     function updateCalendar() {
-        const month = parseInt(document.getElementById("monthSelect").value);
-        const year = parseInt(document.getElementById("yearSelect").value);
+        const monthSelect = document.getElementById("monthSelect");
+        const yearSelect = document.getElementById("yearSelect");
+        if (!monthSelect || !yearSelect) return;
+
+        const month = parseInt(monthSelect.value);
+        const year = parseInt(yearSelect.value);
         currentDate = new Date(year, month, 1);
 
         document.getElementById("monthYearTitle").innerText = `${monthNames[month]} ${year}`;
@@ -2116,11 +2166,10 @@
             grid.appendChild(dayCell);
         }
 
-        // Renderizar tabla resumen para impresión/informe de la nómina
         renderPrintVacationSummary();
     }
 
-    function saveNote() {
+    async function saveNote() {
         if (!selectedDateStr) {
             document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
             return;
@@ -2130,13 +2179,8 @@
         const status = document.getElementById("singleApprovalStatus").value;
         const supervisorNote = document.getElementById("supervisorNote").value.trim();
 
-        if (val) {
-            setParsedDayData(selectedDateStr, val, status, supervisorNote);
-        } else {
-            delete notesData[selectedDateStr];
-        }
+        await setParsedDayData(selectedDateStr, val, status, supervisorNote);
 
-        saveNotesToStorage();
         updateCalendar();
         triggerEquityCheckOnSingle();
     }
@@ -2177,6 +2221,41 @@
         const modal = document.getElementById("hoverModal");
         modal.classList.remove("active");
     }
+
+    window.processLogin = processLogin;
+    window.setLoginMode = setLoginMode;
+    window.handleUserSelectChange = handleUserSelectChange;
+    window.recoverPassword = recoverPassword;
+    window.closeRecoveryModal = closeRecoveryModal;
+    window.confirmPasswordReset = confirmPasswordReset;
+    window.logoutUser = logoutUser;
+    window.openDeleteAccountModal = openDeleteAccountModal;
+    window.closeDeleteAccountModal = closeDeleteAccountModal;
+    window.confirmDeleteAccount = confirmDeleteAccount;
+    window.changeMonth = changeMonth;
+    window.updateCalendar = updateCalendar;
+    window.switchTab = switchTab;
+    window.saveNote = saveNote;
+    window.deleteSelectedDay = deleteSelectedDay;
+    window.saveRange = saveRange;
+    window.deleteRange = deleteRange;
+    window.searchEmployeeHistory = searchEmployeeHistory;
+    window.renderCoordinationSummary = renderCoordinationSummary;
+    window.triggerEquityCheckOnSingle = triggerEquityCheckOnSingle;
+    window.checkRangeEquity = checkRangeEquity;
+
+    // Initialization on load
+    window.onload = function() {
+        document.getElementById("monthSelect").value = today.getMonth();
+        document.getElementById("yearSelect").value = today.getFullYear();
+        const notesArea = document.getElementById("notes");
+        if (notesArea) {
+            notesArea.addEventListener("input", triggerEquityCheckOnSingle);
+        }
+        
+        populateUserDropdown();
+        initCloudSync();
+    };
 </script>
 </body>
 </html>
