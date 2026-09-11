@@ -1016,8 +1016,8 @@
                             <option value="2027">2027</option>
                         </select>
                     </div>
-                    <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background:rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);">
-                        <span style="display:inline-block; width:8px; height:8px; background:#2ecc71; border-radius:50%; box-shadow:0 0 8px #2ecc71;"></span>
+                    <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background:rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);" title="Estado de conexión del sistema">
+                        <span style="display:inline-block; width:8px; height:8px; background:#2ecc71; border-radius:50%; box-shadow:0 0 8px #2ecc71;" id="cloudDot"></span>
                         <span id="cloudStatusText">Nube Conectada</span>
                     </div>
                 </div>
@@ -1161,7 +1161,7 @@
     async function initCloudSync() {
         if (!firebaseConfig) {
             console.warn("No Firebase configuration provided. Running in local session mode.");
-            updateCloudBadge(false, "Modo Local");
+            updateCloudBadge(false, "Modo Local (Sin Nube)");
             return;
         }
 
@@ -1186,13 +1186,14 @@
 
         } catch (err) {
             console.error("Cloud connection error:", err);
-            updateCloudBadge(false, "Error de Conexión");
+            updateCloudBadge(false, "Modo Local (Error Nube)");
         }
     }
 
     function updateCloudBadge(isConnected, labelText) {
         const textEl = document.getElementById("cloudStatusText");
         const badgeEl = document.getElementById("cloudStatusBadge");
+        const dotEl = document.getElementById("cloudDot");
         if (!textEl || !badgeEl) return;
 
         textEl.innerText = labelText;
@@ -1200,10 +1201,18 @@
             badgeEl.style.background = "rgba(46,204,113,0.15)";
             badgeEl.style.color = "#2ecc71";
             badgeEl.style.borderColor = "rgba(46,204,113,0.4)";
+            if (dotEl) {
+                dotEl.style.background = "#2ecc71";
+                dotEl.style.boxShadow = "0 0 8px #2ecc71";
+            }
         } else {
-            badgeEl.style.background = "rgba(231,76,60,0.15)";
-            badgeEl.style.color = "#e74c3c";
-            badgeEl.style.borderColor = "rgba(231,76,60,0.4)";
+            badgeEl.style.background = "rgba(243,156,18,0.15)";
+            badgeEl.style.color = "#f39c12";
+            badgeEl.style.borderColor = "rgba(243,156,18,0.4)";
+            if (dotEl) {
+                dotEl.style.background = "#f39c12";
+                dotEl.style.boxShadow = "0 0 8px #f39c12";
+            }
         }
     }
 
@@ -1225,17 +1234,14 @@
             console.error("Error subscribing to vacations cloud data:", err);
         });
 
-        // 2. Synchronize Supervisor Accounts
+        // 2. Synchronize Supervisor Accounts (fusiona usuarios sin borrar locales)
         const usersCol = getPublicCollection('users');
         onSnapshot(usersCol, (snapshot) => {
-            let cloudUsers = {
-                "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" }
-            };
             snapshot.forEach((docSnap) => {
-                cloudUsers[docSnap.id] = docSnap.data();
+                usersDB[docSnap.id] = docSnap.data();
             });
-            usersDB = cloudUsers;
-            populateUserDropdown(currentUser);
+            const activeUser = currentUser || document.getElementById("userSelect")?.value;
+            populateUserDropdown(activeUser);
         }, (err) => {
             console.error("Error subscribing to users cloud data:", err);
         });
@@ -1875,6 +1881,8 @@
             if (password !== confirmPassword) { triggerShake(); showLoginError("Las contraseñas no coinciden."); return; }
 
             const userData = { password: password, email: email };
+            
+            // Guardar inmediatamente en la base de datos de usuarios activa
             usersDB[username] = userData;
 
             if (db && authUser) {
@@ -2043,6 +2051,7 @@
     }
 
     function logoutUser() {
+        const lastUser = currentUser;
         document.getElementById("mainContainer").style.display = "none";
         document.getElementById("loginOverlay").style.display = "flex";
         document.getElementById("passwordInput").value = "";
@@ -2050,7 +2059,7 @@
         document.getElementById("emailInput").value = "";
         document.getElementById("confirmPasswordInput").value = "";
         document.getElementById("lockIcon").innerText = "🔒";
-        populateUserDropdown(currentUser);
+        populateUserDropdown(lastUser);
         hideLoginError();
     }
 
