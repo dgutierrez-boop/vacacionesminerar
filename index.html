@@ -1122,7 +1122,7 @@
 
 <script type="module">
     // ============================================================
-    // CONFIGURACIÓN DE SUPABASE (con tus credenciales reales)
+    // CONFIGURACIÓN DE SUPABASE
     // ============================================================
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -1135,16 +1135,17 @@
     // ESTADO GLOBAL
     // ============================================================
     let currentUser = "";
-    let notesData = {};   // formato: { "YYYY-MM-DD": { text, status, supervisorNote } }
+    let notesData = {};
     let usersDB = { "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" } };
     let isRegisteringNew = false;
 
+    const LOCAL_SESION_KEY = 'minerar_sesion_activa';
+
     // ============================================================
-    // SINCRONIZACIÓN CON SUPABASE (carga inicial + realtime)
+    // SINCRONIZACIÓN CON SUPABASE
     // ============================================================
     async function cargarTodoDesdeSupabase() {
         try {
-            // 1. Cargar usuarios
             const { data: usuarios, error: errU } = await supabase.from('usuarios').select('*');
             if (errU) throw errU;
             if (usuarios && usuarios.length > 0) {
@@ -1155,7 +1156,6 @@
                     };
                 });
             } else {
-                // Si la tabla está vacía, sembrar el usuario por defecto
                 await supabase.from('usuarios').insert([{
                     username: 'SUPERVISOR',
                     password: 'admin',
@@ -1163,7 +1163,6 @@
                 }]);
             }
 
-            // 2. Cargar vacaciones
             const { data: vacas, error: errV } = await supabase.from('vacaciones').select('*');
             if (errV) throw errV;
             notesData = {};
@@ -1177,24 +1176,18 @@
                 });
             }
 
-            // 3. Refrescar UI
             populateUserDropdown(currentUser || "");
             updateCalendar();
             updateCloudBadge(true, "Nube Sincronizada");
 
-            // 4. Suscripción realtime a cambios de vacaciones
             supabase.channel('vacaciones-realtime')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'vacaciones' }, payload => {
-                    console.log('Cambio en vacaciones:', payload);
-                    // Recargar solo la parte de vacaciones
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'vacaciones' }, () => {
                     recargarVacaciones();
                 })
                 .subscribe();
 
-            // 5. Suscripción realtime a usuarios
             supabase.channel('usuarios-realtime')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'usuarios' }, payload => {
-                    console.log('Cambio en usuarios:', payload);
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'usuarios' }, () => {
                     recargarUsuarios();
                 })
                 .subscribe();
@@ -1283,7 +1276,6 @@
 
     async function setParsedDayData(dateKey, text, status, supervisorNote) {
         if (!text || text.trim() === "") {
-            // Eliminar de Supabase
             delete notesData[dateKey];
             try {
                 const { error } = await supabase.from('vacaciones').delete().eq('date_key', dateKey);
@@ -1303,16 +1295,14 @@
                 supervisorNote: entry.supervisor_note
             };
             try {
-                // Upsert: si existe, actualiza; si no, inserta
                 const { error } = await supabase.from('vacaciones').upsert(entry, { onConflict: 'date_key' });
                 if (error) throw error;
             } catch(e) { console.error("Error saving to Supabase:", e); }
         }
-        // Recargar solo esta fecha en el calendario
     }
 
     // ============================================================
-    // CONSTANTES Y DATOS
+    // CONSTANTES
     // ============================================================
     const today = new Date();
     let currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -1442,7 +1432,6 @@
 
         if (startDate > endDate) { alert("La fecha de inicio debe ser anterior o igual a la fecha de fin."); return; }
 
-        // Construir lista de fechas
         let curr = new Date(startDate);
         let fechas = [];
         while (curr <= endDate) {
@@ -1453,7 +1442,6 @@
             curr.setDate(curr.getDate() + 1);
         }
 
-        // Insertar en Supabase en bloque
         const registros = fechas.map(fecha => ({
             date_key: fecha,
             employee_name: nameVal,
@@ -1497,7 +1485,6 @@
         }
 
         try {
-            // Si hay nombre, filtrar por nombre
             let query = supabase.from('vacaciones').delete().in('date_key', fechas);
             if (nameVal) {
                 query = query.ilike('employee_name', `%${nameVal}%`);
@@ -1900,6 +1887,11 @@
         lockIcon.innerText = "🔓";
         playUnlockSound();
 
+        // ✅ NUEVO: Guardar sesión activa en el navegador
+        try {
+            localStorage.setItem(LOCAL_SESION_KEY, currentUser);
+        } catch(e) { console.warn("No se pudo guardar la sesión:", e); }
+
         setTimeout(() => {
             document.getElementById("loginOverlay").style.display = "none";
             document.getElementById("mainContainer").style.display = "block";
@@ -2019,6 +2011,14 @@
         document.getElementById("emailInput").value = "";
         document.getElementById("confirmPasswordInput").value = "";
         document.getElementById("lockIcon").innerText = "🔒";
+
+        // ✅ NUEVO: Borrar sesión activa del navegador
+        try {
+            localStorage.removeItem(LOCAL_SESION_KEY);
+        } catch(e) { console.warn("No se pudo borrar la sesión:", e); }
+
+        currentUser = ""; // ✅ NUEVO: limpiar la variable del usuario actual
+
         populateUserDropdown(lastUser);
         hideLoginError();
     }
@@ -2198,7 +2198,23 @@
         const notesArea = document.getElementById("notes");
         if (notesArea) notesArea.addEventListener("input", triggerEquityCheckOnSingle);
 
+        // Cargar datos desde Supabase
         await cargarTodoDesdeSupabase();
+
+        // ✅ NUEVO: Restaurar sesión activa si existe
+        try {
+            const sesionGuardada = localStorage.getItem(LOCAL_SESION_KEY);
+            if (sesionGuardada && usersDB[sesionGuardada]) {
+                currentUser = sesionGuardada;
+                document.getElementById("loginOverlay").style.display = "none";
+                document.getElementById("mainContainer").style.display = "block";
+                document.getElementById("supervisorInput").value = currentUser;
+                updateCalendar();
+                console.log("✅ Sesión restaurada para:", currentUser);
+            }
+        } catch(e) {
+            console.warn("No se pudo restaurar la sesión:", e);
+        }
     };
 </script>
 </body>
