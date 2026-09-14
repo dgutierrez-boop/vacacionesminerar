@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
     <title>CALENDARIO VACACIONAL PERSONAL DE MINERAR S.A.</title>
 
     <link rel="icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
@@ -615,6 +615,96 @@
             margin: 10px 0; font-size: 0.83rem; color: #ff7675;
         }
 
+        /* ============================================================
+           RESPONSIVE — TABLET (hasta 1024px)
+           ============================================================ */
+        @media (max-width: 1024px) {
+            body { padding: 12px; }
+            .container { padding: 15px; }
+            .main-content { flex-direction: column; }
+            .calendar-section,
+            .notes-section { width: 100%; min-width: 0; }
+            .notes-section { margin-top: 15px; }
+            .header-top-row { flex-wrap: wrap; gap: 12px; }
+            .header-person-row input { width: 100%; max-width: 400px; }
+            .header-bottom-row { flex-direction: column; align-items: flex-start; }
+            .header-actions { width: 100%; justify-content: flex-start; }
+            .calendar-day { min-height: 90px; }
+        }
+
+        /* ============================================================
+           RESPONSIVE — CELULAR (hasta 768px)
+           ============================================================ */
+        @media (max-width: 768px) {
+            body { padding: 8px; }
+            .container { padding: 10px; border-radius: 8px; }
+            header { padding: 12px; margin-bottom: 12px; }
+            .header-top-row { flex-direction: column; align-items: flex-start; }
+            .header-logo-left img { width: 45px; height: 45px; }
+            .header-main-title { font-size: 1rem; line-height: 1.3; }
+            .header-person-row { flex-direction: column; align-items: flex-start; width: 100%; }
+            .header-person-row label { font-size: 0.85rem; }
+            .header-person-row input { width: 100%; font-size: 0.95rem; padding: 6px 8px; }
+            .header-bottom-row { gap: 10px; }
+            .meta-fields { width: 100%; gap: 8px; }
+            .field-group { flex: 1 1 45%; }
+            .field-group select,
+            .field-group input { width: 100%; font-size: 0.8rem; padding: 6px 6px; }
+            .header-actions { width: 100%; gap: 6px; }
+            .header-actions button { flex: 1 1 45%; font-size: 0.75rem; padding: 8px 6px; justify-content: center; }
+            .month-navigation { padding: 8px 10px; flex-wrap: wrap; gap: 8px; }
+            .current-month { font-size: 1rem; flex-basis: 100%; order: -1; }
+            .nav-btn { flex: 1; font-size: 0.75rem; padding: 6px 8px; }
+            .calendar-grid { gap: 2px; padding: 2px; }
+            .calendar-day-header { font-size: 0.65rem; padding: 4px 1px; }
+            .calendar-day { min-height: 70px; padding: 3px; }
+            .day-number { font-size: 0.8rem; margin-bottom: 2px; }
+            .holiday-tag { font-size: 0.5rem; padding: 1px 3px; }
+            .day-content { font-size: 0.55rem; padding: 2px 3px; }
+            .day-content .sup-tag { font-size: 0.5rem; }
+            .legend { font-size: 9px; gap: 8px; }
+            .notes-section { padding: 12px; min-width: 0; }
+            .notes-section h2 { font-size: 1rem; }
+            .panel-tabs { gap: 2px; }
+            .tab-btn { font-size: 0.62rem; padding: 6px 2px; min-width: 50px; }
+            .summary-card { padding: 8px 10px; }
+            .summary-header { font-size: 0.78rem; }
+            .summary-sub { font-size: 0.72rem; }
+            .summary-table { display: block; overflow-x: auto; white-space: nowrap; font-size: 0.7rem; }
+            .summary-table th,
+            .summary-table td { padding: 4px 6px; }
+            .help-modal-box { max-width: 100%; border-radius: 10px; }
+            .help-modal-header { padding: 12px 15px; }
+            .help-modal-header h2 { font-size: 0.9rem; }
+            .help-modal-body { padding: 12px 15px 20px 15px; }
+            .accordion-header { padding: 10px 12px; font-size: 0.82rem; }
+            .accordion-content { font-size: 0.78rem; }
+            .login-box { width: 95%; max-width: 360px; padding: 22px 18px; }
+            .login-box h3 { font-size: 1rem; }
+            .lock-icon-container { font-size: 2.5rem; }
+        }
+
+        /* ============================================================
+           RESPONSIVE — CELULAR CHICO (hasta 480px)
+           ============================================================ */
+        @media (max-width: 480px) {
+            .header-main-title { font-size: 0.85rem; }
+            .header-person-row label { font-size: 0.72rem; }
+            .header-person-row input { font-size: 0.85rem; }
+            .header-actions button { flex: 1 1 100%; font-size: 0.7rem; }
+            .calendar-day { min-height: 60px; padding: 2px; }
+            .day-number { font-size: 0.7rem; }
+            .day-content { font-size: 0.5rem; padding: 1px 2px; }
+            .day-content .sup-tag { display: none; }
+            .legend { font-size: 8px; }
+            .tab-btn { font-size: 0.55rem; padding: 5px 1px; }
+            .month-navigation { padding: 6px 8px; }
+            .current-month { font-size: 0.9rem; }
+            .summary-header { font-size: 0.7rem; }
+            .summary-table { font-size: 0.62rem; }
+        }
+
+        /* ====== SOLO PARA IMPRESIÓN ====== */
         #printArea { display: none; }
 
         @media print {
@@ -774,7 +864,6 @@
 </head>
 <body>
 
-    <!-- OVERLAY DE AUTENTICACIÓN -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <div class="lock-icon-container" id="lockIcon">🔒</div>
@@ -1247,6 +1336,24 @@
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
+                        📱 11. Uso en Celular y Tablet
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>El sistema se adapta automáticamente a cualquier pantalla:</p>
+                        <ul>
+                            <li>📱 <strong>Celular</strong>: todo en una columna, calendario compacto.</li>
+                            <li>📱 <strong>Tablet</strong>: calendario arriba, panel abajo.</li>
+                            <li>💻 <strong>Computadora</strong>: vista completa con calendario y panel lado a lado.</li>
+                        </ul>
+                        <div class="tip-box">
+                            💡 <strong>Tip:</strong> En celular, girá el dispositivo horizontalmente para ver mejor el calendario.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
                         ❓ Preguntas Frecuentes
                         <span class="arrow">▼</span>
                     </div>
@@ -1288,17 +1395,11 @@
 
     const LOCAL_SESION_KEY = 'minerar_sesion_activa';
 
-    // ============================================================
-    // HELPERS DE NORMALIZACIÓN
-    // ============================================================
     function normalizar(str) {
         if (!str) return "";
         return String(str).toUpperCase().trim();
     }
 
-    // ============================================================
-    // SINCRONIZACIÓN CON SUPABASE
-    // ============================================================
     async function cargarTodoDesdeSupabase() {
         try {
             const { data: usuarios, error: errU } = await supabase.from('usuarios').select('*');
@@ -1352,10 +1453,10 @@
                     if (!notesData[key]) notesData[key] = [];
                     notesData[key].push({
                         id: v.id,
-                        text: normalizar(v.employee_name),          // 👈 normalizado
+                        text: normalizar(v.employee_name),
                         status: v.status || 'APROBADO',
                         supervisorNote: v.supervisor_note || '',
-                        updatedBy: normalizar(v.updated_by) || 'DESCONOCIDO'  // 👈 normalizado
+                        updatedBy: normalizar(v.updated_by) || 'DESCONOCIDO'
                     });
                 });
             }
@@ -1575,7 +1676,7 @@
     async function saveRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
-        const nameVal = normalizar(document.getElementById("rangeEmployeeName").value);  // 👈 normalizado
+        const nameVal = normalizar(document.getElementById("rangeEmployeeName").value);
         const statusVal = document.getElementById("rangeApprovalStatus").value;
 
         if (!startVal || !endVal || !nameVal) { alert("Por favor completa la fecha de inicio, fin y el nombre del empleado."); return; }
@@ -1596,10 +1697,10 @@
 
         const registros = fechas.map(fecha => ({
             date_key: fecha,
-            employee_name: nameVal,                      // 👈 ya en mayúsculas
+            employee_name: nameVal,
             status: statusVal,
             supervisor_note: `Asignado por rango el ${new Date().toLocaleDateString()}`,
-            updated_by: normalizar(currentUser) || "SUPERVISOR"  // 👈 normalizado
+            updated_by: normalizar(currentUser) || "SUPERVISOR"
         }));
 
         try {
@@ -1617,7 +1718,7 @@
     async function deleteRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
-        const nameVal = normalizar(document.getElementById("rangeEmployeeName").value);  // 👈 normalizado
+        const nameVal = normalizar(document.getElementById("rangeEmployeeName").value);
 
         if (!startVal || !endVal) { alert("Por favor selecciona la fecha de inicio y fin del rango."); return; }
 
@@ -1696,7 +1797,7 @@
             document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
             return;
         }
-        const val = normalizar(document.getElementById("notes").value);  // 👈 normalizado
+        const val = normalizar(document.getElementById("notes").value);
         const status = document.getElementById("singleApprovalStatus").value;
         const supervisorNote = document.getElementById("supervisorNote").value.trim();
 
@@ -1706,7 +1807,6 @@
         }
 
         const misRegs = getMyRecordsForDay(selectedDateStr);
-        // Comparación normalizada
         const existingSameName = misRegs.find(r => normalizar(r.text) === val);
 
         try {
@@ -1723,10 +1823,10 @@
             } else {
                 const { error } = await supabase.from('vacaciones').insert([{
                     date_key: selectedDateStr,
-                    employee_name: val,                       // 👈 ya en mayúsculas
+                    employee_name: val,
                     status: status,
                     supervisor_note: supervisorNote,
-                    updated_by: normalizar(currentUser)       // 👈 normalizado
+                    updated_by: normalizar(currentUser)
                 }]);
                 if (error) throw error;
             }
@@ -1740,7 +1840,7 @@
     }
 
     function searchEmployeeHistory() {
-        const query = normalizar(document.getElementById("searchWorkerInput").value);  // 👈 normalizado
+        const query = normalizar(document.getElementById("searchWorkerInput").value);
         const container = document.getElementById("historyResults");
 
         if (!query) {
@@ -1845,7 +1945,7 @@
     function printEmployeeHistory() {
         const select = document.getElementById("employeePrintSelect");
         const yearSelect = document.getElementById("employeeYearSelect");
-        const empleado = normalizar(select.value);   // 👈 normalizado
+        const empleado = normalizar(select.value);
         const anio = yearSelect.value;
 
         if (!empleado) {
@@ -1881,7 +1981,7 @@
                 if (anio !== 'ALL' && yearKey !== anio) continue;
 
                 notesData[key].forEach(rec => {
-                    if (normalizar(rec.text) === normalizar(empleado)) {   // 👈 normalizado
+                    if (normalizar(rec.text) === normalizar(empleado)) {
                         registros.push({
                             date: key,
                             status: rec.status || 'APROBADO',
@@ -1974,7 +2074,7 @@
                     notesData[key].forEach(rec => {
                         if (mode === 'mine' && rec.updatedBy !== currentUser) return;
                         
-                        const empName = normalizar(rec.text);   // 👈 normalizado
+                        const empName = normalizar(rec.text);
                         if (!employeeDays[empName]) employeeDays[empName] = [];
                         employeeDays[empName].push({
                             date: key,
@@ -2090,7 +2190,7 @@
                 notesData[key].forEach(rec => {
                     if (currentFilter !== 'ALL' && rec.updatedBy !== currentUser) return;
                     
-                    const empName = normalizar(rec.text);   // 👈 normalizado
+                    const empName = normalizar(rec.text);
                     if (!employeeDays[empName]) employeeDays[empName] = [];
                     employeeDays[empName].push({
                         date: key,
@@ -2373,7 +2473,7 @@
         };
 
         if (isRegisteringNew) {
-            const username = normalizar(document.getElementById("usernameInput").value);  // 👈 normalizado
+            const username = normalizar(document.getElementById("usernameInput").value);
             const email = document.getElementById("emailInput").value.trim().toLowerCase();
             const confirmPassword = document.getElementById("confirmPasswordInput").value.trim();
 
@@ -2400,7 +2500,7 @@
                 return;
             }
         } else {
-            const username = normalizar(userSelect.value);  // 👈 normalizado
+            const username = normalizar(userSelect.value);
             if (!username || username === "NEW_USER") {
                 triggerShake();
                 showLoginError("Por favor selecciona tu usuario de la lista.");
@@ -2448,7 +2548,7 @@
     }
 
     async function confirmPasswordReset() {
-        const username = normalizar(document.getElementById("recoveryUsernameText").innerText);  // 👈 normalizado
+        const username = normalizar(document.getElementById("recoveryUsernameText").innerText);
         const email = document.getElementById("recoveryEmailInput").value.trim().toLowerCase();
         const newPass = document.getElementById("recoveryNewPass").value.trim();
         const confirmPass = document.getElementById("recoveryConfirmPass").value.trim();
