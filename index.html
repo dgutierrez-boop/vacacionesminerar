@@ -1499,7 +1499,6 @@
         const select = document.getElementById("employeePrintSelect");
         if (!select) return;
 
-        // Recolectar todos los empleados únicos
         const empleados = new Set();
         for (let key in notesData) {
             notesData[key].forEach(rec => {
@@ -1510,7 +1509,6 @@
         }
 
         const ordenados = Array.from(empleados).sort();
-
         const valorActual = select.value;
         select.innerHTML = '<option value="">-- Selecciona un empleado --</option>';
         ordenados.forEach(emp => {
@@ -1711,6 +1709,11 @@
         }
     }
 
+    // ============================================================
+    // CORRECCIÓN CLAVE: saveNote() ahora permite múltiples
+    // empleados por día. Si el nombre ya existe para el mismo
+    // supervisor y fecha, actualiza; si es diferente, inserta nuevo.
+    // ============================================================
     async function saveNote() {
         if (!selectedDateStr) {
             document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
@@ -1726,19 +1729,22 @@
         }
 
         const misRegs = getMyRecordsForDay(selectedDateStr);
+        // Buscar si ya existe un registro mío con ese mismo nombre en esa fecha
+        const existingSameName = misRegs.find(r => r.text.toUpperCase() === val);
 
         try {
-            if (misRegs.length > 0) {
+            if (existingSameName) {
+                // Actualizar el registro existente con ese nombre
                 const { error } = await supabase.from('vacaciones')
                     .update({
-                        employee_name: val,
                         status: status,
                         supervisor_note: supervisorNote,
                         updated_by: currentUser
                     })
-                    .eq('id', misRegs[0].id);
+                    .eq('id', existingSameName.id);
                 if (error) throw error;
             } else {
+                // Insertar un nuevo registro para el mismo día (otro empleado)
                 const { error } = await supabase.from('vacaciones').insert([{
                     date_key: selectedDateStr,
                     employee_name: val,
@@ -1849,7 +1855,6 @@
     // IMPRESIÓN
     // ============================================================
     function printFullReport() {
-        // Genera reporte completo (calendario + resumen) en el área de impresión
         renderPrintArea('full');
         setTimeout(() => window.print(), 300);
     }
@@ -1897,11 +1902,9 @@
         let resumenHTML = "";
 
         if (mode === 'employee') {
-            // ====== MODO HISTORIAL DE UN EMPLEADO ======
             headerTitle = `HISTORIAL DE VACACIONES`;
             headerSub = `Empleado: ${empleado} ${anio !== 'ALL' ? `— Año ${anio}` : '— Todos los años'}`;
 
-            // Recolectar todos los registros del empleado
             let registros = [];
             for (let key in notesData) {
                 const yearKey = key.split("-")[0];
@@ -1924,7 +1927,6 @@
                 tablaHTML = `<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No se encontraron registros de vacaciones para este empleado ${anio !== 'ALL' ? `en el año ${anio}` : ''}.</p>`;
                 resumenHTML = "";
             } else {
-                // Agrupar en períodos
                 let periods = [];
                 let currentPeriod = null;
                 registros.forEach(item => {
@@ -1993,7 +1995,6 @@
                     </div>`;
             }
         } else {
-            // ====== MODO REPORTE GENERAL DEL MES ======
             headerTitle = `NOMINA DE PERSONAL Y DÍAS DE VACACIONES`;
             headerSub = `${monthNames[month].toUpperCase()} ${year}`;
 
@@ -2080,7 +2081,6 @@
             }
         }
 
-        // Armar el HTML completo para el área de impresión
         const filtroTexto = mode === 'mine' ? 'Solo mis registros' : 
                            (mode === 'employee' ? `Historial de ${empleado}` : 'Todos los supervisores');
 
@@ -2107,7 +2107,6 @@
     }
 
     function renderPrintVacationSummary() {
-        // Este es el resumen que se ve EN PANTALLA (no impresión)
         const summaryContainer = document.getElementById("printSummaryContainer");
         if (!summaryContainer) return;
 
@@ -2601,7 +2600,6 @@
         m += delta;
         if (m < 0) { m = 11; y--; }
         if (m > 11) { m = 0; y++; }
-        // Asegurar que el año esté en el rango del select
         if (y < 2024) y = 2024;
         if (y > 2030) y = 2030;
         document.getElementById("monthSelect").value = m;
@@ -2621,7 +2619,6 @@
         const year = parseInt(yearSelect.value);
         document.getElementById("monthYearTitle").innerText = `${monthNames[month]} ${year}`;
 
-        // Aviso de feriados móviles para años > 2027
         const futureWarning = document.getElementById("futureWarning");
         if (futureWarning) {
             if (year > 2027) {
