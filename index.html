@@ -484,7 +484,6 @@
             text-align: center;
         }
 
-        /* Estilos pestaña "Por Empleado" */
         .employee-print-form {
             background: rgba(0,0,0,0.25);
             padding: 12px;
@@ -513,7 +512,6 @@
         }
         .employee-print-form select:focus { border-color: #E67E00; outline: none; }
 
-        /* ===== ESTILOS DEL MODAL DE AYUDA ===== */
         #helpModal {
             display: none; position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -617,7 +615,6 @@
             margin: 10px 0; font-size: 0.83rem; color: #ff7675;
         }
 
-        /* ====== SOLO PARA IMPRESIÓN ====== */
         #printArea { display: none; }
 
         @media print {
@@ -800,7 +797,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE ELIMINACIÓN DE CUENTA -->
     <div class="login-overlay" id="deleteAccountModal" style="display:none;">
         <div class="login-box" style="border-top-color: #e74c3c;">
             <div style="font-size:2.5rem; margin-bottom:10px;">⚠️</div>
@@ -815,7 +811,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE RECUPERACIÓN -->
     <div class="login-overlay" id="recoveryModal" style="display:none;">
         <div class="login-box" style="border-top-color: #E67E00;">
             <div style="font-size:2.5rem; margin-bottom:8px;">🔑</div>
@@ -836,14 +831,12 @@
         </div>
     </div>
 
-    <!-- MODAL HOVER DE FERIADOS -->
     <div id="hoverModal" style="position:fixed; display:none; z-index:10000; background:#1e272e; border:2px solid #e74c3c; border-radius:8px; padding:12px; width:300px; box-shadow:0 8px 25px rgba(0,0,0,0.8); pointer-events:none;">
         <div id="fhmDateText" style="font-size:0.75rem; font-weight:bold; color:#e74c3c; margin-bottom:4px;"></div>
         <div id="fhmTitle" style="font-size:0.95rem; font-weight:bold; color:#ffffff; margin-bottom:6px;"></div>
         <div id="fhmDesc" style="font-size:0.8rem; color:#dcdde1; line-height:1.3;"></div>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL -->
     <div class="container" id="mainContainer">
         <header>
             <div class="header-top-row">
@@ -987,7 +980,7 @@
                             <input type="date" id="rangeEnd">
                         </div>
                     </div>
-                    <input type="text" id="rangeEmployeeName" placeholder="Nombre de Empleado (Ej: POLIZA FRANCISCO)" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px;" oninput="checkRangeEquity()">
+                    <input type="text" id="rangeEmployeeName" placeholder="Nombre de Empleado (Ej: POLIZA FRANCISCO)" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px; text-transform: uppercase;" oninput="checkRangeEquity()">
                     
                     <div style="margin-bottom:10px;">
                         <label style="font-size:0.75rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Estado de Asignación:</label>
@@ -1005,7 +998,7 @@
 
                 <div id="tabEquity" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:8px;">Buscar historial de vacaciones por empleado:</p>
-                    <input type="text" id="searchWorkerInput" placeholder="Escribe el nombre (Ej: POLIZA)" style="width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem; margin-bottom:8px;" oninput="searchEmployeeHistory()">
+                    <input type="text" id="searchWorkerInput" placeholder="Escribe el nombre (Ej: POLIZA)" style="width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem; margin-bottom:8px; text-transform: uppercase;" oninput="searchEmployeeHistory()">
                     
                     <div id="historyResults" class="history-list">
                         <p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas.</p>
@@ -1048,10 +1041,8 @@
         </div>
     </div>
 
-    <!-- ÁREA OCULTA PARA IMPRESIÓN -->
     <div id="printArea"></div>
 
-    <!-- MODAL DE AYUDA / TUTORIAL -->
     <div id="helpModal">
         <div class="help-modal-box">
             <div class="help-modal-header">
@@ -1106,6 +1097,9 @@
                         </ol>
                         <div class="warn-box">
                             🔒 Solo podés editar/borrar los registros que <strong>vos mismo cargaste</strong>.
+                        </div>
+                        <div class="tip-box">
+                            ✨ <strong>Novedad:</strong> Ya podés cargar <strong>varios empleados el mismo día</strong>. El sistema los apila automáticamente.
                         </div>
                     </div>
                 </div>
@@ -1258,6 +1252,7 @@
                     </div>
                     <div class="accordion-content">
                         <p><strong>🤔 ¿Puedo cargar varios empleados el mismo día?</strong><br>Sí. El sistema los apila.</p>
+                        <p><strong>🤔 ¿Puedo escribir en minúsculas?</strong><br>Sí. El sistema convierte automáticamente a MAYÚSCULAS.</p>
                         <p><strong>🤔 ¿Puedo editar lo de otro supervisor?</strong><br>No. Solo tus propios registros.</p>
                         <p><strong>🤔 ¿Puedo imprimir el historial de un empleado?</strong><br>Sí, en la pestaña "📄 Por Empleado".</p>
                         <p><strong>🤔 ¿Los feriados se cargan solos?</strong><br>Sí, los nacionales argentinos. 🇦🇷</p>
@@ -1278,9 +1273,6 @@
     </div>
 
 <script type="module">
-    // ============================================================
-    // CONFIGURACIÓN DE SUPABASE
-    // ============================================================
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
     const SUPABASE_URL = 'https://gxgvyailtxezpiwlsien.supabase.co';
@@ -1288,9 +1280,6 @@
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ============================================================
-    // ESTADO GLOBAL
-    // ============================================================
     let currentUser = "";
     let notesData = {};
     let usersDB = { "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" } };
@@ -1298,6 +1287,14 @@
     let currentFilter = 'ALL';
 
     const LOCAL_SESION_KEY = 'minerar_sesion_activa';
+
+    // ============================================================
+    // HELPERS DE NORMALIZACIÓN
+    // ============================================================
+    function normalizar(str) {
+        if (!str) return "";
+        return String(str).toUpperCase().trim();
+    }
 
     // ============================================================
     // SINCRONIZACIÓN CON SUPABASE
@@ -1308,7 +1305,7 @@
             if (errU) throw errU;
             if (usuarios && usuarios.length > 0) {
                 usuarios.forEach(u => {
-                    usersDB[u.username.toUpperCase()] = {
+                    usersDB[normalizar(u.username)] = {
                         password: u.password,
                         email: u.email || ''
                     };
@@ -1355,10 +1352,10 @@
                     if (!notesData[key]) notesData[key] = [];
                     notesData[key].push({
                         id: v.id,
-                        text: v.employee_name,
+                        text: normalizar(v.employee_name),          // 👈 normalizado
                         status: v.status || 'APROBADO',
                         supervisorNote: v.supervisor_note || '',
-                        updatedBy: v.updated_by || 'DESCONOCIDO'
+                        updatedBy: normalizar(v.updated_by) || 'DESCONOCIDO'  // 👈 normalizado
                     });
                 });
             }
@@ -1379,7 +1376,7 @@
             usersDB = {};
             if (data) {
                 data.forEach(u => {
-                    usersDB[u.username.toUpperCase()] = {
+                    usersDB[normalizar(u.username)] = {
                         password: u.password,
                         email: u.email || ''
                     };
@@ -1411,9 +1408,6 @@
         }
     }
 
-    // ============================================================
-    // HELPERS
-    // ============================================================
     function getDayRecords(dateKey) {
         return notesData[dateKey] || [];
     }
@@ -1427,7 +1421,7 @@
     function getColorForSupervisor(supervisorName) {
         if (!supervisorName || supervisorName.trim() === "") return "#bdc3c7";
         let hash = 0;
-        let str = supervisorName.trim().toUpperCase();
+        let str = normalizar(supervisorName);
         for (let i = 0; i < str.length; i++) {
             hash = str.charCodeAt(i) + ((hash << 5) - hash);
         }
@@ -1445,9 +1439,6 @@
         return `${dia}/${mes}/${anio} a las ${hora}:${min} hs`;
     }
 
-    // ============================================================
-    // CONSTANTES
-    // ============================================================
     const today = new Date();
     let selectedDateStr = "";
     
@@ -1492,9 +1483,6 @@
         }
     }
 
-    // ============================================================
-    // DROPDOWN DE EMPLEADOS (para la pestaña "Por Empleado")
-    // ============================================================
     function updateEmployeeDropdown() {
         const select = document.getElementById("employeePrintSelect");
         if (!select) return;
@@ -1503,13 +1491,13 @@
         for (let key in notesData) {
             notesData[key].forEach(rec => {
                 if (rec.text && rec.text.trim()) {
-                    empleados.add(rec.text.trim().toUpperCase());
+                    empleados.add(normalizar(rec.text));
                 }
             });
         }
 
         const ordenados = Array.from(empleados).sort();
-        const valorActual = select.value;
+        const valorActual = normalizar(select.value);
         select.innerHTML = '<option value="">-- Selecciona un empleado --</option>';
         ordenados.forEach(emp => {
             const opt = document.createElement("option");
@@ -1523,12 +1511,9 @@
         }
     }
 
-    // ============================================================
-    // FILTROS Y EQUIDAD
-    // ============================================================
     function checkEquityForDateAndName(dateStr, workerName) {
         if (!dateStr || !workerName || workerName.trim().length < 2) return null;
-        const cleanName = workerName.trim().toUpperCase();
+        const cleanName = normalizar(workerName);
         const parts = dateStr.split("-");
         if (parts.length !== 3) return null;
         const currentYear = parts[0];
@@ -1536,7 +1521,7 @@
 
         for (let key in notesData) {
             notesData[key].forEach(rec => {
-                if (rec.text && rec.text.toUpperCase().includes(cleanName)) {
+                if (rec.text && normalizar(rec.text).includes(cleanName)) {
                     const kParts = key.split("-");
                     if (kParts.length === 3) {
                         const kYear = kParts[0];
@@ -1559,11 +1544,11 @@
         if (matches && matches.length > 0) {
             const years = [...new Set(matches.map(m => m.year))].join(", ");
             alertEl.className = "equity-alert warning";
-            alertEl.innerHTML = `⚠️ <b>Atención - Rotación:</b><br>${nameVal.toUpperCase()} ya tomó vacaciones en este mes en el/los año(s) <b>${years}</b>.`;
+            alertEl.innerHTML = `⚠️ <b>Atención - Rotación:</b><br>${normalizar(nameVal)} ya tomó vacaciones en este mes en el/los año(s) <b>${years}</b>.`;
             alertEl.style.display = "block";
         } else {
             alertEl.className = "equity-alert success";
-            alertEl.innerHTML = `✅ <b>Sin repeticiones previas:</b><br>${nameVal.toUpperCase()} no registra vacaciones en este mes en años anteriores.`;
+            alertEl.innerHTML = `✅ <b>Sin repeticiones previas:</b><br>${normalizar(nameVal)} no registra vacaciones en este mes en años anteriores.`;
             alertEl.style.display = "block";
         }
     }
@@ -1578,22 +1563,19 @@
         if (matches && matches.length > 0) {
             const years = [...new Set(matches.map(m => m.year))].join(", ");
             alertEl.className = "equity-alert warning";
-            alertEl.innerHTML = `⚠️ <b>Advertencia de Equidad:</b><br>${nameVal.toUpperCase()} registra vacaciones en esta misma época en el/los año(s) <b>${years}</b>.`;
+            alertEl.innerHTML = `⚠️ <b>Advertencia de Equidad:</b><br>${normalizar(nameVal)} registra vacaciones en esta misma época en el/los año(s) <b>${years}</b>.`;
             alertEl.style.display = "block";
         } else {
             alertEl.className = "equity-alert success";
-            alertEl.innerHTML = `✅ <b>Período Libre:</b> ${nameVal.toUpperCase()} no ha usado este mes anteriormente.`;
+            alertEl.innerHTML = `✅ <b>Período Libre:</b> ${normalizar(nameVal)} no ha usado este mes anteriormente.`;
             alertEl.style.display = "block";
         }
     }
 
-    // ============================================================
-    // GUARDAR Y BORRAR
-    // ============================================================
     async function saveRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
-        const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
+        const nameVal = normalizar(document.getElementById("rangeEmployeeName").value);  // 👈 normalizado
         const statusVal = document.getElementById("rangeApprovalStatus").value;
 
         if (!startVal || !endVal || !nameVal) { alert("Por favor completa la fecha de inicio, fin y el nombre del empleado."); return; }
@@ -1614,10 +1596,10 @@
 
         const registros = fechas.map(fecha => ({
             date_key: fecha,
-            employee_name: nameVal,
+            employee_name: nameVal,                      // 👈 ya en mayúsculas
             status: statusVal,
             supervisor_note: `Asignado por rango el ${new Date().toLocaleDateString()}`,
-            updated_by: currentUser || "SUPERVISOR"
+            updated_by: normalizar(currentUser) || "SUPERVISOR"  // 👈 normalizado
         }));
 
         try {
@@ -1635,7 +1617,7 @@
     async function deleteRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
-        const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
+        const nameVal = normalizar(document.getElementById("rangeEmployeeName").value);  // 👈 normalizado
 
         if (!startVal || !endVal) { alert("Por favor selecciona la fecha de inicio y fin del rango."); return; }
 
@@ -1657,7 +1639,7 @@
         fechas.forEach(fecha => {
             const misRegs = getMyRecordsForDay(fecha);
             misRegs.forEach(r => {
-                if (!nameVal || r.text.toUpperCase().includes(nameVal)) {
+                if (!nameVal || normalizar(r.text).includes(nameVal)) {
                     idsABorrar.push(r.id);
                 }
             });
@@ -1709,17 +1691,12 @@
         }
     }
 
-    // ============================================================
-    // CORRECCIÓN CLAVE: saveNote() ahora permite múltiples
-    // empleados por día. Si el nombre ya existe para el mismo
-    // supervisor y fecha, actualiza; si es diferente, inserta nuevo.
-    // ============================================================
     async function saveNote() {
         if (!selectedDateStr) {
             document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
             return;
         }
-        const val = document.getElementById("notes").value.trim().toUpperCase();
+        const val = normalizar(document.getElementById("notes").value);  // 👈 normalizado
         const status = document.getElementById("singleApprovalStatus").value;
         const supervisorNote = document.getElementById("supervisorNote").value.trim();
 
@@ -1729,28 +1706,27 @@
         }
 
         const misRegs = getMyRecordsForDay(selectedDateStr);
-        // Buscar si ya existe un registro mío con ese mismo nombre en esa fecha
-        const existingSameName = misRegs.find(r => r.text.toUpperCase() === val);
+        // Comparación normalizada
+        const existingSameName = misRegs.find(r => normalizar(r.text) === val);
 
         try {
             if (existingSameName) {
-                // Actualizar el registro existente con ese nombre
                 const { error } = await supabase.from('vacaciones')
                     .update({
+                        employee_name: val,
                         status: status,
                         supervisor_note: supervisorNote,
-                        updated_by: currentUser
+                        updated_by: normalizar(currentUser)
                     })
                     .eq('id', existingSameName.id);
                 if (error) throw error;
             } else {
-                // Insertar un nuevo registro para el mismo día (otro empleado)
                 const { error } = await supabase.from('vacaciones').insert([{
                     date_key: selectedDateStr,
-                    employee_name: val,
+                    employee_name: val,                       // 👈 ya en mayúsculas
                     status: status,
                     supervisor_note: supervisorNote,
-                    updated_by: currentUser
+                    updated_by: normalizar(currentUser)       // 👈 normalizado
                 }]);
                 if (error) throw error;
             }
@@ -1763,11 +1739,8 @@
         }
     }
 
-    // ============================================================
-    // HISTORIAL Y COORDINACIÓN
-    // ============================================================
     function searchEmployeeHistory() {
-        const query = document.getElementById("searchWorkerInput").value.trim().toUpperCase();
+        const query = normalizar(document.getElementById("searchWorkerInput").value);  // 👈 normalizado
         const container = document.getElementById("historyResults");
 
         if (!query) {
@@ -1778,7 +1751,7 @@
         let found = {};
         for (let key in notesData) {
             notesData[key].forEach(rec => {
-                if (rec.text && rec.text.toUpperCase().includes(query)) {
+                if (rec.text && normalizar(rec.text).includes(query)) {
                     const year = key.split("-")[0];
                     if (!found[year]) found[year] = [];
                     found[year].push({ date: key, updatedBy: rec.updatedBy });
@@ -1851,9 +1824,6 @@
         container.innerHTML = html;
     }
 
-    // ============================================================
-    // IMPRESIÓN
-    // ============================================================
     function printFullReport() {
         renderPrintArea('full');
         setTimeout(() => window.print(), 300);
@@ -1875,7 +1845,7 @@
     function printEmployeeHistory() {
         const select = document.getElementById("employeePrintSelect");
         const yearSelect = document.getElementById("employeeYearSelect");
-        const empleado = select.value;
+        const empleado = normalizar(select.value);   // 👈 normalizado
         const anio = yearSelect.value;
 
         if (!empleado) {
@@ -1911,7 +1881,7 @@
                 if (anio !== 'ALL' && yearKey !== anio) continue;
 
                 notesData[key].forEach(rec => {
-                    if (rec.text.toUpperCase() === empleado.toUpperCase()) {
+                    if (normalizar(rec.text) === normalizar(empleado)) {   // 👈 normalizado
                         registros.push({
                             date: key,
                             status: rec.status || 'APROBADO',
@@ -2004,7 +1974,7 @@
                     notesData[key].forEach(rec => {
                         if (mode === 'mine' && rec.updatedBy !== currentUser) return;
                         
-                        const empName = rec.text.toUpperCase().trim();
+                        const empName = normalizar(rec.text);   // 👈 normalizado
                         if (!employeeDays[empName]) employeeDays[empName] = [];
                         employeeDays[empName].push({
                             date: key,
@@ -2120,7 +2090,7 @@
                 notesData[key].forEach(rec => {
                     if (currentFilter !== 'ALL' && rec.updatedBy !== currentUser) return;
                     
-                    const empName = rec.text.toUpperCase().trim();
+                    const empName = normalizar(rec.text);   // 👈 normalizado
                     if (!employeeDays[empName]) employeeDays[empName] = [];
                     employeeDays[empName].push({
                         date: key,
@@ -2211,9 +2181,6 @@
         summaryContainer.innerHTML = html;
     }
 
-    // ============================================================
-    // PANEL DEL DÍA
-    // ============================================================
     function renderDayPanel() {
         if (!selectedDateStr) return;
 
@@ -2308,7 +2275,7 @@
             let opt = document.createElement("option");
             opt.value = username;
             opt.innerText = `👤 ${username}`;
-            if (selectUser && username === selectUser) opt.selected = true;
+            if (selectUser && normalizar(username) === normalizar(selectUser)) opt.selected = true;
             userSelect.appendChild(opt);
         });
 
@@ -2406,7 +2373,7 @@
         };
 
         if (isRegisteringNew) {
-            const username = document.getElementById("usernameInput").value.trim().toUpperCase();
+            const username = normalizar(document.getElementById("usernameInput").value);  // 👈 normalizado
             const email = document.getElementById("emailInput").value.trim().toLowerCase();
             const confirmPassword = document.getElementById("confirmPasswordInput").value.trim();
 
@@ -2433,7 +2400,7 @@
                 return;
             }
         } else {
-            const username = userSelect.value;
+            const username = normalizar(userSelect.value);  // 👈 normalizado
             if (!username || username === "NEW_USER") {
                 triggerShake();
                 showLoginError("Por favor selecciona tu usuario de la lista.");
@@ -2463,8 +2430,8 @@
     }
 
     function openRecoveryModal(username) {
-        const user = usersDB[username];
-        document.getElementById("recoveryUsernameText").innerText = username;
+        const user = usersDB[normalizar(username)];
+        document.getElementById("recoveryUsernameText").innerText = normalizar(username);
         document.getElementById("recoveryEmailInput").value = "";
         document.getElementById("recoveryNewPass").value = "";
         document.getElementById("recoveryConfirmPass").value = "";
@@ -2481,7 +2448,7 @@
     }
 
     async function confirmPasswordReset() {
-        const username = document.getElementById("recoveryUsernameText").innerText;
+        const username = normalizar(document.getElementById("recoveryUsernameText").innerText);  // 👈 normalizado
         const email = document.getElementById("recoveryEmailInput").value.trim().toLowerCase();
         const newPass = document.getElementById("recoveryNewPass").value.trim();
         const confirmPass = document.getElementById("recoveryConfirmPass").value.trim();
@@ -2750,9 +2717,6 @@
         document.getElementById("hoverModal").classList.remove("active");
     }
 
-    // ============================================================
-    // MODAL DE AYUDA
-    // ============================================================
     function openHelpModal() {
         const modal = document.getElementById("helpModal");
         if (modal) modal.classList.add("active");
@@ -2781,9 +2745,6 @@
         }
     });
 
-    // ============================================================
-    // EXPONER FUNCIONES AL WINDOW
-    // ============================================================
     window.openHelpModal = openHelpModal;
     window.closeHelpModal = closeHelpModal;
     window.toggleAccordion = toggleAccordion;
@@ -2813,7 +2774,6 @@
     window.printFullReport = printFullReport;
     window.printEmployeeHistory = printEmployeeHistory;
 
-    // Inicialización
     window.onload = async function() {
         document.getElementById("monthSelect").value = today.getMonth();
         document.getElementById("yearSelect").value = today.getFullYear();
@@ -2824,8 +2784,8 @@
 
         try {
             const sesionGuardada = localStorage.getItem(LOCAL_SESION_KEY);
-            if (sesionGuardada && usersDB[sesionGuardada]) {
-                currentUser = sesionGuardada;
+            if (sesionGuardada && usersDB[normalizar(sesionGuardada)]) {
+                currentUser = normalizar(sesionGuardada);
                 document.getElementById("loginOverlay").style.display = "none";
                 document.getElementById("mainContainer").style.display = "block";
                 document.getElementById("supervisorInput").value = currentUser;
