@@ -125,7 +125,7 @@
             border-top: 1px solid #353b48; padding-top: 15px;
         }
 
-        .meta-fields { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .meta-fields { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
         .field-group { display: flex; align-items: center; gap: 8px; }
         .field-group span { font-size: 0.85rem; font-weight: bold; color: #dcdde1; text-transform: uppercase; }
         .field-group input, .field-group select {
@@ -133,10 +133,15 @@
             border-radius: 6px; padding: 6px 10px; outline: none;
             color: #000000; background: #ffffff;
         }
+        #filterSelect {
+            border: 2px solid #E67E00;
+            background: #ffffff;
+            font-weight: 900;
+        }
 
-        .header-actions { display: flex; gap: 10px; }
+        .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-        .print-btn, .logout-btn, .delete-user-btn {
+        .print-btn, .logout-btn, .delete-user-btn, .print-mine-btn {
             padding: 9px 14px; border: none; border-radius: 6px;
             color: white; font-weight: bold; font-size: 0.85rem;
             cursor: pointer; transition: transform 0.1s, background 0.2s;
@@ -144,6 +149,8 @@
         }
         .print-btn { background: #27ae60; }
         .print-btn:hover { background: #219653; transform: translateY(-1px); }
+        .print-mine-btn { background: #2980b9; }
+        .print-mine-btn:hover { background: #1f6391; transform: translateY(-1px); }
         .logout-btn { background: #e67e22; }
         .logout-btn:hover { background: #d35400; transform: translateY(-1px); }
         .delete-user-btn { background: #c0392b; }
@@ -172,6 +179,17 @@
             padding-bottom: 4px; margin-bottom: 6px;
         }
         .summary-sub { font-size: 0.82rem; color: #2c3e50; margin-bottom: 8px; }
+        .summary-filter-tag {
+            display: inline-block;
+            background: #E67E00;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
 
         .summary-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
         .summary-table th {
@@ -254,6 +272,11 @@
             line-height: 1.2; padding: 3px 5px; border-radius: 4px;
             margin-top: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
             color: #111; position: relative;
+            transition: opacity 0.2s;
+        }
+        .day-content.dimmed {
+            opacity: 0.35;
+            filter: grayscale(0.5);
         }
         .day-content .emp-name-line {
             display: flex; justify-content: space-between; align-items: center;
@@ -263,9 +286,7 @@
             font-size: 0.6rem; font-weight: 700; opacity: 0.85;
             display: block; margin-top: 1px;
         }
-        .day-content .lock-mini {
-            font-size: 0.7rem;
-        }
+        .day-content .lock-mini { font-size: 0.7rem; }
 
         .calendar-day.selected {
             outline: 3px solid #E67E00 !important;
@@ -416,7 +437,6 @@
 
         #hoverModal.active { display: block !important; }
 
-        /* ===== REGISTROS DE OTROS SUPERVISORES (panel derecho) ===== */
         .other-records-section {
             background: rgba(0, 0, 0, 0.35);
             border-radius: 8px;
@@ -430,12 +450,9 @@
             margin-bottom: 8px; letter-spacing: 0.5px;
         }
         .other-record-item {
-            background: #2d3436;
-            border-radius: 6px;
-            padding: 8px 10px;
-            margin-bottom: 6px;
-            font-size: 0.82rem;
-            border-left: 3px solid #e74c3c;
+            background: #2d3436; border-radius: 6px;
+            padding: 8px 10px; margin-bottom: 6px;
+            font-size: 0.82rem; border-left: 3px solid #e74c3c;
         }
         .other-record-item:last-child { margin-bottom: 0; }
         .other-record-item .rec-name {
@@ -447,9 +464,7 @@
             font-size: 0.72rem; color: #fbc531;
             margin-top: 3px;
         }
-        .other-record-item .rec-status {
-            margin-top: 4px;
-        }
+        .other-record-item .rec-status { margin-top: 4px; }
         .locked-msg {
             background: rgba(231, 76, 60, 0.15);
             border-left: 4px solid #e74c3c;
@@ -848,6 +863,13 @@
                             <option value="2027">2027</option>
                         </select>
                     </div>
+                    <div class="field-group">
+                        <span>VER:</span>
+                        <select id="filterSelect" onchange="updateCalendar()">
+                            <option value="ALL">Todos los supervisores</option>
+                            <option value="MINE">📄 Solo los míos</option>
+                        </select>
+                    </div>
                     <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background:rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);">
                         <span style="display:inline-block; width:8px; height:8px; background:#2ecc71; border-radius:50%; box-shadow:0 0 8px #2ecc71;" id="cloudDot"></span>
                         <span id="cloudStatusText">Conectando...</span>
@@ -855,6 +877,7 @@
                 </div>
                 <div class="header-actions">
                     <button class="help-btn" onclick="openHelpModal()">❓ Ayuda</button>
+                    <button class="print-mine-btn" onclick="printMyRecords()">📄 Solo Mis Registros</button>
                     <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
                     <button class="logout-btn" onclick="logoutUser()">🚪 Cerrar Sesión</button>
                     <button class="delete-user-btn" onclick="openDeleteAccountModal()">🗑️ Eliminar Cuenta</button>
@@ -876,7 +899,7 @@
                     <span><span style="color:#E67E00;">&#9632;</span> Seleccionado</span>
                     <span><span style="color:#d63031;">&#9632;</span> Feriado Nacional</span>
                     <span><span style="color:#2980b9;">&#9632;</span> Tu registro</span>
-                    <span><span style="color:#7f8c8d;">&#9632;</span> Registro de otro supervisor (🔒)</span>
+                    <span><span style="color:#7f8c8d;">&#9632;</span> Otro supervisor (🔒)</span>
                 </div>
 
                 <div id="printSummaryContainer" class="print-summary-container"></div>
@@ -895,7 +918,6 @@
                 <div id="tabSingle" class="tab-content active">
                     <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla del calendario</div>
                     
-                    <!-- Registros de otros supervisores (modo vista, bloqueados) -->
                     <div id="otherRecordsContainer" class="other-records-section" style="display:none;">
                         <div class="other-records-title">🔒 Registros de otros supervisores (bloqueados)</div>
                         <div id="otherRecordsList"></div>
@@ -1001,13 +1023,6 @@
                         <div class="tip-box">
                             💡 <strong>Tip:</strong> Si refrescás la página, ¡seguís dentro! Solo te pide contraseña si tocás "🚪 Cerrar Sesión".
                         </div>
-                        <p><strong>🔑 ¿Olvidaste tu contraseña?</strong></p>
-                        <ol>
-                            <li>Seleccioná tu usuario en la lista.</li>
-                            <li>Hacé clic en <strong>"¿Olvidaste tu contraseña?"</strong>.</li>
-                            <li>Ingresá tu correo registrado y tu nueva contraseña dos veces.</li>
-                            <li>Hacé clic en <strong>"Actualizar Clave"</strong>. ✅</li>
-                        </ol>
                     </div>
                 </div>
 
@@ -1020,7 +1035,7 @@
                         <p><strong>📌 Forma 1: Casilla por casilla (un día a la vez)</strong></p>
                         <ol>
                             <li>Hacé clic en el <strong>día</strong> que querés asignar en el calendario.</li>
-                            <li>Si es la primera vez que cargás en ese día, escribí el nombre del empleado en el área de texto.</li>
+                            <li>Escribí el nombre del empleado en el área de texto.</li>
                             <li>Elegí el estado: ✅ APROBADO o ⏳ EN REVISIÓN.</li>
                             <li>(Opcional) Agregá una 💬 nota.</li>
                             <li>Hacé clic en <strong>"💾 Guardar Decisión"</strong>.</li>
@@ -1031,14 +1046,11 @@
                             <li>Completá Desde, Hasta, Nombre del empleado y Estado.</li>
                             <li>Hacé clic en <strong>"📅 Asignar Rango Completo"</strong>.</li>
                         </ol>
-                        <div class="tip-box">
-                            ⚡ <strong>Tip:</strong> El sistema te avisa con una ⚠️ alerta de equidad si ese empleado ya tomó vacaciones en el mismo mes en años anteriores.
-                        </div>
                         <div class="warn-box">
-                            🔒 <strong>Importante:</strong> Solo podés editar y borrar los registros que <strong>vos mismo cargaste</strong>. Los registros de otros supervisores aparecen bloqueados con 🔒 y no se pueden modificar.
+                            🔒 <strong>Importante:</strong> Solo podés editar y borrar los registros que <strong>vos mismo cargaste</strong>. Los registros de otros supervisores aparecen bloqueados con 🔒.
                         </div>
                         <div class="tip-box">
-                            📅 <strong>Varios empleados por día:</strong> Un mismo día puede tener varios registros (incluso del mismo supervisor). El sistema los apila y los muestra todos. ¡Nada se pisa!
+                            📅 <strong>Varios empleados por día:</strong> Un mismo día puede tener varios registros (incluso del mismo supervisor). El sistema los apila y los muestra todos.
                         </div>
                     </div>
                 </div>
@@ -1054,18 +1066,14 @@
                             <li>Hacé clic en el <strong>día</strong> que querés limpiar.</li>
                             <li>En el panel derecho, bajá hasta <strong>"TU REGISTRO EN ESTE DÍA"</strong>.</li>
                             <li>Hacé clic en <strong>"🗑️ Eliminar Mi Registro de esta Casilla"</strong>.</li>
-                            <li>¡Listo! Tu registro se borra. Los de otros supervisores quedan intactos.</li>
                         </ol>
                         <p><strong>🗓️ Borrar TUS registros en un rango:</strong></p>
                         <ol>
                             <li>Hacé clic en la pestaña <strong>"🗓️ Por Rango"</strong>.</li>
                             <li>Completá Desde y Hasta con las fechas a borrar.</li>
-                            <li>(Opcional) Escribí el nombre del empleado para borrar solo el suyo.</li>
+                            <li>(Opcional) Escribí el nombre del empleado.</li>
                             <li>Hacé clic en <strong>"🗑️ Eliminar MIS Registros por Rango"</strong>.</li>
                         </ol>
-                        <div class="warn-box">
-                            ⚠️ <strong>Ojo:</strong> El borrado por rango solo elimina los registros que vos cargaste. Los de otros supervisores quedan intactos.
-                        </div>
                     </div>
                 </div>
 
@@ -1075,7 +1083,7 @@
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p>El sistema maneja permisos según <strong>quién cargó cada registro</strong>. Cada supervisor es "dueño" de los registros que carga.</p>
+                        <p>El sistema maneja permisos según <strong>quién cargó cada registro</strong>.</p>
                         <table>
                             <thead>
                                 <tr><th>Acción</th><th>Tu registro</th><th>Registro ajeno</th></tr>
@@ -1086,70 +1094,55 @@
                                 <tr><td>Borrar</td><td>✅</td><td>🔒 No</td></tr>
                             </tbody>
                         </table>
-                        <div class="warn-box">
-                            🔒 <strong>Ejemplo:</strong> Si <strong>JOSE MANUEL GONZALEZ</strong> cargó vacaciones de POLIZA FRANCISCO del 14 al 20 de septiembre, y vos entrás como GUTIERREZ, vas a ver las vacaciones de POLIZA en el calendario (con un 🔒), pero <strong>no vas a poder editarlas ni borrarlas</strong>. Solo JOSE MANUEL GONZALEZ puede hacerlo.
-                        </div>
                         <div class="tip-box">
-                            💡 <strong>¿Por qué?</strong> Para que cada supervisor sea responsable de sus propios registros, y evitar que otro los modifique por error.
+                            💡 <strong>¿Por qué?</strong> Para que cada supervisor sea responsable de sus propios registros.
                         </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🔍 5. Consultar Historial de un Empleado
+                        👁️ 5. Filtrar Visualización e Imprimir lo Tuyo
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
+                        <p>Arriba del calendario, al lado de MES y AÑO, tenés un selector <strong>"VER"</strong>:</p>
+                        <ul>
+                            <li><strong>Todos los supervisores</strong>: ves todo el calendario.</li>
+                            <li><strong>📄 Solo los míos</strong>: los registros ajenos se ven en gris apagado.</li>
+                        </ul>
+                        <p>También hay un botón <strong>"📄 Solo Mis Registros"</strong> que:</p>
                         <ol>
-                            <li>En el panel derecho, hacé clic en la pestaña <strong>"⚖️ Historial"</strong>.</li>
-                            <li>Escribí el nombre del empleado.</li>
-                            <li>Abajo te aparecen todos los años en los que tuvo vacaciones.</li>
+                            <li>Cambia el filtro a "Solo los míos".</li>
+                            <li>Abre el diálogo de impresión automáticamente.</li>
                         </ol>
                         <div class="tip-box">
-                            💡 <strong>Tip:</strong> Usalo para chequear si alguien ya gozó de vacaciones varios años seguidos en la misma época.
+                            💡 <strong>Tip:</strong> El botón "🖨️ Imprimir" respeta el filtro. Si tenés "Solo los míos" activado, solo se imprime tu listado.
                         </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🤝 6. Panel de Coordinación
+                        🖨️ 6. Cómo Imprimir o Exportar a PDF
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
                         <ol>
-                            <li>Hacé clic en la pestaña <strong>"🤝 Coordinación"</strong>.</li>
-                            <li>Vas a ver un resumen del mes actual con todos los registros (tuyos y ajenos).</li>
-                            <li>Cada uno aparece con el supervisor que lo cargó.</li>
-                        </ol>
-                        <div class="tip-box">
-                            💡 <strong>Tip:</strong> Usalo para ver de un vistazo cuántos empleados coinciden de vacaciones y si vas a tener problemas de cobertura.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🖨️ 7. Cómo Imprimir o Exportar a PDF
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <ol>
-                            <li>Ajustá el mes y año que querés imprimir.</li>
-                            <li>Hacé clic en el botón verde <strong>"🖨️ Imprimir"</strong>.</li>
+                            <li>Ajustá el mes, año y filtro que querés imprimir.</li>
+                            <li>Hacé clic en <strong>"🖨️ Imprimir"</strong> (o <strong>"📄 Solo Mis Registros"</strong>).</li>
                             <li>Se abre la ventana de impresión del navegador.</li>
                             <li>Elegí <strong>Impresora</strong> o <strong>Guardar como PDF</strong>.</li>
                         </ol>
                         <div class="tip-box">
-                            📋 El resumen incluye la columna <strong>"CARGADO POR"</strong> que indica qué supervisor cargó cada vacación.
+                            📋 El resumen incluye la columna <strong>"CARGADO POR"</strong> y muestra el filtro aplicado en el encabezado.
                         </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🎨 8. ¿Qué Significan los Colores?
+                        🎨 7. ¿Qué Significan los Colores?
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
@@ -1158,13 +1151,11 @@
                                 <tr><th>Color</th><th>Significado</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>🟧 Naranja</td><td>Casilla seleccionada (la que estás editando)</td></tr>
+                                <tr><td>🟧 Naranja</td><td>Casilla seleccionada</td></tr>
                                 <tr><td>🟥 Rojo claro</td><td>Feriado Nacional</td></tr>
-                                <tr><td>🟦 Azul</td><td>Tu registro (podés editarlo)</td></tr>
-                                <tr><td>🟪 Color por supervisor</td><td>Cada supervisor tiene un color único. Todos sus registros comparten ese color.</td></tr>
-                                <tr><td>🔒 Candado</td><td>Registro de otro supervisor (no editable)</td></tr>
-                                <tr><td>🟩 Verde</td><td>Estado APROBADO ✅</td></tr>
-                                <tr><td>🟧 Naranja</td><td>Estado EN REVISIÓN ⏳</td></tr>
+                                <tr><td>🟦 Azul</td><td>Tu registro (editable)</td></tr>
+                                <tr><td>🟪 Color por supervisor</td><td>Cada supervisor tiene un color único</td></tr>
+                                <tr><td>🔒 Gris apagado</td><td>Registro de otro supervisor (no editable)</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1172,49 +1163,15 @@
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🚪 9. Cómo Cerrar Sesión
+                        ☁️ 8. ¿Dónde se Guardan los Datos?
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <ol>
-                            <li>Hacé clic en el botón naranja <strong>"🚪 Cerrar Sesión"</strong>.</li>
-                            <li>Volvés a la pantalla de login.</li>
-                        </ol>
-                        <div class="tip-box">
-                            ⚠️ <strong>Importante:</strong> Cerrá sesión si estás en una computadora compartida.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🗑️ 10. Cómo Eliminar tu Cuenta
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <ol>
-                            <li>Con la sesión iniciada, hacé clic en <strong>"🗑️ Eliminar Cuenta"</strong>.</li>
-                            <li>Ingresá tu contraseña para confirmar.</li>
-                            <li>Hacé clic en <strong>"Eliminar"</strong>.</li>
-                        </ol>
-                        <div class="warn-box">
-                            ⚠️ <strong>Ojo:</strong> Esta acción <strong>NO borra</strong> las vacaciones que cargaste. Solo elimina tu usuario. Los registros quedan en el calendario con tu nombre como "Cargado por".
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        ☁️ 11. ¿Dónde se Guardan los Datos?
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Todos los datos se guardan en la <strong>nube de Supabase</strong> ☁️. Eso significa que:</p>
+                        <p>Todos los datos se guardan en la <strong>nube de Supabase</strong> ☁️. Eso significa:</p>
                         <ul>
                             <li>✅ <strong>No se pierden</strong> al refrescar la página.</li>
-                            <li>✅ <strong>Los ven todos</strong> los supervisores, en cualquier dispositivo.</li>
-                            <li>✅ <strong>Se actualizan en tiempo real</strong>.</li>
-                            <li>✅ <strong>No hace falta pagar nada</strong>: usamos el plan gratuito.</li>
+                            <li>✅ <strong>Los ven todos</strong> los supervisores en tiempo real.</li>
+                            <li>✅ <strong>No hace falta pagar nada</strong>.</li>
                         </ul>
                     </div>
                 </div>
@@ -1225,34 +1182,11 @@
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p><strong>🤔 ¿Puedo cargar varios empleados en el mismo día?</strong><br>Sí. Podés cargar varios registros el mismo día (incluso del mismo supervisor). El sistema los apila y los muestra todos.</p>
-                        <p><strong>🤔 ¿Puedo editar las vacaciones que cargó otro supervisor?</strong><br>No. Solo podés editar/borrar <strong>tus propios</strong> registros. Los ajenos quedan con 🔒. Si necesitás cambiar algo suyo, pedile al supervisor que lo haga.</p>
-                        <p><strong>🤔 ¿Dos supervisores pueden tener vacaciones en el mismo día?</strong><br>Sí. Cada supervisor es independiente. Sus registros no se pisan, se apilan en la casilla.</p>
-                        <p><strong>🤔 ¿Puedo cargar vacaciones de años anteriores?</strong><br>Sí. Cambiá el año en el selector "AÑO" y cargá los datos.</p>
+                        <p><strong>🤔 ¿Puedo cargar varios empleados en el mismo día?</strong><br>Sí. Podés cargar varios registros el mismo día.</p>
+                        <p><strong>🤔 ¿Puedo editar las vacaciones que cargó otro supervisor?</strong><br>No. Solo podés editar/borrar tus propios registros.</p>
+                        <p><strong>🤔 ¿Dos supervisores pueden tener vacaciones en el mismo día?</strong><br>Sí. Cada uno es independiente y no se pisan.</p>
+                        <p><strong>🤔 ¿Puedo imprimir solo mis registros?</strong><br>Sí. Usá el botón "📄 Solo Mis Registros".</p>
                         <p><strong>🤔 ¿Los feriados se cargan solos?</strong><br>Sí. Los feriados nacionales argentinos ya están cargados. 🇦🇷</p>
-                        <p><strong>🤔 ¿Puedo usar la app desde el celular?</strong><br>¡Sí! La app es responsive. 📱</p>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        ✅ Checklist Rápido para Nuevos Usuarios
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <ul style="list-style: none; margin-left: 0;">
-                            <li>☐ 📝 Crear cuenta con nombre, correo y contraseña.</li>
-                            <li>☐ 🔐 Ingresar al sistema.</li>
-                            <li>☐ 📅 Seleccionar el mes y año correctos.</li>
-                            <li>☐ 📌 Probar asignar una casilla con un nombre de prueba.</li>
-                            <li>☐ 🗑️ Borrarla para practicar.</li>
-                            <li>☐ 🗓️ Probar la asignación por rango.</li>
-                            <li>☐ ⚖️ Consultar el historial de un empleado.</li>
-                            <li>☐ 🔒 Verificar que no podés editar registros ajenos.</li>
-                            <li>☐ 🤝 Mirar el panel de coordinación.</li>
-                            <li>☐ 🖨️ Probar imprimir un mes.</li>
-                            <li>☐ 🚪 Cerrar sesión correctamente.</li>
-                        </ul>
                     </div>
                 </div>
 
@@ -1284,10 +1218,12 @@
     // ESTADO GLOBAL
     // ============================================================
     let currentUser = "";
-    // Estructura: notesData[date_key] = [ { id, text, status, supervisorNote, updatedBy }, ... ]
-    let notesData = {};
+    let notesData = {}; // notesData[date_key] = [ {id, text, status, supervisorNote, updatedBy}, ... ]
     let usersDB = { "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" } };
     let isRegisteringNew = false;
+
+    // Filtro actual: 'ALL' o 'MINE'
+    let currentFilter = 'ALL';
 
     const LOCAL_SESION_KEY = 'minerar_sesion_activa';
 
@@ -1317,7 +1253,6 @@
             populateUserDropdown(currentUser || "");
             updateCloudBadge(true, "Nube Sincronizada");
 
-            // Realtime: cuando alguien cambia vacaciones, recargamos
             supabase.channel('vacaciones-realtime')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'vacaciones' }, () => {
                     recargarVacaciones();
@@ -1341,7 +1276,6 @@
             const { data, error } = await supabase.from('vacaciones').select('*').order('created_at', { ascending: true });
             if (error) throw error;
             
-            // Agrupar por date_key
             notesData = {};
             if (data) {
                 data.forEach(v => {
@@ -1407,22 +1341,16 @@
     // ============================================================
     // HELPERS
     // ============================================================
-    // Devuelve TODOS los registros de un día
     function getDayRecords(dateKey) {
         return notesData[dateKey] || [];
     }
-
-    // Devuelve solo los registros del usuario logueado
     function getMyRecordsForDay(dateKey) {
         return getDayRecords(dateKey).filter(r => r.updatedBy === currentUser);
     }
-
-    // Devuelve los registros de otros supervisores
     function getOtherRecordsForDay(dateKey) {
         return getDayRecords(dateKey).filter(r => r.updatedBy !== currentUser);
     }
 
-    // Colores por supervisor (determinístico por nombre)
     function getColorForSupervisor(supervisorName) {
         if (!supervisorName || supervisorName.trim() === "") return "#bdc3c7";
         let hash = 0;
@@ -1434,23 +1362,10 @@
         return `hsl(${h}, 70%, 80%)`;
     }
 
-    // Colores para empleados (más suaves, se usa para el nombre del empleado)
-    function getColorForName(name) {
-        if (!name || name.trim() === "") return "#ffeaa7";
-        let hash = 0;
-        let str = name.trim().toUpperCase();
-        for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        const h = Math.abs(hash) % 360;
-        return `hsl(${h}, 75%, 82%)`;
-    }
-
     // ============================================================
     // CONSTANTES
     // ============================================================
     const today = new Date();
-    let currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
     let selectedDateStr = "";
     
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -1499,8 +1414,7 @@
         let pastMatches = [];
 
         for (let key in notesData) {
-            const records = notesData[key];
-            records.forEach(rec => {
+            notesData[key].forEach(rec => {
                 if (rec.text && rec.text.toUpperCase().includes(cleanName)) {
                     const kParts = key.split("-");
                     if (kParts.length === 3) {
@@ -1517,9 +1431,7 @@
 
     function triggerEquityCheckOnSingle() {
         const nameVal = document.getElementById("notes").value.trim();
-        const statusVal = document.getElementById("singleApprovalStatus").value;
         const alertEl = document.getElementById("singleEquityAlert");
-
         if (!selectedDateStr || !nameVal) { alertEl.style.display = "none"; return; }
 
         const matches = checkEquityForDateAndName(selectedDateStr, nameVal);
@@ -1539,7 +1451,6 @@
         const nameVal = document.getElementById("rangeEmployeeName").value.trim();
         const startVal = document.getElementById("rangeStart").value;
         const alertEl = document.getElementById("rangeEquityAlert");
-
         if (!startVal || !nameVal) { alertEl.style.display = "none"; return; }
 
         const matches = checkEquityForDateAndName(startVal, nameVal);
@@ -1565,7 +1476,6 @@
 
         let startDate = new Date(startVal + "T00:00:00");
         let endDate = new Date(endVal + "T00:00:00");
-
         if (startDate > endDate) { alert("La fecha de inicio debe ser anterior o igual a la fecha de fin."); return; }
 
         let curr = new Date(startDate);
@@ -1587,22 +1497,10 @@
         }));
 
         try {
-            // Verificar si ya existe un registro TUYO en esas fechas para ese empleado
-            let existentes = 0;
-            fechas.forEach(fecha => {
-                const misRegs = getMyRecordsForDay(fecha);
-                if (misRegs.some(r => r.text === nameVal)) existentes++;
-            });
-
-            if (existentes > 0) {
-                const ok = confirm(`⚠️ Ya tenés ${existentes} registro(s) de "${nameVal}" en este rango.\n\n¿Querés continuar? Los registros existentes se sumarán (no se borran).`);
-                if (!ok) return;
-            }
-
             const { error } = await supabase.from('vacaciones').insert(registros);
             if (error) throw error;
             await recargarVacaciones();
-            alert(`✅ Se registraron ${fechas.length} días de vacaciones para ${nameVal} (${statusVal}).`);
+            alert(`✅ Se registraron ${fechas.length} días para ${nameVal} (${statusVal}).`);
             document.getElementById("rangeEmployeeName").value = "";
         } catch (err) {
             console.error(err);
@@ -1619,7 +1517,6 @@
 
         let startDate = new Date(startVal + "T00:00:00");
         let endDate = new Date(endVal + "T00:00:00");
-
         if (startDate > endDate) { alert("La fecha de inicio debe ser anterior o igual a la fecha de fin."); return; }
 
         let curr = new Date(startDate);
@@ -1632,7 +1529,6 @@
             curr.setDate(curr.getDate() + 1);
         }
 
-        // Buscar SOLO MIS registros en esas fechas
         let idsABorrar = [];
         fechas.forEach(fecha => {
             const misRegs = getMyRecordsForDay(fecha);
@@ -1644,11 +1540,11 @@
         });
 
         if (idsABorrar.length === 0) {
-            alert("⚠️ No se encontraron TUS registros en ese rango" + (nameVal ? ` para "${nameVal}"` : "") + ".\n\nRecordá: solo podés borrar los registros que vos mismo cargaste.");
+            alert("⚠️ No se encontraron TUS registros en ese rango.");
             return;
         }
 
-        const ok = confirm(`🗑️ Se eliminarán ${idsABorrar.length} de TUS registros en ese rango.\n\n¿Continuar?`);
+        const ok = confirm(`🗑️ Se eliminarán ${idsABorrar.length} de TUS registros.\n\n¿Continuar?`);
         if (!ok) return;
 
         try {
@@ -1671,7 +1567,7 @@
             return;
         }
 
-        const ok = confirm(`🗑️ Se eliminará(n) ${misRegs.length} registro(s) TUYO(S) de este día.\n\n¿Continuar?`);
+        const ok = confirm(`🗑️ Se eliminará(n) ${misRegs.length} registro(s) TUYO(S).\n\n¿Continuar?`);
         if (!ok) return;
 
         try {
@@ -1702,8 +1598,7 @@
         for (let key in notesData) {
             notesData[key].forEach(rec => {
                 if (rec.text && rec.text.toUpperCase().includes(query)) {
-                    const parts = key.split("-");
-                    const year = parts[0];
+                    const year = key.split("-")[0];
                     if (!found[year]) found[year] = [];
                     found[year].push({ date: key, updatedBy: rec.updatedBy });
                 }
@@ -1741,7 +1636,10 @@
         for (let key in notesData) {
             if (key.startsWith(`${year}-${mm}`)) {
                 notesData[key].forEach(rec => {
-                    daysWithVacations.push({ date: key, data: rec });
+                    // Aplicar filtro
+                    if (currentFilter === 'ALL' || rec.updatedBy === currentUser) {
+                        daysWithVacations.push({ date: key, data: rec });
+                    }
                 });
             }
         }
@@ -1767,7 +1665,6 @@
                         <span class="status-badge ${statusClass}">${statusText}</span>
                     </div>
                     <div style="font-size:0.72rem; color:#fbc531; margin-top:4px;">👤 ${item.data.updatedBy}</div>
-                    ${item.data.supervisorNote ? `<div style="font-size:0.7rem; color:#f1c40f; margin-top:2px;">💬 ${item.data.supervisorNote}</div>` : ''}
                 </div>
             `;
         });
@@ -1782,11 +1679,13 @@
         const year = parseInt(document.getElementById("yearSelect").value);
         const mm = String(month + 1).padStart(2, '0');
 
-        // Agrupar por empleado
         let employeeDays = {};
         for (let key in notesData) {
             if (key.startsWith(`${year}-${mm}`)) {
                 notesData[key].forEach(rec => {
+                    // Aplicar filtro
+                    if (currentFilter !== 'ALL' && rec.updatedBy !== currentUser) return;
+                    
                     const empName = rec.text.toUpperCase().trim();
                     if (!employeeDays[empName]) employeeDays[empName] = [];
                     employeeDays[empName].push({
@@ -1799,20 +1698,25 @@
         }
 
         const empNames = Object.keys(employeeDays);
+        const filterLabel = currentFilter === 'ALL' ? 'Todos los supervisores' : 'Solo mis registros';
+        const filterTag = currentFilter === 'ALL' 
+            ? '' 
+            : `<span class="summary-filter-tag">📄 SOLO MIS REGISTROS</span>`;
+
         if (empNames.length === 0) {
             summaryContainer.innerHTML = `
                 <div class="summary-card">
                     <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year}</div>
-                    <div class="summary-sub">SUPERVISOR A CARGO: <strong>${currentUser || 'NO ESPECIFICADO'}</strong></div>
-                    <p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No se registraron vacaciones asignadas en el presente mes.</p>
+                    <div class="summary-sub">SUPERVISOR: <strong>${currentUser || 'NO ESPECIFICADO'}</strong></div>
+                    <p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No se registraron vacaciones ${currentFilter === 'ALL' ? 'en el presente mes' : 'tuyas en el presente mes'}.</p>
                 </div>`;
             return;
         }
 
         let html = `
             <div class="summary-card">
-                <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year}</div>
-                <div class="summary-sub">SUPERVISOR A CARGO: <strong>${currentUser || 'GUTIERREZ'}</strong></div>
+                <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year} ${filterTag}</div>
+                <div class="summary-sub">SUPERVISOR: <strong>${currentUser || 'NO ESPECIFICADO'}</strong> &nbsp;|&nbsp; FILTRO: <strong>${filterLabel}</strong></div>
                 <table class="summary-table">
                     <thead>
                         <tr>
@@ -1874,9 +1778,6 @@
         summaryContainer.innerHTML = html;
     }
 
-    // ============================================================
-    // PANEL DEL DÍA SELECCIONADO (para la pestaña "Casilla")
-    // ============================================================
     function renderDayPanel() {
         if (!selectedDateStr) return;
 
@@ -1888,7 +1789,6 @@
         const myForm = document.getElementById("myRecordForm");
         const lockedMsg = document.getElementById("lockedMessage");
 
-        // Mostrar registros de otros supervisores
         if (otherRegs.length > 0) {
             otherContainer.style.display = "block";
             otherList.innerHTML = otherRegs.map(r => {
@@ -1898,9 +1798,7 @@
                     : '<span class="status-badge pending">EN REVISIÓN</span>';
                 return `
                     <div class="other-record-item" style="border-left-color: ${color};">
-                        <div class="rec-name">
-                            <span>🔒 ${r.text}</span>
-                        </div>
+                        <div class="rec-name"><span>🔒 ${r.text}</span></div>
                         <div class="rec-sup">👤 ${r.updatedBy}</div>
                         <div class="rec-status">${statusBadge}</div>
                         ${r.supervisorNote ? `<div style="font-size:0.72rem; color:#f1c40f; margin-top:3px;">💬 ${r.supervisorNote}</div>` : ''}
@@ -1911,9 +1809,7 @@
             otherContainer.style.display = "none";
         }
 
-        // Formulario de mi registro
         if (myRegs.length > 0) {
-            // Cargar el primer registro mío en el formulario
             const myReg = myRegs[0];
             document.getElementById("notes").value = myReg.text;
             document.getElementById("singleApprovalStatus").value = myReg.status || "APROBADO";
@@ -2086,7 +1982,6 @@
             if (!email || !email.includes("@")) { triggerShake(); showLoginError("Ingresa un correo válido."); return; }
             if (!password) { triggerShake(); showLoginError("Ingresa una contraseña."); return; }
             if (password !== confirmPassword) { triggerShake(); showLoginError("Las contraseñas no coinciden."); return; }
-
             if (usersDB[username]) { triggerShake(); showLoginError("Ese usuario ya existe."); return; }
 
             try {
@@ -2212,7 +2107,7 @@
             if (error) throw error;
             delete usersDB[currentUser];
             msgEl.style.color = "#2ecc71";
-            msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Tus registros de vacaciones quedan intactos. Cerrando sesión...`;
+            msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Tus registros quedan intactos. Cerrando sesión...`;
             setTimeout(() => {
                 closeDeleteAccountModal();
                 logoutUser();
@@ -2227,7 +2122,7 @@
         hideLoginError();
         const userSelect = document.getElementById("userSelect").value;
         if (!userSelect || userSelect === "NEW_USER") {
-            showLoginError("⚠️ Por favor selecciona tu usuario en la lista antes de recuperar la contraseña.");
+            showLoginError("⚠️ Por favor selecciona tu usuario antes de recuperar la contraseña.");
             return;
         }
         openRecoveryModal(userSelect);
@@ -2252,6 +2147,7 @@
         } catch(e) { console.warn("No se pudo borrar la sesión:", e); }
 
         currentUser = "";
+        currentFilter = 'ALL';
 
         populateUserDropdown(lastUser);
         hideLoginError();
@@ -2280,11 +2176,14 @@
     function updateCalendar() {
         const monthSelect = document.getElementById("monthSelect");
         const yearSelect = document.getElementById("yearSelect");
+        const filterSelect = document.getElementById("filterSelect");
         if (!monthSelect || !yearSelect) return;
+
+        // Leer filtro actual
+        if (filterSelect) currentFilter = filterSelect.value;
 
         const month = parseInt(monthSelect.value);
         const year = parseInt(yearSelect.value);
-        currentDate = new Date(year, month, 1);
         document.getElementById("monthYearTitle").innerText = `${monthNames[month]} ${year}`;
 
         const grid = document.getElementById("calendarGrid");
@@ -2338,21 +2237,23 @@
             }
             dayCell.appendChild(headerDiv);
 
-            // Mostrar TODOS los registros del día
             const records = getDayRecords(keyDate);
             records.forEach(rec => {
+                const isMine = rec.updatedBy === currentUser;
+                
+                // APLICAR FILTRO VISUAL
+                // Si estamos en "Solo los míos" y el registro es ajeno → ocultar
+                if (currentFilter === 'MINE' && !isMine) return;
+
                 const contentDiv = document.createElement("div");
                 contentDiv.className = "day-content";
                 
-                const isMine = rec.updatedBy === currentUser;
                 const supColor = getColorForSupervisor(rec.updatedBy);
-                
-                // Fondo suave con color del supervisor
                 contentDiv.style.backgroundColor = supColor;
-                // Si NO es mío, agrego un borde gris y opacidad
+
                 if (!isMine) {
                     contentDiv.style.borderLeft = "3px solid #7f8c8d";
-                    contentDiv.style.opacity = "0.85";
+                    contentDiv.style.opacity = "0.75";
                 } else {
                     contentDiv.style.borderLeft = "3px solid #2980b9";
                 }
@@ -2399,7 +2300,6 @@
 
         try {
             if (misRegs.length > 0) {
-                // Actualizar el primer registro mío
                 const { error } = await supabase.from('vacaciones')
                     .update({
                         employee_name: val,
@@ -2410,7 +2310,6 @@
                     .eq('id', misRegs[0].id);
                 if (error) throw error;
             } else {
-                // Crear uno nuevo
                 const { error } = await supabase.from('vacaciones').insert([{
                     date_key: selectedDateStr,
                     employee_name: val,
@@ -2427,6 +2326,20 @@
             console.error(err);
             alert("Error guardando: " + err.message);
         }
+    }
+
+    function printMyRecords() {
+        // Cambiar filtro a "Solo los míos" y disparar impresión
+        const filterSelect = document.getElementById("filterSelect");
+        if (filterSelect) {
+            filterSelect.value = 'MINE';
+            currentFilter = 'MINE';
+            updateCalendar();
+        }
+        // Esperar un momento a que se actualice la vista y luego imprimir
+        setTimeout(() => {
+            window.print();
+        }, 400);
     }
 
     function showHoverModal(e, keyHoliday, keyDate) {
@@ -2516,6 +2429,7 @@
     window.renderCoordinationSummary = renderCoordinationSummary;
     window.triggerEquityCheckOnSingle = triggerEquityCheckOnSingle;
     window.checkRangeEquity = checkRangeEquity;
+    window.printMyRecords = printMyRecords;
 
     // Inicialización
     window.onload = async function() {
