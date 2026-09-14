@@ -699,6 +699,182 @@
             display: block !important;
         }
 
+        /* ===== ESTILOS DEL MODAL DE AYUDA Y ACORDEÓN ===== */
+        .help-btn {
+            padding: 9px 14px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #3498db;
+        }
+        .help-btn:hover { background: #2980b9; transform: translateY(-1px); }
+
+        #helpModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 10001;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 30px 15px;
+            overflow-y: auto;
+        }
+        #helpModal.active { display: flex !important; }
+
+        .help-modal-box {
+            background: #1e272e;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border-top: 5px solid #E67E00;
+            position: relative;
+            animation: fadeInModal 0.25s ease-out;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .help-modal-header {
+            padding: 20px 25px;
+            border-bottom: 2px solid #E67E00;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #1e272e;
+            border-radius: 14px 14px 0 0;
+            z-index: 2;
+        }
+        .help-modal-header h2 {
+            color: #fbc531;
+            font-size: 1.15rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+        .help-close-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            width: 34px;
+            height: 34px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .help-close-btn:hover { background: #a93226; }
+
+        .help-modal-body {
+            padding: 20px 25px 30px 25px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+        .help-modal-body::-webkit-scrollbar { width: 8px; }
+        .help-modal-body::-webkit-scrollbar-track { background: #2f3640; border-radius: 4px; }
+        .help-modal-body::-webkit-scrollbar-thumb { background: #E67E00; border-radius: 4px; }
+
+        .accordion-item {
+            background: #2f3640;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            border-left: 4px solid #E67E00;
+        }
+        .accordion-header {
+            background: #353b48;
+            color: #ffffff;
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        .accordion-header:hover { background: #3d4451; }
+        .accordion-header .arrow {
+            font-size: 0.8rem;
+            color: #E67E00;
+            transition: transform 0.3s;
+        }
+        .accordion-item.open .accordion-header { background: #E67E00; color: white; }
+        .accordion-item.open .accordion-header .arrow { transform: rotate(180deg); color: white; }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 18px;
+            color: #dcdde1;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        .accordion-item.open .accordion-content {
+            max-height: 3000px;
+            padding: 15px 18px 20px 18px;
+        }
+        .accordion-content p { margin-bottom: 10px; }
+        .accordion-content strong { color: #fbc531; }
+        .accordion-content ul, .accordion-content ol { margin-left: 20px; margin-bottom: 12px; }
+        .accordion-content li { margin-bottom: 6px; }
+        .accordion-content code {
+            background: #1e272e;
+            color: #E67E00;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.82rem;
+        }
+        .accordion-content .tip-box {
+            background: rgba(230, 126, 0, 0.15);
+            border-left: 3px solid #E67E00;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 0.83rem;
+            color: #f1c40f;
+        }
+        .accordion-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.83rem;
+        }
+        .accordion-content table th {
+            background: #1e272e;
+            color: #ffffff;
+            padding: 8px 10px;
+            text-align: left;
+            border: 1px solid #485460;
+        }
+        .accordion-content table td {
+            padding: 8px 10px;
+            border: 1px solid #485460;
+            color: #dcdde1;
+        }
+        @media print {
+            #helpModal, .help-btn { display: none !important; }
+        }
+
         @media print {
             @page {
                 size: portrait;
@@ -1016,6 +1192,7 @@
                     </div>
                 </div>
                 <div class="header-actions">
+                    <button class="help-btn" onclick="openHelpModal()">❓ Ayuda</button>
                     <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
                     <button class="logout-btn" onclick="logoutUser()">🚪 Cerrar Sesión</button>
                     <button class="delete-user-btn" onclick="openDeleteAccountModal()">🗑️ Eliminar Cuenta</button>
@@ -1116,6 +1293,283 @@
                     <div id="coordinationSummary" class="history-list" style="max-height:360px;"></div>
                     <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar Análisis de Coincidencias</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE AYUDA / TUTORIAL -->
+    <div id="helpModal">
+        <div class="help-modal-box">
+            <div class="help-modal-header">
+                <h2>📘 Manual de Uso — Calendario Vacacional</h2>
+                <button class="help-close-btn" onclick="closeHelpModal()">✕</button>
+            </div>
+            <div class="help-modal-body">
+
+                <!-- 1. Ingreso al sistema -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🔐 1. Ingreso al Sistema
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>🆕 Si es tu primera vez:</strong></p>
+                        <ol>
+                            <li>Abrí la app en tu navegador.</li>
+                            <li>Hacé clic en el botón naranja <strong>"➕ Crear Cuenta"</strong>.</li>
+                            <li>Completá: 👤 Nombre completo, 📧 Correo electrónico, 🔑 Contraseña, 🔑 Confirmar contraseña.</li>
+                            <li>Hacé clic en <strong>"REGISTRAR E INGRESAR"</strong>. ¡Ya estás dentro! 🎉</li>
+                        </ol>
+                        <p><strong>👤 Si ya tenés usuario:</strong></p>
+                        <ol>
+                            <li>Seleccioná tu nombre en la lista desplegable.</li>
+                            <li>Ingresá tu 🔑 contraseña.</li>
+                            <li>Hacé clic en <strong>"INGRESAR AL SISTEMA"</strong>.</li>
+                        </ol>
+                        <div class="tip-box">
+                            💡 <strong>Tip:</strong> Si refrescás la página, ¡seguís dentro! Solo te pide contraseña si tocás "🚪 Cerrar Sesión".
+                        </div>
+                        <p><strong>🔑 ¿Olvidaste tu contraseña?</strong></p>
+                        <ol>
+                            <li>Seleccioná tu usuario en la lista.</li>
+                            <li>Hacé clic en <strong>"¿Olvidaste tu contraseña?"</strong>.</li>
+                            <li>Ingresá tu correo registrado y tu nueva contraseña dos veces.</li>
+                            <li>Hacé clic en <strong>"Actualizar Clave"</strong>. ✅</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- 2. Asignar vacaciones -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        📅 2. Cómo Asignar Vacaciones
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>📌 Forma 1: Casilla por casilla (un día a la vez)</strong></p>
+                        <ol>
+                            <li>Hacé clic en el <strong>día</strong> que querés asignar en el calendario.</li>
+                            <li>En el panel de la derecha, escribí el 👤 nombre del empleado (ej: <code>PEREZ</code>).</li>
+                            <li>Elegí el estado: ✅ APROBADO o ⏳ EN REVISIÓN.</li>
+                            <li>(Opcional) Agregá una 💬 nota del supervisor.</li>
+                            <li>Hacé clic en <strong>"Guardar Decisión"</strong>. ✅</li>
+                        </ol>
+                        <p><strong>🗓️ Forma 2: Por rango de fechas (varios días juntos)</strong></p>
+                        <ol>
+                            <li>Hacé clic en la pestaña <strong>"🗓️ Por Rango"</strong>.</li>
+                            <li>Completá Desde, Hasta, Nombre del empleado y Estado.</li>
+                            <li>Hacé clic en <strong>"Asignar Rango Completo"</strong>. ✅</li>
+                        </ol>
+                        <div class="tip-box">
+                            ⚡ <strong>Tip:</strong> El sistema te avisa con una ⚠️ alerta de equidad si ese empleado ya tomó vacaciones en el mismo mes en años anteriores.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Borrar vacaciones -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🗑️ 3. Cómo Borrar Vacaciones
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>📌 Borrar UNA casilla específica:</strong></p>
+                        <ol>
+                            <li>Hacé clic en el <strong>día</strong> que querés limpiar.</li>
+                            <li>En el panel derecho, hacé clic en <strong>"🗑️ Eliminar Registro de esta Casilla"</strong>.</li>
+                            <li>¡Listo! El día queda vacío.</li>
+                        </ol>
+                        <p><strong>🗓️ Borrar un RANGO completo de días:</strong></p>
+                        <ol>
+                            <li>Hacé clic en la pestaña <strong>"🗓️ Por Rango"</strong>.</li>
+                            <li>Completá Desde y Hasta con las fechas a borrar.</li>
+                            <li>Si querés borrar solo de un empleado, escribí su nombre. Si lo dejás vacío, borra todo el rango.</li>
+                            <li>Hacé clic en <strong>"🗑️ Eliminar Vacaciones por Rango"</strong>.</li>
+                            <li>Confirmá. ¡Listo! ✅</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- 4. Consultar historial -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🔍 4. Consultar Historial de un Empleado
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>En el panel derecho, hacé clic en la pestaña <strong>"⚖️ Historial"</strong>.</li>
+                            <li>Escribí el 👤 nombre del empleado (ej: <code>PEDRO</code>).</li>
+                            <li>Abajo te aparecen todos los años en los que tuvo vacaciones, con las fechas exactas.</li>
+                        </ol>
+                        <div class="tip-box">
+                            💡 <strong>Tip:</strong> Usalo para chequear si alguien ya gozó de vacaciones varios años seguidos en la misma época. ¡Justicia para todos! ⚖️
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Coordinación -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🤝 5. Panel de Coordinación
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>Hacé clic en la pestaña <strong>"🤝 Coordinación"</strong>.</li>
+                            <li>Vas a ver un resumen del mes actual con: día por día quién está de vacaciones, estado y notas.</li>
+                            <li>Si tocás <strong>"🔄 Actualizar Análisis de Coincidencias"</strong>, se refresca la información.</li>
+                        </ol>
+                        <div class="tip-box">
+                            💡 <strong>Tip:</strong> Usalo para ver de un vistazo cuántos empleados coinciden de vacaciones y si vas a tener problemas de cobertura. 🛡️
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Imprimir -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🖨️ 6. Cómo Imprimir o Exportar a PDF
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>Ajustá el mes y año que querés imprimir.</li>
+                            <li>Hacé clic en el botón verde <strong>"🖨️ Imprimir"</strong> (arriba a la derecha).</li>
+                            <li>Se abre la ventana de impresión del navegador.</li>
+                            <li>Elegí <strong>Impresora</strong> (papel) o <strong>Guardar como PDF</strong>.</li>
+                            <li>Hacé clic en Imprimir / Guardar.</li>
+                        </ol>
+                        <div class="tip-box">
+                            📋 La impresión sale limpia, sin la URL, sin el panel lateral y sin los botones, con el encabezado institucional y la tabla resumen del personal abajo. ✨
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Colores -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🎨 7. ¿Qué Significan los Colores?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <table>
+                            <thead>
+                                <tr><th>Color</th><th>Significado</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>🟧 Naranja</td><td>Casilla seleccionada (la que estás editando)</td></tr>
+                                <tr><td>🟥 Rojo claro</td><td>Feriado Nacional (con etiqueta "FERIADO")</td></tr>
+                                <tr><td>🟨 Colores vivos</td><td>Vacaciones de un empleado (cada nombre tiene un color único)</td></tr>
+                                <tr><td>🟩 Verde</td><td>Estado APROBADO ✅</td></tr>
+                                <tr><td>🟧 Naranja</td><td>Estado EN REVISIÓN ⏳</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="tip-box">
+                            🖱️ <strong>Tip:</strong> Pasá el mouse por encima de un feriado para ver su nombre y una breve descripción. 🇦🇷
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Cerrar sesión -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🚪 8. Cómo Cerrar Sesión
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>Hacé clic en el botón naranja <strong>"🚪 Cerrar Sesión"</strong> (arriba a la derecha).</li>
+                            <li>Volvés a la pantalla de login.</li>
+                        </ol>
+                        <div class="tip-box">
+                            ⚠️ <strong>Importante:</strong> Cerrá sesión si estás en una computadora compartida, así el próximo usuario tiene que ingresar su propia contraseña. 🔐
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Eliminar cuenta -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🗑️ 9. Cómo Eliminar tu Cuenta
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>Con la sesión iniciada, hacé clic en <strong>"🗑️ Eliminar Cuenta"</strong>.</li>
+                            <li>Ingresá tu 🔑 contraseña para confirmar.</li>
+                            <li>Hacé clic en <strong>"Eliminar"</strong>.</li>
+                        </ol>
+                        <div class="tip-box">
+                            ⚠️ <strong>Ojo:</strong> Esta acción no se puede deshacer. Tu usuario se borra del sistema.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. Nube -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        ☁️ 10. ¿Dónde se Guardan los Datos?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Todos los datos (usuarios y vacaciones) se guardan en la <strong>nube de Supabase</strong> ☁️. Eso significa que:</p>
+                        <ul>
+                            <li>✅ <strong>No se pierden</strong> al refrescar la página.</li>
+                            <li>✅ <strong>Los ven todos</strong> los supervisores, en cualquier dispositivo.</li>
+                            <li>✅ <strong>Se actualizan en tiempo real</strong>: si otro supervisor carga algo, lo ves al instante. 🔄</li>
+                            <li>✅ <strong>No hace falta pagar nada</strong>: usamos el plan gratuito.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        ❓ Preguntas Frecuentes
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>🤔 ¿Puedo cargar varias vacaciones a la vez?</strong><br>Sí. Usá la pestaña "🗓️ Por Rango" y asigná un período completo en un solo paso.</p>
+                        <p><strong>🤔 ¿Qué pasa si dos empleados se superponen?</strong><br>El sistema te lo muestra en el calendario (cada uno con su color) y en el 🤝 Panel de Coordinación. Vos decidís si está bien o hay que reorganizar.</p>
+                        <p><strong>🤔 ¿Puedo cargar vacaciones de años anteriores?</strong><br>Sí. Cambiá el año en el selector "AÑO" arriba del calendario y cargá los datos. Sirve para el control de equidad.</p>
+                        <p><strong>🤔 ¿Los feriados se cargan solos?</strong><br>Sí. Los feriados nacionales argentinos ya están cargados y aparecen con etiqueta roja "FERIADO". 🇦🇷</p>
+                        <p><strong>🤔 ¿Y si me equivoco al cargar algo?</strong><br>Borralo con "🗑️ Eliminar Registro de esta Casilla" o "🗑️ Eliminar Vacaciones por Rango" y volvé a cargarlo. ✅</p>
+                        <p><strong>🤔 ¿Puedo usar la app desde el celular?</strong><br>¡Sí! La app es responsive y se adapta a celulares y tablets. 📱</p>
+                    </div>
+                </div>
+
+                <!-- Checklist -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        ✅ Checklist Rápido para Nuevos Usuarios
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul style="list-style: none; margin-left: 0;">
+                            <li>☐ 📝 Crear cuenta con nombre, correo y contraseña.</li>
+                            <li>☐ 🔐 Ingresar al sistema.</li>
+                            <li>☐ 📅 Seleccionar el mes y año correctos.</li>
+                            <li>☐ 📌 Probar asignar una casilla con un nombre de prueba.</li>
+                            <li>☐ 🗑️ Borrarla para practicar.</li>
+                            <li>☐ 🗓️ Probar la asignación por rango.</li>
+                            <li>☐ ⚖️ Consultar el historial de un empleado.</li>
+                            <li>☐ 🤝 Mirar el panel de coordinación.</li>
+                            <li>☐ 🖨️ Probar imprimir un mes.</li>
+                            <li>☐ 🚪 Cerrar sesión correctamente.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="text-align:center; margin-top: 25px; padding-top: 20px; border-top: 2px solid #E67E00;">
+                    <div style="color: #fbc531; font-weight: 900; font-size: 1rem; margin-bottom: 8px;">
+                        🌟 ¡Gracias por usar el Calendario Vacacional de Minerar S.A.! 🌟
+                    </div>
+                    <div style="color: #a4b0be; font-style: italic; font-size: 0.85rem;">
+                        "Un equipo organizado es un equipo que descansa mejor." 😴✈️🏖️
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -1887,7 +2341,6 @@
         lockIcon.innerText = "🔓";
         playUnlockSound();
 
-        // ✅ NUEVO: Guardar sesión activa en el navegador
         try {
             localStorage.setItem(LOCAL_SESION_KEY, currentUser);
         } catch(e) { console.warn("No se pudo guardar la sesión:", e); }
@@ -2012,12 +2465,11 @@
         document.getElementById("confirmPasswordInput").value = "";
         document.getElementById("lockIcon").innerText = "🔒";
 
-        // ✅ NUEVO: Borrar sesión activa del navegador
         try {
             localStorage.removeItem(LOCAL_SESION_KEY);
         } catch(e) { console.warn("No se pudo borrar la sesión:", e); }
 
-        currentUser = ""; // ✅ NUEVO: limpiar la variable del usuario actual
+        currentUser = "";
 
         populateUserDropdown(lastUser);
         hideLoginError();
@@ -2168,7 +2620,47 @@
         document.getElementById("hoverModal").classList.remove("active");
     }
 
-    // Exponer funciones al window
+    // ============================================================
+    // MODAL DE AYUDA Y ACORDEÓN
+    // ============================================================
+    function openHelpModal() {
+        const modal = document.getElementById("helpModal");
+        if (modal) modal.classList.add("active");
+    }
+
+    function closeHelpModal() {
+        const modal = document.getElementById("helpModal");
+        if (modal) modal.classList.remove("active");
+    }
+
+    function toggleAccordion(headerElement) {
+        const item = headerElement.parentElement;
+        item.classList.toggle("open");
+    }
+
+    // Cerrar el modal con la tecla ESC o clic afuera
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            const modal = document.getElementById("helpModal");
+            if (modal && modal.classList.contains("active")) {
+                closeHelpModal();
+            }
+        }
+    });
+    document.addEventListener("click", (e) => {
+        const modal = document.getElementById("helpModal");
+        if (modal && e.target === modal) {
+            closeHelpModal();
+        }
+    });
+
+    // ============================================================
+    // EXPONER FUNCIONES AL WINDOW
+    // ============================================================
+    window.openHelpModal = openHelpModal;
+    window.closeHelpModal = closeHelpModal;
+    window.toggleAccordion = toggleAccordion;
+
     window.processLogin = processLogin;
     window.setLoginMode = setLoginMode;
     window.handleUserSelectChange = handleUserSelectChange;
@@ -2198,10 +2690,8 @@
         const notesArea = document.getElementById("notes");
         if (notesArea) notesArea.addEventListener("input", triggerEquityCheckOnSingle);
 
-        // Cargar datos desde Supabase
         await cargarTodoDesdeSupabase();
 
-        // ✅ NUEVO: Restaurar sesión activa si existe
         try {
             const sesionGuardada = localStorage.getItem(LOCAL_SESION_KEY);
             if (sesionGuardada && usersDB[sesionGuardada]) {
