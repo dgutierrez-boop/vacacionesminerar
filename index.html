@@ -24,13 +24,11 @@
             padding: 20px;
         }
 
-        /* CONFIGURACIÓN DE IMPRESIÓN Y MARGEN DE PÁGINA PARA ELIMINAR URLs */
         @page {
             size: auto;
             margin: 8mm 10mm;
         }
 
-        /* ANIMACIÓN DE VIBRACIÓN EN CANDADO AL ERRAR CLAVE */
         @keyframes vibrate {
             0% { transform: translateX(0); }
             20% { transform: translateX(-8px) rotate(-5deg); }
@@ -42,7 +40,6 @@
 
         .shake { animation: vibrate 0.4s ease-in-out; }
 
-        /* OVERLAY DE AUTENTICACIÓN Y REGISTRO */
         .login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -270,7 +267,6 @@
             align-items: stretch;
         }
 
-        /* TABLA Y DETALLE DE IMPRESIÓN RESUMEN DE VACACIONES */
         .print-summary-container {
             margin-top: 15px;
             width: 100%;
@@ -703,7 +699,6 @@
             display: block !important;
         }
 
-        /* CONFIGURACIÓN EXCLUSIVA PARA IMPRESIÓN Y PDF */
         @media print {
             @page {
                 size: portrait;
@@ -717,7 +712,6 @@
                 margin: 0 !important;
             }
 
-            /* Ocultar elementos innecesarios al imprimir */
             .login-overlay,
             #hoverModal,
             .header-actions,
@@ -945,7 +939,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE RECUPERACIÓN / RESTABLECIMIENTO DE CONTRASEÑA -->
+    <!-- MODAL DE RECUPERACIÓN -->
     <div class="login-overlay" id="recoveryModal" style="display:none;">
         <div class="login-box" style="border-top-color: #E67E00;">
             <div style="font-size:2.5rem; margin-bottom:8px;">🔑</div>
@@ -1016,9 +1010,9 @@
                             <option value="2027">2027</option>
                         </select>
                     </div>
-                    <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background:rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);" title="Estado de conexión del sistema">
+                    <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background:rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);" title="Estado de conexión">
                         <span style="display:inline-block; width:8px; height:8px; background:#2ecc71; border-radius:50%; box-shadow:0 0 8px #2ecc71;" id="cloudDot"></span>
-                        <span id="cloudStatusText">Nube Conectada</span>
+                        <span id="cloudStatusText">Conectando...</span>
                     </div>
                 </div>
                 <div class="header-actions">
@@ -1046,7 +1040,6 @@
                     <span><span style="color:#e74c3c;">&#9632;</span> Superposición (Coincidencia de Personal)</span>
                 </div>
 
-                <!-- TABLA RESUMEN DE PERSONAL EN VACACIONES -->
                 <div id="printSummaryContainer" class="print-summary-container"></div>
             </div>
 
@@ -1060,7 +1053,6 @@
                     <button class="tab-btn" onclick="switchTab('coordination')">🤝 Coordinación</button>
                 </div>
 
-                <!-- TAB 1: CASILLA INDIVIDUAL -->
                 <div id="tabSingle" class="tab-content active">
                     <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla del calendario</div>
                     
@@ -1082,7 +1074,6 @@
                     <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteSelectedDay()">🗑️ Eliminar Registro de esta Casilla</button>
                 </div>
 
-                <!-- TAB 2: POR RANGO DE FECHAS -->
                 <div id="tabRange" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna o elimina un período completo de vacaciones en un solo paso:</p>
                     <div class="range-inputs">
@@ -1111,22 +1102,18 @@
                     <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar Vacaciones por Rango</button>
                 </div>
 
-                <!-- TAB 3: EQUIDAD E HISTORIAL -->
                 <div id="tabEquity" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:8px;">Buscar historial de vacaciones por empleado para analizar prioridad:</p>
                     <input type="text" id="searchWorkerInput" placeholder="Escribe el nombre (Ej: PEDRO)" style="width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem; margin-bottom:8px;" oninput="searchEmployeeHistory()">
                     
                     <div id="historyResults" class="history-list">
-                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas en años anteriores y actuales.</p>
+                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas.</p>
                     </div>
                 </div>
 
-                <!-- TAB 4: COORDINACIÓN Y COINCIDENCIAS -->
                 <div id="tabCoordination" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Panel de Coincidencias de Personal en el mes actual:</p>
-                    <div id="coordinationSummary" class="history-list" style="max-height:360px;">
-                        <!-- Se carga dinámicamente -->
-                    </div>
+                    <div id="coordinationSummary" class="history-list" style="max-height:360px;"></div>
                     <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar Análisis de Coincidencias</button>
                 </div>
             </div>
@@ -1134,88 +1121,130 @@
     </div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    // ============================================================
+    // CONFIGURACIÓN DE SUPABASE (con tus credenciales reales)
+    // ============================================================
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    // Application Environment & Cloud Variables
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'minerar-vacaciones-app';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const SUPABASE_URL = 'https://gxgvyailtxezpiwlsien.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4Z3Z5YWlsdHhlenBpd2xzaWVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNzc2MjYsImV4cCI6MjEwNDk1MzYyNn0.Qak95bB3EauN7Pz_6FosF5y-VDsIuElHLBr0gtLfz-A';
 
-    let db = null;
-    let auth = null;
-    let authUser = null;
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // ============================================================
+    // ESTADO GLOBAL
+    // ============================================================
     let currentUser = "";
-    let notesData = {};
-    let usersDB = {
-        "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" }
-    };
+    let notesData = {};   // formato: { "YYYY-MM-DD": { text, status, supervisorNote } }
+    let usersDB = { "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" } };
     let isRegisteringNew = false;
 
-    // PERSISTENCIA AUTOMÁTICA EN BROWSER (LOCALSTORAGE) PARA VERCEL Y GITHUB PAGES
-    const LOCAL_STORAGE_VACATIONS_KEY = 'minerar_vacations_data_v1';
-    const LOCAL_STORAGE_USERS_KEY = 'minerar_users_data_v1';
-
-    function saveLocalStorage() {
+    // ============================================================
+    // SINCRONIZACIÓN CON SUPABASE (carga inicial + realtime)
+    // ============================================================
+    async function cargarTodoDesdeSupabase() {
         try {
-            localStorage.setItem(LOCAL_STORAGE_VACATIONS_KEY, JSON.stringify(notesData));
-            localStorage.setItem(LOCAL_STORAGE_USERS_KEY, JSON.stringify(usersDB));
-        } catch (e) {
-            console.warn("No se pudo guardar en localStorage:", e);
-        }
-    }
-
-    function loadLocalStorage() {
-        try {
-            const savedVacations = localStorage.getItem(LOCAL_STORAGE_VACATIONS_KEY);
-            if (savedVacations) {
-                notesData = JSON.parse(savedVacations);
-            }
-            const savedUsers = localStorage.getItem(LOCAL_STORAGE_USERS_KEY);
-            if (savedUsers) {
-                const parsedUsers = JSON.parse(savedUsers);
-                usersDB = { ...usersDB, ...parsedUsers };
-            }
-        } catch (e) {
-            console.warn("No se pudo cargar de localStorage:", e);
-        }
-    }
-
-    // Helper paths for Firestore strictly matching Rule 1
-    const getPublicCollection = (collName) => collection(db, 'artifacts', appId, 'public', 'data', collName);
-    const getPublicDoc = (collName, docId) => doc(db, 'artifacts', appId, 'public', 'data', collName, docId);
-
-    async function initCloudSync() {
-        if (!firebaseConfig) {
-            console.warn("No Firebase configuration provided. Running in local session mode.");
-            updateCloudBadge(false, "Modo Local (Persistente)");
-            return;
-        }
-
-        try {
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-
-            // RULE 3 - Authenticate first before making Firestore calls
-            if (initialAuthToken) {
-                const cred = await signInWithCustomToken(auth, initialAuthToken);
-                authUser = cred.user;
+            // 1. Cargar usuarios
+            const { data: usuarios, error: errU } = await supabase.from('usuarios').select('*');
+            if (errU) throw errU;
+            if (usuarios && usuarios.length > 0) {
+                usuarios.forEach(u => {
+                    usersDB[u.username.toUpperCase()] = {
+                        password: u.password,
+                        email: u.email || ''
+                    };
+                });
             } else {
-                const cred = await signInAnonymously(auth);
-                authUser = cred.user;
+                // Si la tabla está vacía, sembrar el usuario por defecto
+                await supabase.from('usuarios').insert([{
+                    username: 'SUPERVISOR',
+                    password: 'admin',
+                    email: 'admin@minerar.com.ar'
+                }]);
             }
 
+            // 2. Cargar vacaciones
+            const { data: vacas, error: errV } = await supabase.from('vacaciones').select('*');
+            if (errV) throw errV;
+            notesData = {};
+            if (vacas) {
+                vacas.forEach(v => {
+                    notesData[v.date_key] = {
+                        text: v.employee_name,
+                        status: v.status || 'APROBADO',
+                        supervisorNote: v.supervisor_note || ''
+                    };
+                });
+            }
+
+            // 3. Refrescar UI
+            populateUserDropdown(currentUser || "");
+            updateCalendar();
             updateCloudBadge(true, "Nube Sincronizada");
 
-            // Setup Realtime Listeners for Users and Vacation Records
-            setupRealtimeListeners();
+            // 4. Suscripción realtime a cambios de vacaciones
+            supabase.channel('vacaciones-realtime')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'vacaciones' }, payload => {
+                    console.log('Cambio en vacaciones:', payload);
+                    // Recargar solo la parte de vacaciones
+                    recargarVacaciones();
+                })
+                .subscribe();
+
+            // 5. Suscripción realtime a usuarios
+            supabase.channel('usuarios-realtime')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'usuarios' }, payload => {
+                    console.log('Cambio en usuarios:', payload);
+                    recargarUsuarios();
+                })
+                .subscribe();
 
         } catch (err) {
-            console.error("Cloud connection error:", err);
-            updateCloudBadge(false, "Modo Local (Persistente)");
+            console.error("Error cargando desde Supabase:", err);
+            updateCloudBadge(false, "Modo Local (Offline)");
+        }
+    }
+
+    async function recargarVacaciones() {
+        try {
+            const { data, error } = await supabase.from('vacaciones').select('*');
+            if (error) throw error;
+            notesData = {};
+            if (data) {
+                data.forEach(v => {
+                    notesData[v.date_key] = {
+                        text: v.employee_name,
+                        status: v.status || 'APROBADO',
+                        supervisorNote: v.supervisor_note || ''
+                    };
+                });
+            }
+            updateCalendar();
+            if (document.getElementById("tabCoordination")?.classList.contains("active")) {
+                renderCoordinationSummary();
+            }
+        } catch (err) {
+            console.error("Error recargando vacaciones:", err);
+        }
+    }
+
+    async function recargarUsuarios() {
+        try {
+            const { data, error } = await supabase.from('usuarios').select('*');
+            if (error) throw error;
+            usersDB = {};
+            if (data) {
+                data.forEach(u => {
+                    usersDB[u.username.toUpperCase()] = {
+                        password: u.password,
+                        email: u.email || ''
+                    };
+                });
+            }
+            const activeUser = currentUser || document.getElementById("userSelect")?.value;
+            populateUserDropdown(activeUser);
+        } catch (err) {
+            console.error("Error recargando usuarios:", err);
         }
     }
 
@@ -1230,95 +1259,61 @@
             badgeEl.style.background = "rgba(46,204,113,0.15)";
             badgeEl.style.color = "#2ecc71";
             badgeEl.style.borderColor = "rgba(46,204,113,0.4)";
-            if (dotEl) {
-                dotEl.style.background = "#2ecc71";
-                dotEl.style.boxShadow = "0 0 8px #2ecc71";
-            }
+            if (dotEl) { dotEl.style.background = "#2ecc71"; dotEl.style.boxShadow = "0 0 8px #2ecc71"; }
         } else {
             badgeEl.style.background = "rgba(243,156,18,0.15)";
             badgeEl.style.color = "#f39c12";
             badgeEl.style.borderColor = "rgba(243,156,18,0.4)";
-            if (dotEl) {
-                dotEl.style.background = "#f39c12";
-                dotEl.style.boxShadow = "0 0 8px #f39c12";
-            }
+            if (dotEl) { dotEl.style.background = "#f39c12"; dotEl.style.boxShadow = "0 0 8px #f39c12"; }
         }
     }
 
-    function setupRealtimeListeners() {
-        if (!db || !authUser) return;
-
-        // 1. Synchronize Vacation Notes
-        const vacationsCol = getPublicCollection('vacations');
-        onSnapshot(vacationsCol, (snapshot) => {
-            notesData = {};
-            snapshot.forEach((docSnap) => {
-                notesData[docSnap.id] = docSnap.data();
-            });
-            saveLocalStorage();
-            updateCalendar();
-            if (document.getElementById("tabCoordination")?.classList.contains("active")) {
-                renderCoordinationSummary();
-            }
-        }, (err) => {
-            console.error("Error subscribing to vacations cloud data:", err);
-        });
-
-        // 2. Synchronize Supervisor Accounts (fusiona usuarios sin borrar locales)
-        const usersCol = getPublicCollection('users');
-        onSnapshot(usersCol, (snapshot) => {
-            snapshot.forEach((docSnap) => {
-                usersDB[docSnap.id] = docSnap.data();
-            });
-            saveLocalStorage();
-            const activeUser = currentUser || document.getElementById("userSelect")?.value;
-            populateUserDropdown(activeUser);
-        }, (err) => {
-            console.error("Error subscribing to users cloud data:", err);
-        });
-    }
-
-    // Helper functions for parsed data
+    // ============================================================
+    // HELPERS
+    // ============================================================
     function getParsedDayData(dateKey) {
         const raw = notesData[dateKey];
         if (!raw) return { text: "", status: "APROBADO", supervisorNote: "" };
-        if (typeof raw === "object") {
-            return {
-                text: raw.text || "",
-                status: raw.status || "APROBADO",
-                supervisorNote: raw.supervisorNote || ""
-            };
-        }
-        return { text: raw, status: "APROBADO", supervisorNote: "" };
+        return {
+            text: raw.text || "",
+            status: raw.status || "APROBADO",
+            supervisorNote: raw.supervisorNote || ""
+        };
     }
 
     async function setParsedDayData(dateKey, text, status, supervisorNote) {
         if (!text || text.trim() === "") {
+            // Eliminar de Supabase
             delete notesData[dateKey];
-            if (db && authUser) {
-                try {
-                    await deleteDoc(getPublicDoc('vacations', dateKey));
-                } catch(e) { console.error("Error deleting doc from cloud:", e); }
-            }
+            try {
+                const { error } = await supabase.from('vacaciones').delete().eq('date_key', dateKey);
+                if (error) throw error;
+            } catch(e) { console.error("Error deleting from Supabase:", e); }
         } else {
             const entry = {
-                text: text.trim(),
+                date_key: dateKey,
+                employee_name: text.trim().toUpperCase(),
                 status: status || "APROBADO",
-                supervisorNote: supervisorNote ? supervisorNote.trim() : "",
-                updatedBy: currentUser || "SUPERVISOR",
-                updatedAt: new Date().toISOString()
+                supervisor_note: supervisorNote ? supervisorNote.trim() : "",
+                updated_by: currentUser || "SUPERVISOR"
             };
-            notesData[dateKey] = entry;
-            if (db && authUser) {
-                try {
-                    await setDoc(getPublicDoc('vacations', dateKey), entry);
-                } catch(e) { console.error("Error saving doc to cloud:", e); }
-            }
+            notesData[dateKey] = {
+                text: entry.employee_name,
+                status: entry.status,
+                supervisorNote: entry.supervisor_note
+            };
+            try {
+                // Upsert: si existe, actualiza; si no, inserta
+                const { error } = await supabase.from('vacaciones').upsert(entry, { onConflict: 'date_key' });
+                if (error) throw error;
+            } catch(e) { console.error("Error saving to Supabase:", e); }
         }
-        saveLocalStorage();
+        // Recargar solo esta fecha en el calendario
     }
 
-    // Initial setup
+    // ============================================================
+    // CONSTANTES Y DATOS
+    // ============================================================
     const today = new Date();
     let currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
     let selectedDateStr = "";
@@ -1373,13 +1368,10 @@
 
     function checkEquityForDateAndName(dateStr, workerName) {
         if (!dateStr || !workerName || workerName.trim().length < 2) return null;
-        
         const cleanName = workerName.trim().toUpperCase();
         const parts = dateStr.split("-");
         if (parts.length !== 3) return null;
-
         const currentYear = parts[0];
-
         let pastMatches = [];
 
         for (let key in notesData) {
@@ -1394,7 +1386,6 @@
                 }
             }
         }
-
         return pastMatches;
     }
 
@@ -1403,20 +1394,17 @@
         const statusVal = document.getElementById("singleApprovalStatus").value;
         const alertEl = document.getElementById("singleEquityAlert");
 
-        if (!selectedDateStr || !nameVal) {
-            alertEl.style.display = "none";
-            return;
-        }
+        if (!selectedDateStr || !nameVal) { alertEl.style.display = "none"; return; }
 
         const matches = checkEquityForDateAndName(selectedDateStr, nameVal);
         if (matches && matches.length > 0) {
             const years = [...new Set(matches.map(m => m.year))].join(", ");
             alertEl.className = "equity-alert warning";
-            alertEl.innerHTML = `⚠️ <b>Atención - Rotación de Vacaciones:</b><br>${nameVal.toUpperCase()} ya tomó vacaciones en este mes en el/los año(s) <b>${years}</b>.<br>💡 <i>Sugerencia:</i> El supervisor puede mantener o reasignar la fecha. Estado actual: <b>${statusVal}</b>.`;
+            alertEl.innerHTML = `⚠️ <b>Atención - Rotación de Vacaciones:</b><br>${nameVal.toUpperCase()} ya tomó vacaciones en este mes en el/los año(s) <b>${years}</b>.<br>💡 <i>Sugerencia:</i> Estado actual: <b>${statusVal}</b>.`;
             alertEl.style.display = "block";
         } else {
             alertEl.className = "equity-alert success";
-            alertEl.innerHTML = `✅ <b>Sin repeticiones previas:</b><br>${nameVal.toUpperCase()} no registra vacaciones en este mes en años anteriores. Concesión fluida sin conflicto de rotación.`;
+            alertEl.innerHTML = `✅ <b>Sin repeticiones previas:</b><br>${nameVal.toUpperCase()} no registra vacaciones en este mes en años anteriores.`;
             alertEl.style.display = "block";
         }
     }
@@ -1426,16 +1414,13 @@
         const startVal = document.getElementById("rangeStart").value;
         const alertEl = document.getElementById("rangeEquityAlert");
 
-        if (!startVal || !nameVal) {
-            alertEl.style.display = "none";
-            return;
-        }
+        if (!startVal || !nameVal) { alertEl.style.display = "none"; return; }
 
         const matches = checkEquityForDateAndName(startVal, nameVal);
         if (matches && matches.length > 0) {
             const years = [...new Set(matches.map(m => m.year))].join(", ");
             alertEl.className = "equity-alert warning";
-            alertEl.innerHTML = `⚠️ <b>Advertencia de Equidad:</b><br>${nameVal.toUpperCase()} registra vacaciones en esta misma época en el/los año(s) <b>${years}</b>.<br>Considera rotar esta fecha o registrar justificación de supervisor.`;
+            alertEl.innerHTML = `⚠️ <b>Advertencia de Equidad:</b><br>${nameVal.toUpperCase()} registra vacaciones en esta misma época en el/los año(s) <b>${years}</b>.`;
             alertEl.style.display = "block";
         } else {
             alertEl.className = "equity-alert success";
@@ -1450,36 +1435,43 @@
         const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
         const statusVal = document.getElementById("rangeApprovalStatus").value;
 
-        if (!startVal || !endVal || !nameVal) {
-            alert("Por favor completa la fecha de inicio, fin y el nombre del empleado.");
-            return;
-        }
+        if (!startVal || !endVal || !nameVal) { alert("Por favor completa la fecha de inicio, fin y el nombre del empleado."); return; }
 
         let startDate = new Date(startVal + "T00:00:00");
         let endDate = new Date(endVal + "T00:00:00");
 
-        if (startDate > endDate) {
-            alert("La fecha de inicio debe ser anterior o igual a la fecha de fin.");
-            return;
-        }
+        if (startDate > endDate) { alert("La fecha de inicio debe ser anterior o igual a la fecha de fin."); return; }
 
+        // Construir lista de fechas
         let curr = new Date(startDate);
-        let count = 0;
-
+        let fechas = [];
         while (curr <= endDate) {
             const yyyy = curr.getFullYear();
             const mm = String(curr.getMonth() + 1).padStart(2, '0');
             const dd = String(curr.getDate()).padStart(2, '0');
-            const dateKey = `${yyyy}-${mm}-${dd}`;
-
-            await setParsedDayData(dateKey, nameVal, statusVal, `Asignado por rango el ${new Date().toLocaleDateString()}`);
+            fechas.push(`${yyyy}-${mm}-${dd}`);
             curr.setDate(curr.getDate() + 1);
-            count++;
         }
 
-        updateCalendar();
-        alert(`✅ Se registraron ${count} días de vacaciones para ${nameVal} (${statusVal}).`);
-        document.getElementById("rangeEmployeeName").value = "";
+        // Insertar en Supabase en bloque
+        const registros = fechas.map(fecha => ({
+            date_key: fecha,
+            employee_name: nameVal,
+            status: statusVal,
+            supervisor_note: `Asignado por rango el ${new Date().toLocaleDateString()}`,
+            updated_by: currentUser || "SUPERVISOR"
+        }));
+
+        try {
+            const { error } = await supabase.from('vacaciones').upsert(registros, { onConflict: 'date_key' });
+            if (error) throw error;
+            await recargarVacaciones();
+            alert(`✅ Se registraron ${fechas.length} días de vacaciones para ${nameVal} (${statusVal}).`);
+            document.getElementById("rangeEmployeeName").value = "";
+        } catch (err) {
+            console.error(err);
+            alert("Error guardando el rango: " + err.message);
+        }
     }
 
     async function deleteRange() {
@@ -1487,54 +1479,54 @@
         const endVal = document.getElementById("rangeEnd").value;
         const nameVal = document.getElementById("rangeEmployeeName").value.trim().toUpperCase();
 
-        if (!startVal || !endVal) {
-            alert("Por favor selecciona la fecha de inicio y fin del rango a eliminar.");
-            return;
-        }
+        if (!startVal || !endVal) { alert("Por favor selecciona la fecha de inicio y fin del rango a eliminar."); return; }
 
         let startDate = new Date(startVal + "T00:00:00");
         let endDate = new Date(endVal + "T00:00:00");
 
-        if (startDate > endDate) {
-            alert("La fecha de inicio debe ser anterior o igual a la fecha de fin.");
-            return;
-        }
+        if (startDate > endDate) { alert("La fecha de inicio debe ser anterior o igual a la fecha de fin."); return; }
 
         let curr = new Date(startDate);
-        let count = 0;
-
+        let fechas = [];
         while (curr <= endDate) {
             const yyyy = curr.getFullYear();
             const mm = String(curr.getMonth() + 1).padStart(2, '0');
             const dd = String(curr.getDate()).padStart(2, '0');
-            const dateKey = `${yyyy}-${mm}-${dd}`;
-
-            const dayData = getParsedDayData(dateKey);
-            if (!nameVal || (dayData.text && dayData.text.toUpperCase().includes(nameVal))) {
-                await setParsedDayData(dateKey, "", "", "");
-                count++;
-            }
-
+            fechas.push(`${yyyy}-${mm}-${dd}`);
             curr.setDate(curr.getDate() + 1);
         }
 
-        updateCalendar();
-        alert(`🗑️ Se eliminaron los registros de ${count} día(s) en el rango seleccionado.`);
+        try {
+            // Si hay nombre, filtrar por nombre
+            let query = supabase.from('vacaciones').delete().in('date_key', fechas);
+            if (nameVal) {
+                query = query.ilike('employee_name', `%${nameVal}%`);
+            }
+            const { error } = await query;
+            if (error) throw error;
+            await recargarVacaciones();
+            alert(`🗑️ Se eliminaron los registros del rango seleccionado.`);
+        } catch (err) {
+            console.error(err);
+            alert("Error eliminando el rango: " + err.message);
+        }
     }
 
     async function deleteSelectedDay() {
-        if (!selectedDateStr) {
-            alert("Selecciona primero una casilla en el calendario.");
-            return;
+        if (!selectedDateStr) { alert("Selecciona primero una casilla en el calendario."); return; }
+
+        try {
+            const { error } = await supabase.from('vacaciones').delete().eq('date_key', selectedDateStr);
+            if (error) throw error;
+            document.getElementById("notes").value = "";
+            document.getElementById("supervisorNote").value = "";
+            await recargarVacaciones();
+            triggerEquityCheckOnSingle();
+            alert("🗑️ Registro eliminado de esta casilla.");
+        } catch (err) {
+            console.error(err);
+            alert("Error eliminando: " + err.message);
         }
-
-        await setParsedDayData(selectedDateStr, "", "", "");
-        document.getElementById("notes").value = "";
-        document.getElementById("supervisorNote").value = "";
-
-        updateCalendar();
-        triggerEquityCheckOnSingle();
-        alert("🗑️ Registro eliminado de esta casilla.");
     }
 
     function searchEmployeeHistory() {
@@ -1542,12 +1534,11 @@
         const container = document.getElementById("historyResults");
 
         if (!query) {
-            container.innerHTML = `<p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas en años anteriores y actuales.</p>`;
+            container.innerHTML = `<p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresa un nombre arriba para ver sus vacaciones registradas.</p>`;
             return;
         }
 
         let found = {};
-
         for (let key in notesData) {
             const data = getParsedDayData(key);
             if (data.text && data.text.toUpperCase().includes(query)) {
@@ -1559,25 +1550,21 @@
         }
 
         const yearsList = Object.keys(found).sort();
-
         if (yearsList.length === 0) {
-            container.innerHTML = `<p style="font-size:0.8rem; color:#e74c3c; text-align:center;">No se encontraron registros de vacaciones para "${query}".</p>`;
+            container.innerHTML = `<p style="font-size:0.8rem; color:#e74c3c; text-align:center;">No se encontraron registros para "${query}".</p>`;
             return;
         }
 
         let html = "";
         yearsList.forEach(yr => {
             const dates = found[yr].sort();
-            const minDate = dates[0];
-            const maxDate = dates[dates.length - 1];
             html += `
                 <div class="history-item">
                     <div class="history-item-name">🗓️ Año ${yr} - (${dates.length} días)</div>
-                    <div class="history-item-dates">Desde ${minDate} hasta ${maxDate}</div>
+                    <div class="history-item-dates">Desde ${dates[0]} hasta ${dates[dates.length - 1]}</div>
                 </div>
             `;
         });
-
         container.innerHTML = html;
     }
 
@@ -1590,13 +1577,10 @@
         const mm = String(month + 1).padStart(2, '0');
 
         let daysWithVacations = [];
-
         for (let key in notesData) {
             if (key.startsWith(`${year}-${mm}`)) {
                 const data = getParsedDayData(key);
-                if (data.text) {
-                    daysWithVacations.push({ date: key, data: data });
-                }
+                if (data.text) daysWithVacations.push({ date: key, data: data });
             }
         }
 
@@ -1606,12 +1590,10 @@
         }
 
         daysWithVacations.sort((a, b) => a.date.localeCompare(b.date));
-
         let html = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">Resumen ${monthNames[month]} ${year} (${daysWithVacations.length} días ocupados):</div>`;
 
         daysWithVacations.forEach(item => {
-            const dateParts = item.date.split("-");
-            const dayNum = dateParts[2];
+            const dayNum = item.date.split("-")[2];
             const statusClass = item.data.status === 'APROBADO' ? 'approved' : 'pending';
             const statusText = item.data.status === 'APROBADO' ? 'Aprobado' : 'En Revisión';
 
@@ -1625,7 +1607,6 @@
                 </div>
             `;
         });
-
         container.innerHTML = html;
     }
 
@@ -1638,22 +1619,18 @@
         const mm = String(month + 1).padStart(2, '0');
 
         let employeeDays = {};
-
         for (let key in notesData) {
             if (key.startsWith(`${year}-${mm}`)) {
                 const data = getParsedDayData(key);
                 if (data.text) {
                     const empName = data.text.toUpperCase().trim();
-                    if (!employeeDays[empName]) {
-                        employeeDays[empName] = [];
-                    }
+                    if (!employeeDays[empName]) employeeDays[empName] = [];
                     employeeDays[empName].push({ date: key, status: data.status || 'APROBADO' });
                 }
             }
         }
 
         const empNames = Object.keys(employeeDays);
-
         if (empNames.length === 0) {
             summaryContainer.innerHTML = `
                 <div class="summary-card">
@@ -1686,7 +1663,6 @@
 
             let periods = [];
             let currentPeriod = null;
-
             items.forEach(item => {
                 const d = new Date(item.date + "T00:00:00");
                 if (!currentPeriod) {
@@ -1694,7 +1670,6 @@
                 } else {
                     let prevEnd = new Date(currentPeriod.end);
                     prevEnd.setDate(prevEnd.getDate() + 1);
-                    
                     if (d.getTime() === prevEnd.getTime()) {
                         currentPeriod.end = d;
                         currentPeriod.count++;
@@ -1724,23 +1699,17 @@
             });
         });
 
-        html += `
-                    </tbody>
-                </table>
-            </div>`;
-
+        html += `</tbody></table></div>`;
         summaryContainer.innerHTML = html;
     }
 
     function selectDate(dateKey, day, monthName, year) {
         selectedDateStr = dateKey;
         document.getElementById("selectedDateText").innerText = `Casilla: ${day} de ${monthName} de ${year}`;
-        
         const data = getParsedDayData(dateKey);
         document.getElementById("notes").value = data.text;
         document.getElementById("singleApprovalStatus").value = data.status || "APROBADO";
         document.getElementById("supervisorNote").value = data.supervisorNote || "";
-
         triggerEquityCheckOnSingle();
         updateCalendar();
     }
@@ -1750,10 +1719,8 @@
         errEl.innerText = msg;
         errEl.style.display = "block";
     }
-
     function hideLoginError() {
-        const errEl = document.getElementById("loginErrorMsg");
-        errEl.style.display = "none";
+        document.getElementById("loginErrorMsg").style.display = "none";
     }
 
     function playUnlockSound() {
@@ -1790,15 +1757,11 @@
             let opt = document.createElement("option");
             opt.value = username;
             opt.innerText = `👤 ${username}`;
-            if (selectUser && username === selectUser) {
-                opt.selected = true;
-            }
+            if (selectUser && username === selectUser) opt.selected = true;
             userSelect.appendChild(opt);
         });
 
-        if (!selectUser && usernames.length > 0) {
-            userSelect.value = usernames[0];
-        }
+        if (!selectUser && usernames.length > 0) userSelect.value = usernames[0];
 
         let newOpt = document.createElement("option");
         newOpt.value = "NEW_USER";
@@ -1812,8 +1775,6 @@
 
     function setLoginMode(mode) {
         const userSelect = document.getElementById("userSelect");
-        if (!userSelect) return;
-
         if (mode === 'register') {
             userSelect.value = "NEW_USER";
         } else {
@@ -1848,21 +1809,14 @@
             usernameInput.style.display = "block";
             emailInput.style.display = "block";
             confirmPasswordInput.style.display = "block";
-            
-            usernameInput.value = "";
-            emailInput.value = "";
-            passwordInput.value = "";
-            confirmPasswordInput.value = "";
-
+            usernameInput.value = ""; emailInput.value = ""; passwordInput.value = ""; confirmPasswordInput.value = "";
             submitBtn.innerText = "REGISTRAR E INGRESAR";
             infoText.innerText = "Ingresa tu nombre completo, correo y contraseña para crear la cuenta.";
             forgotBtn.style.display = "none";
-
             if (loginModeBtn && registerModeBtn) {
                 loginModeBtn.style.background = "transparent";
                 loginModeBtn.style.color = "#a4b0be";
                 loginModeBtn.style.border = "1px solid #485460";
-                
                 registerModeBtn.style.background = "#E67E00";
                 registerModeBtn.style.color = "white";
                 registerModeBtn.style.border = "none";
@@ -1876,12 +1830,10 @@
             submitBtn.innerText = "INGRESAR AL SISTEMA";
             infoText.innerText = "Selecciona tu usuario e ingresa tu contraseña.";
             forgotBtn.style.display = "inline-block";
-
             if (loginModeBtn && registerModeBtn) {
                 loginModeBtn.style.background = "#E67E00";
                 loginModeBtn.style.color = "white";
                 loginModeBtn.style.border = "none";
-
                 registerModeBtn.style.background = "transparent";
                 registerModeBtn.style.color = "#E67E00";
                 registerModeBtn.style.border = "2px solid #E67E00";
@@ -1912,21 +1864,24 @@
             if (!password) { triggerShake(); showLoginError("Ingresa una contraseña."); return; }
             if (password !== confirmPassword) { triggerShake(); showLoginError("Las contraseñas no coinciden."); return; }
 
-            const userData = { password: password, email: email };
-            
-            // Guardar inmediatamente en la base de datos de usuarios activa
-            usersDB[username] = userData;
-            saveLocalStorage();
+            if (usersDB[username]) { triggerShake(); showLoginError("Ese usuario ya existe."); return; }
 
-            if (db && authUser) {
-                try {
-                    await setDoc(getPublicDoc('users', username), userData);
-                } catch(e) { console.error("Error saving user to cloud:", e); }
+            try {
+                const { error } = await supabase.from('usuarios').insert([{
+                    username: username,
+                    password: password,
+                    email: email
+                }]);
+                if (error) throw error;
+                usersDB[username] = { password: password, email: email };
+                currentUser = username;
+                populateUserDropdown(username);
+            } catch (err) {
+                console.error(err);
+                triggerShake();
+                showLoginError("Error creando usuario: " + err.message);
+                return;
             }
-
-            currentUser = username;
-            populateUserDropdown(username);
-
         } else {
             const username = userSelect.value;
             if (!username || username === "NEW_USER") {
@@ -1934,13 +1889,11 @@
                 showLoginError("Por favor selecciona tu usuario de la lista.");
                 return;
             }
-
             if (!password || !usersDB[username] || usersDB[username].password !== password) {
                 triggerShake();
                 showLoginError("Contraseña incorrecta.");
                 return;
             }
-
             currentUser = username;
         }
 
@@ -1957,24 +1910,19 @@
 
     function openRecoveryModal(username) {
         const user = usersDB[username];
-        
         document.getElementById("recoveryUsernameText").innerText = username;
         document.getElementById("recoveryEmailInput").value = "";
         document.getElementById("recoveryNewPass").value = "";
         document.getElementById("recoveryConfirmPass").value = "";
-        
         const msgEl = document.getElementById("recoveryMsg");
-        msgEl.innerText = "";
-        msgEl.style.display = "none";
+        msgEl.innerText = ""; msgEl.style.display = "none";
 
         const hintEl = document.getElementById("recoveryEmailHint");
-        
         if (user && user.email) {
             hintEl.innerText = `Ingresa el correo vinculado (${user.email}) y define tu nueva contraseña.`;
         } else {
             hintEl.innerText = `El usuario "${username}" aún no tiene datos de correo/clave. Ingresa tu correo y la contraseña deseada para asignársela.`;
         }
-        
         document.getElementById("recoveryModal").style.display = "flex";
     }
 
@@ -1984,91 +1932,68 @@
         const newPass = document.getElementById("recoveryNewPass").value.trim();
         const confirmPass = document.getElementById("recoveryConfirmPass").value.trim();
         const msgEl = document.getElementById("recoveryMsg");
-
         msgEl.style.display = "block";
 
         if (!email || !email.includes("@")) {
-            msgEl.style.color = "#ff6b6b";
-            msgEl.style.background = "rgba(255,107,107,0.1)";
-            msgEl.innerText = "Ingresa un correo electrónico válido.";
-            return;
+            msgEl.style.color = "#ff6b6b"; msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Ingresa un correo electrónico válido."; return;
         }
 
         const user = usersDB[username];
-
         if (user && user.email && user.email.toLowerCase() !== email) {
-            msgEl.style.color = "#ff6b6b";
-            msgEl.style.background = "rgba(255,107,107,0.1)";
-            msgEl.innerText = "El correo ingresado no coincide con el registrado.";
-            return;
+            msgEl.style.color = "#ff6b6b"; msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "El correo ingresado no coincide con el registrado."; return;
         }
-
         if (!newPass) {
-            msgEl.style.color = "#ff6b6b";
-            msgEl.style.background = "rgba(255,107,107,0.1)";
-            msgEl.innerText = "Ingresa la nueva contraseña.";
-            return;
+            msgEl.style.color = "#ff6b6b"; msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Ingresa la nueva contraseña."; return;
         }
-
         if (newPass !== confirmPass) {
-            msgEl.style.color = "#ff6b6b";
-            msgEl.style.background = "rgba(255,107,107,0.1)";
-            msgEl.innerText = "Las contraseñas no coinciden.";
-            return;
+            msgEl.style.color = "#ff6b6b"; msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Las contraseñas no coinciden."; return;
         }
 
-        const userData = { password: newPass, email: email };
-        usersDB[username] = userData;
-        saveLocalStorage();
-
-        if (db && authUser) {
-            try {
-                await setDoc(getPublicDoc('users', username), userData);
-            } catch(e) { console.error("Error resetting password in cloud:", e); }
+        try {
+            const { error } = await supabase.from('usuarios')
+                .update({ password: newPass, email: email })
+                .eq('username', username);
+            if (error) throw error;
+            usersDB[username] = { password: newPass, email: email };
+            msgEl.style.color = "#2ecc71"; msgEl.style.background = "rgba(46,204,113,0.15)";
+            msgEl.innerText = "✅ ¡Contraseña actualizada con éxito!";
+            setTimeout(() => {
+                closeRecoveryModal();
+                document.getElementById("passwordInput").value = newPass;
+            }, 1200);
+        } catch (err) {
+            msgEl.style.color = "#ff6b6b"; msgEl.style.background = "rgba(255,107,107,0.1)";
+            msgEl.innerText = "Error actualizando: " + err.message;
         }
-
-        msgEl.style.color = "#2ecc71";
-        msgEl.style.background = "rgba(46,204,113,0.15)";
-        msgEl.innerText = "✅ ¡Contraseña actualizada con éxito!";
-
-        setTimeout(() => {
-            closeRecoveryModal();
-            document.getElementById("passwordInput").value = newPass;
-        }, 1200);
     }
 
     async function confirmDeleteAccount() {
         const pass = document.getElementById("deleteConfirmPassword").value.trim();
         const msgEl = document.getElementById("deleteModalMsg");
 
-        if (!pass) {
-            msgEl.style.color = "#ff6b6b";
-            msgEl.innerText = "Ingresa tu contraseña para confirmar.";
-            return;
-        }
-
+        if (!pass) { msgEl.style.color = "#ff6b6b"; msgEl.innerText = "Ingresa tu contraseña para confirmar."; return; }
         if (!usersDB[currentUser] || usersDB[currentUser].password !== pass) {
+            msgEl.style.color = "#ff6b6b"; msgEl.innerText = "Contraseña incorrecta. No se pudo eliminar la cuenta."; return;
+        }
+
+        try {
+            const { error } = await supabase.from('usuarios').delete().eq('username', currentUser);
+            if (error) throw error;
+            delete usersDB[currentUser];
+            msgEl.style.color = "#2ecc71";
+            msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Cerrando sesión...`;
+            setTimeout(() => {
+                closeDeleteAccountModal();
+                logoutUser();
+            }, 1200);
+        } catch (err) {
             msgEl.style.color = "#ff6b6b";
-            msgEl.innerText = "Contraseña incorrecta. No se pudo eliminar la cuenta.";
-            return;
+            msgEl.innerText = "Error eliminando: " + err.message;
         }
-
-        delete usersDB[currentUser];
-        saveLocalStorage();
-
-        if (db && authUser) {
-            try {
-                await deleteDoc(getPublicDoc('users', currentUser));
-            } catch(e) { console.error("Error deleting user from cloud:", e); }
-        }
-
-        msgEl.style.color = "#2ecc71";
-        msgEl.innerText = `El usuario ${currentUser} ha sido eliminado. Cerrando sesión...`;
-
-        setTimeout(() => {
-            closeDeleteAccountModal();
-            logoutUser();
-        }, 1200);
     }
 
     function recoverPassword() {
@@ -2103,7 +2028,6 @@
         document.getElementById("deleteModalMsg").innerText = "";
         document.getElementById("deleteAccountModal").style.display = "flex";
     }
-
     function closeDeleteAccountModal() {
         document.getElementById("deleteAccountModal").style.display = "none";
     }
@@ -2111,11 +2035,9 @@
     function changeMonth(delta) {
         let m = parseInt(document.getElementById("monthSelect").value);
         let y = parseInt(document.getElementById("yearSelect").value);
-
         m += delta;
         if (m < 0) { m = 11; y--; }
         if (m > 11) { m = 0; y++; }
-
         document.getElementById("monthSelect").value = m;
         document.getElementById("yearSelect").value = y;
         updateCalendar();
@@ -2129,7 +2051,6 @@
         const month = parseInt(monthSelect.value);
         const year = parseInt(yearSelect.value);
         currentDate = new Date(year, month, 1);
-
         document.getElementById("monthYearTitle").innerText = `${monthNames[month]} ${year}`;
 
         const grid = document.getElementById("calendarGrid");
@@ -2166,10 +2087,7 @@
                 isHoliday = true;
                 dayCell.classList.add("holiday-day");
             }
-
-            if (selectedDateStr === keyDate) {
-                dayCell.classList.add("selected");
-            }
+            if (selectedDateStr === keyDate) dayCell.classList.add("selected");
 
             const headerDiv = document.createElement("div");
             headerDiv.className = "day-number";
@@ -2180,23 +2098,19 @@
                 hTag.className = "holiday-tag";
                 hTag.innerText = "FERIADO";
                 headerDiv.appendChild(hTag);
-
                 dayCell.addEventListener("mouseenter", (e) => showHoverModal(e, keyHoliday, keyDate));
                 dayCell.addEventListener("mousemove", (e) => moveHoverModal(e));
                 dayCell.addEventListener("mouseleave", () => hideHoverModal());
             }
-
             dayCell.appendChild(headerDiv);
 
             const dayData = getParsedDayData(keyDate);
             if (dayData.text) {
                 const contentDiv = document.createElement("div");
                 contentDiv.className = "day-content";
-                
                 const statusBadge = dayData.status === 'APROBADO' 
                     ? '<span class="status-badge approved">✔ Aprobado</span>' 
                     : '<span class="status-badge pending">⏳ En Revisión</span>';
-
                 contentDiv.innerHTML = `<div>${dayData.text}</div>${statusBadge}`;
                 contentDiv.style.backgroundColor = getColorForName(dayData.text);
                 dayCell.appendChild(contentDiv);
@@ -2218,27 +2132,21 @@
             document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
             return;
         }
-
         const val = document.getElementById("notes").value.trim();
         const status = document.getElementById("singleApprovalStatus").value;
         const supervisorNote = document.getElementById("supervisorNote").value.trim();
-
         await setParsedDayData(selectedDateStr, val, status, supervisorNote);
-
-        updateCalendar();
+        await recargarVacaciones();
         triggerEquityCheckOnSingle();
     }
 
     function showHoverModal(e, keyHoliday, keyDate) {
         const modal = document.getElementById("hoverModal");
         const details = holidayDetails[keyHoliday];
-
         if (!details) return;
-
         document.getElementById("fhmDateText").innerText = `FERIADO NACIONAL (${keyDate})`;
         document.getElementById("fhmTitle").innerText = details.title;
         document.getElementById("fhmDesc").innerText = details.desc;
-
         modal.classList.add("active");
         moveHoverModal(e);
     }
@@ -2247,25 +2155,20 @@
         const modal = document.getElementById("hoverModal");
         const x = e.clientX + 18;
         const y = e.clientY + 18;
-
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-
-        let posX = x;
-        let posY = y;
-
+        let posX = x, posY = y;
         if (x + 340 > windowWidth) posX = e.clientX - 330;
         if (y + 160 > windowHeight) posY = e.clientY - 160;
-
         modal.style.left = `${posX}px`;
         modal.style.top = `${posY}px`;
     }
 
     function hideHoverModal() {
-        const modal = document.getElementById("hoverModal");
-        modal.classList.remove("active");
+        document.getElementById("hoverModal").classList.remove("active");
     }
 
+    // Exponer funciones al window
     window.processLogin = processLogin;
     window.setLoginMode = setLoginMode;
     window.handleUserSelectChange = handleUserSelectChange;
@@ -2288,18 +2191,14 @@
     window.triggerEquityCheckOnSingle = triggerEquityCheckOnSingle;
     window.checkRangeEquity = checkRangeEquity;
 
-    // Initialization on load
-    window.onload = function() {
+    // Inicialización
+    window.onload = async function() {
         document.getElementById("monthSelect").value = today.getMonth();
         document.getElementById("yearSelect").value = today.getFullYear();
         const notesArea = document.getElementById("notes");
-        if (notesArea) {
-            notesArea.addEventListener("input", triggerEquityCheckOnSingle);
-        }
-        
-        loadLocalStorage();
-        populateUserDropdown();
-        initCloudSync();
+        if (notesArea) notesArea.addEventListener("input", triggerEquityCheckOnSingle);
+
+        await cargarTodoDesdeSupabase();
     };
 </script>
 </body>
