@@ -225,6 +225,19 @@
             font-weight: 900; text-transform: uppercase;
         }
 
+        .future-warning {
+            display: none;
+            background: rgba(243, 156, 18, 0.15);
+            border-left: 4px solid #f39c12;
+            color: #d35400;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .future-warning.visible { display: block; }
+
         .calendar-grid {
             display: grid; grid-template-columns: repeat(7, 1fr);
             gap: 4px; background: #ccc; padding: 4px;
@@ -274,10 +287,6 @@
             color: #111; position: relative;
             transition: opacity 0.2s;
         }
-        .day-content.dimmed {
-            opacity: 0.35;
-            filter: grayscale(0.5);
-        }
         .day-content .emp-name-line {
             display: flex; justify-content: space-between; align-items: center;
             gap: 3px; margin-bottom: 1px;
@@ -312,14 +321,15 @@
         }
 
         .panel-tabs {
-            display: flex; gap: 5px; margin-bottom: 12px;
+            display: flex; gap: 3px; margin-bottom: 12px;
             background: rgba(0,0,0,0.3); padding: 4px; border-radius: 8px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
-            flex: 1; padding: 8px 5px; background: transparent;
+            flex: 1; min-width: 60px; padding: 7px 4px; background: transparent;
             color: #a4b0be; border: none; font-weight: bold;
-            font-size: 0.78rem; border-radius: 6px; cursor: pointer;
+            font-size: 0.7rem; border-radius: 6px; cursor: pointer;
             transition: all 0.2s; text-align: center;
         }
         .tab-btn.active {
@@ -474,6 +484,35 @@
             text-align: center;
         }
 
+        /* Estilos pestaña "Por Empleado" */
+        .employee-print-form {
+            background: rgba(0,0,0,0.25);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 10px;
+        }
+        .employee-print-form label {
+            font-size: 0.75rem;
+            color: #a4b0be;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+            margin-top: 8px;
+        }
+        .employee-print-form select {
+            width: 100%;
+            padding: 9px;
+            border-radius: 6px;
+            border: 1px solid #485460;
+            background: #2f3640;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .employee-print-form select:focus { border-color: #E67E00; outline: none; }
+
         /* ===== ESTILOS DEL MODAL DE AYUDA ===== */
         #helpModal {
             display: none; position: fixed;
@@ -577,26 +616,14 @@
             padding: 10px 12px; border-radius: 6px;
             margin: 10px 0; font-size: 0.83rem; color: #ff7675;
         }
-        .accordion-content table {
-            width: 100%; border-collapse: collapse;
-            margin: 10px 0; font-size: 0.83rem;
-        }
-        .accordion-content table th {
-            background: #1e272e; color: #ffffff;
-            padding: 8px 10px; text-align: left;
-            border: 1px solid #485460;
-        }
-        .accordion-content table td {
-            padding: 8px 10px; border: 1px solid #485460;
-            color: #dcdde1;
-        }
+
+        /* ====== SOLO PARA IMPRESIÓN ====== */
+        #printArea { display: none; }
 
         @media print {
-            #helpModal, .help-btn { display: none !important; }
-        }
+            #helpModal, .help-btn, #hoverModal { display: none !important; }
 
-        @media print {
-            @page { size: portrait; margin: 8mm 10mm; }
+            @page { size: portrait; margin: 10mm 10mm; }
 
             body {
                 background: #ffffff !important;
@@ -604,151 +631,147 @@
                 padding: 0 !important; margin: 0 !important;
             }
 
-            .login-overlay, #hoverModal, .header-actions,
-            .notes-section, .nav-btn, .forgot-pass-link {
+            .login-overlay, .header-actions, .notes-section,
+            .nav-btn, .forgot-pass-link, .container {
                 display: none !important;
             }
 
-            .container {
-                display: block !important; width: 100% !important;
-                max-width: 100% !important; box-shadow: none !important;
-                background: transparent !important;
-                padding: 0 !important; margin: 0 !important;
-            }
-
-            header {
-                background: #1e272e !important;
-                color: #ffffff !important;
-                border-top: 4px solid #E67E00 !important;
-                border-bottom: 2px solid #E67E00 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin-bottom: 12px !important;
-                padding: 12px 18px !important;
-            }
-
-            .header-top-row {
-                display: flex !important; flex-direction: row !important;
-                align-items: center !important; justify-content: flex-start !important;
-                gap: 18px !important; margin-bottom: 10px !important;
-                flex-wrap: nowrap !important; width: 100% !important;
-            }
-
-            .header-logo-left {
-                display: flex !important; align-items: center !important;
-                justify-content: center !important;
-                background: transparent !important; border: none !important;
-                padding: 0 !important; margin: 0 !important;
-                flex-shrink: 0 !important;
-            }
-            .header-logo-left img {
-                width: 50px !important; height: 50px !important;
-                object-fit: contain !important; display: block !important;
-            }
-
-            .header-center-content {
-                display: flex !important; flex-direction: column !important;
-                align-items: flex-start !important; justify-content: center !important;
-                text-align: left !important; flex: 1 !important;
-                margin: 0 !important; padding: 0 !important;
-            }
-
-            .header-main-title {
-                font-size: 1.15rem !important; font-weight: 900 !important;
-                color: #fbc531 !important; margin-bottom: 4px !important;
-                line-height: 1.2 !important; text-align: left !important;
-                white-space: normal !important;
-            }
-
-            .header-person-row {
-                display: flex !important; align-items: center !important;
-                gap: 8px !important; justify-content: flex-start !important;
-            }
-            .header-person-row label {
-                font-size: 0.85rem !important; font-weight: 800 !important;
-                color: #ffffff !important; white-space: nowrap !important;
-            }
-            .header-person-row input {
-                background: #ffffff !important;
-                color: #000000 !important;
-                border: 2px solid #E67E00 !important;
-                padding: 3px 8px !important;
-                font-size: 0.9rem !important;
-                font-weight: 900 !important;
-                width: 250px !important;
-                text-align: center !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .meta-fields select {
-                border: none !important; background: transparent !important;
-                color: #ffffff !important; font-size: 1rem !important;
-                font-weight: bold !important; appearance: none;
-                -webkit-appearance: none;
-            }
-
-            .main-content { display: block !important; }
-            .calendar-section {
-                width: 100% !important; flex: none !important;
-                box-shadow: none !important;
-                border: 1px solid #cccccc !important;
-                padding: 10px !important;
-            }
-
-            .print-summary-container {
+            #printArea {
                 display: block !important;
-                margin-top: 15px !important;
-                page-break-inside: avoid;
+                padding: 0;
+                margin: 0;
+                font-family: Arial, sans-serif;
             }
 
-            .summary-card {
-                border: 2px solid #1e272e !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            .print-header {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                border-bottom: 3px solid #E67E00;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
             }
-            .summary-table th {
+            .print-header img {
+                width: 60px; height: 60px; object-fit: contain;
+            }
+            .print-header-text {
+                flex: 1;
+            }
+            .print-header-text h1 {
+                font-size: 1.1rem;
+                color: #1e272e;
+                font-weight: 900;
+                text-transform: uppercase;
+                margin-bottom: 3px;
+            }
+            .print-header-text h2 {
+                font-size: 0.9rem;
+                color: #E67E00;
+                font-weight: 800;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+            .print-header-text .print-meta {
+                font-size: 0.75rem;
+                color: #555;
+                line-height: 1.4;
+            }
+
+            .print-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.82rem;
+                margin-top: 10px;
+            }
+            .print-table th {
                 background: #1e272e !important;
                 color: #ffffff !important;
+                padding: 6px 8px;
+                text-align: left;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                border: 1px solid #1e272e;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .print-table td {
+                padding: 5px 8px;
+                border: 1px solid #bdc3c7;
+                color: #2d3436;
+            }
+            .print-table tr:nth-child(even) { background: #f8f9fa; }
+            .print-table .emp-name {
+                font-weight: 900;
+                color: #d35400;
+                text-transform: uppercase;
+            }
+            .print-table .sup-name {
+                color: #2980b9;
+                font-size: 0.78rem;
+            }
+
+            .print-badge-approved {
+                background: #27ae60 !important;
+                color: white !important;
+                padding: 1px 6px;
+                border-radius: 3px;
+                font-size: 0.65rem;
+                font-weight: 800;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .print-badge-pending {
+                background: #e67e22 !important;
+                color: white !important;
+                padding: 1px 6px;
+                border-radius: 3px;
+                font-size: 0.65rem;
+                font-weight: 800;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
 
-            .month-navigation {
-                background: #2d3436 !important;
-                color: #ffffff !important;
-                justify-content: center !important;
+            .print-summary-box {
+                background: #f8f9fa !important;
+                border: 2px solid #1e272e;
+                border-radius: 6px;
+                padding: 10px 14px;
+                margin-top: 15px;
+                font-size: 0.85rem;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+            }
+            .print-summary-box .title {
+                font-weight: 900;
+                color: #1e272e;
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                margin-bottom: 6px;
+                border-bottom: 1px solid #bdc3c7;
+                padding-bottom: 4px;
+            }
+            .print-summary-box .row {
+                display: flex;
+                justify-content: space-between;
+                padding: 3px 0;
+                color: #2d3436;
+            }
+            .print-summary-box .row strong {
+                color: #d35400;
             }
 
-            .calendar-grid {
-                gap: 2px !important;
-                background: #dcdde1 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            .print-footer {
+                margin-top: 20px;
+                padding-top: 10px;
+                border-top: 1px solid #bdc3c7;
+                font-size: 0.7rem;
+                color: #7f8c8d;
+                text-align: center;
+                font-style: italic;
             }
 
-            .calendar-day {
-                min-height: 80px !important;
-                page-break-inside: avoid;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .day-content {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .holiday-tag, .status-badge {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .legend {
-                margin-top: 10px !important;
-                color: #2d3436 !important;
-            }
+            .page-break { page-break-before: always; }
+            .no-break { page-break-inside: avoid; }
         }
     </style>
 </head>
@@ -861,6 +884,9 @@
                             <option value="2025">2025</option>
                             <option value="2026">2026</option>
                             <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
                         </select>
                     </div>
                     <div class="field-group">
@@ -878,7 +904,7 @@
                 <div class="header-actions">
                     <button class="help-btn" onclick="openHelpModal()">❓ Ayuda</button>
                     <button class="print-mine-btn" onclick="printMyRecords()">📄 Solo Mis Registros</button>
-                    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
+                    <button class="print-btn" onclick="printFullReport()">🖨️ Imprimir</button>
                     <button class="logout-btn" onclick="logoutUser()">🚪 Cerrar Sesión</button>
                     <button class="delete-user-btn" onclick="openDeleteAccountModal()">🗑️ Eliminar Cuenta</button>
                 </div>
@@ -892,6 +918,8 @@
                     <div class="current-month" id="monthYearTitle">Cargando...</div>
                     <button class="nav-btn" onclick="changeMonth(1)">Siguiente ▶</button>
                 </div>
+
+                <div id="futureWarning" class="future-warning"></div>
 
                 <div class="calendar-grid" id="calendarGrid"></div>
 
@@ -910,9 +938,10 @@
 
                 <div class="panel-tabs">
                     <button class="tab-btn active" onclick="switchTab('single')">📌 Casilla</button>
-                    <button class="tab-btn" onclick="switchTab('range')">🗓️ Por Rango</button>
+                    <button class="tab-btn" onclick="switchTab('range')">🗓️ Rango</button>
                     <button class="tab-btn" onclick="switchTab('equity')">⚖️ Historial</button>
                     <button class="tab-btn" onclick="switchTab('coordination')">🤝 Coordinación</button>
+                    <button class="tab-btn" onclick="switchTab('employee')">📄 Por Empleado</button>
                 </div>
 
                 <div id="tabSingle" class="tab-content active">
@@ -988,9 +1017,39 @@
                     <div id="coordinationSummary" class="history-list" style="max-height:360px;"></div>
                     <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar Análisis</button>
                 </div>
+
+                <div id="tabEmployee" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📄 <strong>Generar reporte individual de un empleado.</strong> Útil para liquidaciones o auditorías.</p>
+                    
+                    <div class="employee-print-form">
+                        <label>👤 Empleado:</label>
+                        <select id="employeePrintSelect">
+                            <option value="">-- Selecciona un empleado --</option>
+                        </select>
+
+                        <label>📅 Año:</label>
+                        <select id="employeeYearSelect">
+                            <option value="ALL">Todos los años</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
+
+                    <button class="save-btn" onclick="printEmployeeHistory()">🖨️ Imprimir Historial del Empleado</button>
+
+                    <div id="employeePreviewContainer" style="margin-top:15px;"></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- ÁREA OCULTA PARA IMPRESIÓN -->
+    <div id="printArea"></div>
 
     <!-- MODAL DE AYUDA / TUTORIAL -->
     <div id="helpModal">
@@ -1012,7 +1071,7 @@
                             <li>Abrí la app en tu navegador.</li>
                             <li>Hacé clic en el botón naranja <strong>"➕ Crear Cuenta"</strong>.</li>
                             <li>Completá: 👤 Nombre completo, 📧 Correo electrónico, 🔑 Contraseña, 🔑 Confirmar contraseña.</li>
-                            <li>Hacé clic en <strong>"REGISTRAR E INGRESAR"</strong>. ¡Ya estás dentro! 🎉</li>
+                            <li>Hacé clic en <strong>"REGISTRAR E INGRESAR"</strong>.</li>
                         </ol>
                         <p><strong>👤 Si ya tenés usuario:</strong></p>
                         <ol>
@@ -1032,25 +1091,21 @@
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p><strong>📌 Forma 1: Casilla por casilla (un día a la vez)</strong></p>
+                        <p><strong>📌 Forma 1: Casilla por casilla</strong></p>
                         <ol>
-                            <li>Hacé clic en el <strong>día</strong> que querés asignar en el calendario.</li>
-                            <li>Escribí el nombre del empleado en el área de texto.</li>
-                            <li>Elegí el estado: ✅ APROBADO o ⏳ EN REVISIÓN.</li>
-                            <li>(Opcional) Agregá una 💬 nota.</li>
+                            <li>Hacé clic en el <strong>día</strong> que querés asignar.</li>
+                            <li>Escribí el nombre del empleado.</li>
+                            <li>Elegí el estado.</li>
                             <li>Hacé clic en <strong>"💾 Guardar Decisión"</strong>.</li>
                         </ol>
-                        <p><strong>🗓️ Forma 2: Por rango de fechas (varios días juntos)</strong></p>
+                        <p><strong>🗓️ Forma 2: Por rango de fechas</strong></p>
                         <ol>
-                            <li>Hacé clic en la pestaña <strong>"🗓️ Por Rango"</strong>.</li>
-                            <li>Completá Desde, Hasta, Nombre del empleado y Estado.</li>
+                            <li>Hacé clic en la pestaña <strong>"🗓️ Rango"</strong>.</li>
+                            <li>Completá Desde, Hasta, Nombre y Estado.</li>
                             <li>Hacé clic en <strong>"📅 Asignar Rango Completo"</strong>.</li>
                         </ol>
                         <div class="warn-box">
-                            🔒 <strong>Importante:</strong> Solo podés editar y borrar los registros que <strong>vos mismo cargaste</strong>. Los registros de otros supervisores aparecen bloqueados con 🔒.
-                        </div>
-                        <div class="tip-box">
-                            📅 <strong>Varios empleados por día:</strong> Un mismo día puede tener varios registros (incluso del mismo supervisor). El sistema los apila y los muestra todos.
+                            🔒 Solo podés editar/borrar los registros que <strong>vos mismo cargaste</strong>.
                         </div>
                     </div>
                 </div>
@@ -1061,29 +1116,20 @@
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p><strong>📌 Borrar TU registro de una casilla:</strong></p>
-                        <ol>
-                            <li>Hacé clic en el <strong>día</strong> que querés limpiar.</li>
-                            <li>En el panel derecho, bajá hasta <strong>"TU REGISTRO EN ESTE DÍA"</strong>.</li>
-                            <li>Hacé clic en <strong>"🗑️ Eliminar Mi Registro de esta Casilla"</strong>.</li>
-                        </ol>
-                        <p><strong>🗓️ Borrar TUS registros en un rango:</strong></p>
-                        <ol>
-                            <li>Hacé clic en la pestaña <strong>"🗓️ Por Rango"</strong>.</li>
-                            <li>Completá Desde y Hasta con las fechas a borrar.</li>
-                            <li>(Opcional) Escribí el nombre del empleado.</li>
-                            <li>Hacé clic en <strong>"🗑️ Eliminar MIS Registros por Rango"</strong>.</li>
-                        </ol>
+                        <p>Igual que para cargar: por casilla o por rango. Solo podés borrar lo tuyo.</p>
+                        <div class="warn-box">
+                            ⚠️ El borrado por rango solo elimina TUS registros.
+                        </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🔒 4. Permisos y Bloqueo de Registros
+                        🔒 4. Permisos y Bloqueo
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p>El sistema maneja permisos según <strong>quién cargó cada registro</strong>.</p>
+                        <p>Cada supervisor es dueño de sus propios registros.</p>
                         <table>
                             <thead>
                                 <tr><th>Acción</th><th>Tu registro</th><th>Registro ajeno</th></tr>
@@ -1094,55 +1140,72 @@
                                 <tr><td>Borrar</td><td>✅</td><td>🔒 No</td></tr>
                             </tbody>
                         </table>
-                        <div class="tip-box">
-                            💡 <strong>¿Por qué?</strong> Para que cada supervisor sea responsable de sus propios registros.
-                        </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        👁️ 5. Filtrar Visualización e Imprimir lo Tuyo
+                        👁️ 5. Filtro y Impresión por Supervisor
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p>Arriba del calendario, al lado de MES y AÑO, tenés un selector <strong>"VER"</strong>:</p>
+                        <p>Con el selector <strong>"VER"</strong> podés elegir:</p>
                         <ul>
-                            <li><strong>Todos los supervisores</strong>: ves todo el calendario.</li>
-                            <li><strong>📄 Solo los míos</strong>: los registros ajenos se ven en gris apagado.</li>
+                            <li><strong>Todos los supervisores</strong>: ves todo.</li>
+                            <li><strong>Solo los míos</strong>: ocultás los ajenos.</li>
                         </ul>
-                        <p>También hay un botón <strong>"📄 Solo Mis Registros"</strong> que:</p>
-                        <ol>
-                            <li>Cambia el filtro a "Solo los míos".</li>
-                            <li>Abre el diálogo de impresión automáticamente.</li>
-                        </ol>
-                        <div class="tip-box">
-                            💡 <strong>Tip:</strong> El botón "🖨️ Imprimir" respeta el filtro. Si tenés "Solo los míos" activado, solo se imprime tu listado.
-                        </div>
+                        <p>El botón <strong>"📄 Solo Mis Registros"</strong> cambia el filtro y abre la impresión.</p>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🖨️ 6. Cómo Imprimir o Exportar a PDF
+                        📄 6. Reporte por Empleado (Liquidaciones)
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
+                        <p>En la pestaña <strong>"📄 Por Empleado"</strong> podés:</p>
                         <ol>
-                            <li>Ajustá el mes, año y filtro que querés imprimir.</li>
-                            <li>Hacé clic en <strong>"🖨️ Imprimir"</strong> (o <strong>"📄 Solo Mis Registros"</strong>).</li>
-                            <li>Se abre la ventana de impresión del navegador.</li>
-                            <li>Elegí <strong>Impresora</strong> o <strong>Guardar como PDF</strong>.</li>
+                            <li>Seleccionar un empleado del desplegable.</li>
+                            <li>Elegir un año específico o "Todos los años".</li>
+                            <li>Hacer clic en <strong>"🖨️ Imprimir Historial"</strong>.</li>
                         </ol>
+                        <p>Sale una hoja con:</p>
+                        <ul>
+                            <li>Todas las vacaciones del empleado (fechas, días, estado, supervisor).</li>
+                            <li>Totales (días totales, cantidad de períodos).</li>
+                            <li>Encabezado con logo y fecha.</li>
+                        </ul>
                         <div class="tip-box">
-                            📋 El resumen incluye la columna <strong>"CARGADO POR"</strong> y muestra el filtro aplicado en el encabezado.
+                            💡 <strong>Ideal para RRHH</strong> cuando necesita hacer una liquidación.
                         </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        🎨 7. ¿Qué Significan los Colores?
+                        🖨️ 7. Cómo Imprimir
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>Reporte general del mes:</strong></p>
+                        <ol>
+                            <li>Elegí el mes, año y filtro.</li>
+                            <li>Hacé clic en <strong>"🖨️ Imprimir"</strong>.</li>
+                            <li>Sale el calendario + resumen en hojas separadas.</li>
+                        </ol>
+                        <p><strong>Historial de un empleado:</strong></p>
+                        <ol>
+                            <li>Andá a <strong>"📄 Por Empleado"</strong>.</li>
+                            <li>Seleccioná el empleado y año.</li>
+                            <li>Hacé clic en <strong>"🖨️ Imprimir Historial del Empleado"</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        🎨 8. ¿Qué Significan los Colores?
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
@@ -1154,8 +1217,8 @@
                                 <tr><td>🟧 Naranja</td><td>Casilla seleccionada</td></tr>
                                 <tr><td>🟥 Rojo claro</td><td>Feriado Nacional</td></tr>
                                 <tr><td>🟦 Azul</td><td>Tu registro (editable)</td></tr>
-                                <tr><td>🟪 Color por supervisor</td><td>Cada supervisor tiene un color único</td></tr>
-                                <tr><td>🔒 Gris apagado</td><td>Registro de otro supervisor (no editable)</td></tr>
+                                <tr><td>🟪 Color por supervisor</td><td>Cada supervisor tiene su color único</td></tr>
+                                <tr><td>🔒 Gris apagado</td><td>Registro ajeno (no editable)</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1163,13 +1226,25 @@
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        ☁️ 8. ¿Dónde se Guardan los Datos?
+                        📅 9. Años y Feriados
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p>Todos los datos se guardan en la <strong>nube de Supabase</strong> ☁️. Eso significa:</p>
+                        <p>El selector de año va de <strong>2024 a 2030</strong>.</p>
+                        <p><strong>Feriados inamovibles</strong>: caen siempre el mismo día (25/12, 01/01, etc.).</p>
+                        <p><strong>Feriados móviles</strong> (Carnaval, Viernes Santo): pueden no estar actualizados para años > 2027. Aparece un aviso cuando pasás de 2027.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        ☁️ 10. ¿Dónde se Guardan los Datos?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>En la <strong>nube de Supabase</strong> ☁️. Eso significa:</p>
                         <ul>
-                            <li>✅ <strong>No se pierden</strong> al refrescar la página.</li>
+                            <li>✅ <strong>No se pierden</strong> al refrescar.</li>
                             <li>✅ <strong>Los ven todos</strong> los supervisores en tiempo real.</li>
                             <li>✅ <strong>No hace falta pagar nada</strong>.</li>
                         </ul>
@@ -1182,11 +1257,10 @@
                         <span class="arrow">▼</span>
                     </div>
                     <div class="accordion-content">
-                        <p><strong>🤔 ¿Puedo cargar varios empleados en el mismo día?</strong><br>Sí. Podés cargar varios registros el mismo día.</p>
-                        <p><strong>🤔 ¿Puedo editar las vacaciones que cargó otro supervisor?</strong><br>No. Solo podés editar/borrar tus propios registros.</p>
-                        <p><strong>🤔 ¿Dos supervisores pueden tener vacaciones en el mismo día?</strong><br>Sí. Cada uno es independiente y no se pisan.</p>
-                        <p><strong>🤔 ¿Puedo imprimir solo mis registros?</strong><br>Sí. Usá el botón "📄 Solo Mis Registros".</p>
-                        <p><strong>🤔 ¿Los feriados se cargan solos?</strong><br>Sí. Los feriados nacionales argentinos ya están cargados. 🇦🇷</p>
+                        <p><strong>🤔 ¿Puedo cargar varios empleados el mismo día?</strong><br>Sí. El sistema los apila.</p>
+                        <p><strong>🤔 ¿Puedo editar lo de otro supervisor?</strong><br>No. Solo tus propios registros.</p>
+                        <p><strong>🤔 ¿Puedo imprimir el historial de un empleado?</strong><br>Sí, en la pestaña "📄 Por Empleado".</p>
+                        <p><strong>🤔 ¿Los feriados se cargan solos?</strong><br>Sí, los nacionales argentinos. 🇦🇷</p>
                     </div>
                 </div>
 
@@ -1218,11 +1292,9 @@
     // ESTADO GLOBAL
     // ============================================================
     let currentUser = "";
-    let notesData = {}; // notesData[date_key] = [ {id, text, status, supervisorNote, updatedBy}, ... ]
+    let notesData = {};
     let usersDB = { "SUPERVISOR": { password: "admin", email: "admin@minerar.com.ar" } };
     let isRegisteringNew = false;
-
-    // Filtro actual: 'ALL' o 'MINE'
     let currentFilter = 'ALL';
 
     const LOCAL_SESION_KEY = 'minerar_sesion_activa';
@@ -1291,6 +1363,7 @@
                 });
             }
             updateCalendar();
+            updateEmployeeDropdown();
             if (document.getElementById("tabCoordination")?.classList.contains("active")) {
                 renderCoordinationSummary();
             }
@@ -1362,6 +1435,16 @@
         return `hsl(${h}, 70%, 80%)`;
     }
 
+    function getFechaImpresion() {
+        const now = new Date();
+        const dia = String(now.getDate()).padStart(2, '0');
+        const mes = String(now.getMonth() + 1).padStart(2, '0');
+        const anio = now.getFullYear();
+        const hora = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+        return `${dia}/${mes}/${anio} a las ${hora}:${min} hs`;
+    }
+
     // ============================================================
     // CONSTANTES
     // ============================================================
@@ -1402,9 +1485,49 @@
             document.querySelectorAll('.tab-btn')[3].classList.add('active');
             document.getElementById('tabCoordination').classList.add('active');
             renderCoordinationSummary();
+        } else if (tabName === 'employee') {
+            document.querySelectorAll('.tab-btn')[4].classList.add('active');
+            document.getElementById('tabEmployee').classList.add('active');
+            updateEmployeeDropdown();
         }
     }
 
+    // ============================================================
+    // DROPDOWN DE EMPLEADOS (para la pestaña "Por Empleado")
+    // ============================================================
+    function updateEmployeeDropdown() {
+        const select = document.getElementById("employeePrintSelect");
+        if (!select) return;
+
+        // Recolectar todos los empleados únicos
+        const empleados = new Set();
+        for (let key in notesData) {
+            notesData[key].forEach(rec => {
+                if (rec.text && rec.text.trim()) {
+                    empleados.add(rec.text.trim().toUpperCase());
+                }
+            });
+        }
+
+        const ordenados = Array.from(empleados).sort();
+
+        const valorActual = select.value;
+        select.innerHTML = '<option value="">-- Selecciona un empleado --</option>';
+        ordenados.forEach(emp => {
+            const opt = document.createElement("option");
+            opt.value = emp;
+            opt.innerText = emp;
+            select.appendChild(opt);
+        });
+
+        if (valorActual && ordenados.includes(valorActual)) {
+            select.value = valorActual;
+        }
+    }
+
+    // ============================================================
+    // FILTROS Y EQUIDAD
+    // ============================================================
     function checkEquityForDateAndName(dateStr, workerName) {
         if (!dateStr || !workerName || workerName.trim().length < 2) return null;
         const cleanName = workerName.trim().toUpperCase();
@@ -1466,6 +1589,9 @@
         }
     }
 
+    // ============================================================
+    // GUARDAR Y BORRAR
+    // ============================================================
     async function saveRange() {
         const startVal = document.getElementById("rangeStart").value;
         const endVal = document.getElementById("rangeEnd").value;
@@ -1585,6 +1711,55 @@
         }
     }
 
+    async function saveNote() {
+        if (!selectedDateStr) {
+            document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
+            return;
+        }
+        const val = document.getElementById("notes").value.trim().toUpperCase();
+        const status = document.getElementById("singleApprovalStatus").value;
+        const supervisorNote = document.getElementById("supervisorNote").value.trim();
+
+        if (!val) {
+            alert("Por favor escribí el nombre del empleado.");
+            return;
+        }
+
+        const misRegs = getMyRecordsForDay(selectedDateStr);
+
+        try {
+            if (misRegs.length > 0) {
+                const { error } = await supabase.from('vacaciones')
+                    .update({
+                        employee_name: val,
+                        status: status,
+                        supervisor_note: supervisorNote,
+                        updated_by: currentUser
+                    })
+                    .eq('id', misRegs[0].id);
+                if (error) throw error;
+            } else {
+                const { error } = await supabase.from('vacaciones').insert([{
+                    date_key: selectedDateStr,
+                    employee_name: val,
+                    status: status,
+                    supervisor_note: supervisorNote,
+                    updated_by: currentUser
+                }]);
+                if (error) throw error;
+            }
+            await recargarVacaciones();
+            renderDayPanel();
+            triggerEquityCheckOnSingle();
+        } catch (err) {
+            console.error(err);
+            alert("Error guardando: " + err.message);
+        }
+    }
+
+    // ============================================================
+    // HISTORIAL Y COORDINACIÓN
+    // ============================================================
     function searchEmployeeHistory() {
         const query = document.getElementById("searchWorkerInput").value.trim().toUpperCase();
         const container = document.getElementById("historyResults");
@@ -1636,7 +1811,6 @@
         for (let key in notesData) {
             if (key.startsWith(`${year}-${mm}`)) {
                 notesData[key].forEach(rec => {
-                    // Aplicar filtro
                     if (currentFilter === 'ALL' || rec.updatedBy === currentUser) {
                         daysWithVacations.push({ date: key, data: rec });
                     }
@@ -1645,12 +1819,12 @@
         }
 
         if (daysWithVacations.length === 0) {
-            container.innerHTML = `<p style="font-size:0.8rem; color:#a4b0be; text-align:center;">No hay vacaciones cargadas en ${monthNames[month]} ${year}.</p>`;
+            container.innerHTML = `<p style="font-size:0.8rem; color:#a4b0be; text-align:center;">No hay vacaciones en ${monthNames[month]} ${year}.</p>`;
             return;
         }
 
         daysWithVacations.sort((a, b) => a.date.localeCompare(b.date));
-        let html = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">Resumen ${monthNames[month]} ${year} (${daysWithVacations.length} registros):</div>`;
+        let html = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">Resumen ${monthNames[month]} ${year}:</div>`;
 
         daysWithVacations.forEach(item => {
             const dayNum = item.date.split("-")[2];
@@ -1671,7 +1845,269 @@
         container.innerHTML = html;
     }
 
+    // ============================================================
+    // IMPRESIÓN
+    // ============================================================
+    function printFullReport() {
+        // Genera reporte completo (calendario + resumen) en el área de impresión
+        renderPrintArea('full');
+        setTimeout(() => window.print(), 300);
+    }
+
+    function printMyRecords() {
+        const filterSelect = document.getElementById("filterSelect");
+        if (filterSelect) {
+            filterSelect.value = 'MINE';
+            currentFilter = 'MINE';
+            updateCalendar();
+        }
+        setTimeout(() => {
+            renderPrintArea('mine');
+            setTimeout(() => window.print(), 300);
+        }, 300);
+    }
+
+    function printEmployeeHistory() {
+        const select = document.getElementById("employeePrintSelect");
+        const yearSelect = document.getElementById("employeeYearSelect");
+        const empleado = select.value;
+        const anio = yearSelect.value;
+
+        if (!empleado) {
+            alert("⚠️ Por favor selecciona un empleado.");
+            return;
+        }
+
+        renderPrintArea('employee', empleado, anio);
+        setTimeout(() => window.print(), 300);
+    }
+
+    function renderPrintArea(mode, empleado = "", anio = "") {
+        const printArea = document.getElementById("printArea");
+        if (!printArea) return;
+
+        const month = parseInt(document.getElementById("monthSelect").value);
+        const year = parseInt(document.getElementById("yearSelect").value);
+        const mm = String(month + 1).padStart(2, '0');
+        const fechaImp = getFechaImpresion();
+
+        let headerTitle = "";
+        let headerSub = "";
+        let tablaHTML = "";
+        let resumenHTML = "";
+
+        if (mode === 'employee') {
+            // ====== MODO HISTORIAL DE UN EMPLEADO ======
+            headerTitle = `HISTORIAL DE VACACIONES`;
+            headerSub = `Empleado: ${empleado} ${anio !== 'ALL' ? `— Año ${anio}` : '— Todos los años'}`;
+
+            // Recolectar todos los registros del empleado
+            let registros = [];
+            for (let key in notesData) {
+                const yearKey = key.split("-")[0];
+                if (anio !== 'ALL' && yearKey !== anio) continue;
+
+                notesData[key].forEach(rec => {
+                    if (rec.text.toUpperCase() === empleado.toUpperCase()) {
+                        registros.push({
+                            date: key,
+                            status: rec.status || 'APROBADO',
+                            updatedBy: rec.updatedBy
+                        });
+                    }
+                });
+            }
+
+            registros.sort((a, b) => a.date.localeCompare(b.date));
+
+            if (registros.length === 0) {
+                tablaHTML = `<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No se encontraron registros de vacaciones para este empleado ${anio !== 'ALL' ? `en el año ${anio}` : ''}.</p>`;
+                resumenHTML = "";
+            } else {
+                // Agrupar en períodos
+                let periods = [];
+                let currentPeriod = null;
+                registros.forEach(item => {
+                    const d = new Date(item.date + "T00:00:00");
+                    if (!currentPeriod) {
+                        currentPeriod = { start: d, end: d, count: 1, status: item.status, updatedBy: item.updatedBy };
+                    } else {
+                        let prevEnd = new Date(currentPeriod.end);
+                        prevEnd.setDate(prevEnd.getDate() + 1);
+                        const sameOwner = currentPeriod.updatedBy === item.updatedBy;
+                        if (d.getTime() === prevEnd.getTime() && sameOwner) {
+                            currentPeriod.end = d;
+                            currentPeriod.count++;
+                        } else {
+                            periods.push(currentPeriod);
+                            currentPeriod = { start: d, end: d, count: 1, status: item.status, updatedBy: item.updatedBy };
+                        }
+                    }
+                });
+                if (currentPeriod) periods.push(currentPeriod);
+
+                tablaHTML = `
+                    <table class="print-table">
+                        <thead>
+                            <tr>
+                                <th>AÑO</th>
+                                <th>DESDE</th>
+                                <th>HASTA</th>
+                                <th>DÍAS</th>
+                                <th>ESTADO</th>
+                                <th>CARGADO POR</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                let totalDias = 0;
+                periods.forEach(p => {
+                    const anioInicio = p.start.getFullYear();
+                    const startStr = `${String(p.start.getDate()).padStart(2,'0')}/${String(p.start.getMonth()+1).padStart(2,'0')}/${p.start.getFullYear()}`;
+                    const endStr = `${String(p.end.getDate()).padStart(2,'0')}/${String(p.end.getMonth()+1).padStart(2,'0')}/${p.end.getFullYear()}`;
+                    const badge = p.status === 'APROBADO' 
+                        ? '<span class="print-badge-approved">APROBADO</span>' 
+                        : '<span class="print-badge-pending">EN REVISIÓN</span>';
+                    totalDias += p.count;
+
+                    tablaHTML += `
+                        <tr>
+                            <td><strong>${anioInicio}</strong></td>
+                            <td>${startStr}</td>
+                            <td>${endStr}</td>
+                            <td><strong>${p.count}</strong></td>
+                            <td>${badge}</td>
+                            <td class="sup-name">${p.updatedBy}</td>
+                        </tr>`;
+                });
+
+                tablaHTML += `</tbody></table>`;
+
+                const aniosUnicos = [...new Set(periods.map(p => p.start.getFullYear()))].sort();
+                resumenHTML = `
+                    <div class="print-summary-box">
+                        <div class="title">📊 RESUMEN</div>
+                        <div class="row"><span>Total de días de vacaciones:</span> <strong>${totalDias} día(s)</strong></div>
+                        <div class="row"><span>Cantidad de períodos:</span> <strong>${periods.length}</strong></div>
+                        <div class="row"><span>Años con vacaciones:</span> <strong>${aniosUnicos.join(", ")}</strong></div>
+                    </div>`;
+            }
+        } else {
+            // ====== MODO REPORTE GENERAL DEL MES ======
+            headerTitle = `NOMINA DE PERSONAL Y DÍAS DE VACACIONES`;
+            headerSub = `${monthNames[month].toUpperCase()} ${year}`;
+
+            let employeeDays = {};
+            for (let key in notesData) {
+                if (key.startsWith(`${year}-${mm}`)) {
+                    notesData[key].forEach(rec => {
+                        if (mode === 'mine' && rec.updatedBy !== currentUser) return;
+                        
+                        const empName = rec.text.toUpperCase().trim();
+                        if (!employeeDays[empName]) employeeDays[empName] = [];
+                        employeeDays[empName].push({
+                            date: key,
+                            status: rec.status || 'APROBADO',
+                            updatedBy: rec.updatedBy
+                        });
+                    });
+                }
+            }
+
+            const empNames = Object.keys(employeeDays).sort();
+            if (empNames.length === 0) {
+                tablaHTML = `<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No hay vacaciones registradas en ${monthNames[month]} ${year}${mode === 'mine' ? ' (solo tus registros)' : ''}.</p>`;
+            } else {
+                tablaHTML = `
+                    <table class="print-table">
+                        <thead>
+                            <tr>
+                                <th>EMPLEADO / BENEFICIARIO</th>
+                                <th>DESDE</th>
+                                <th>HASTA</th>
+                                <th>DÍAS</th>
+                                <th>ESTADO</th>
+                                <th>CARGADO POR</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                empNames.forEach(emp => {
+                    let items = employeeDays[emp];
+                    items.sort((a, b) => a.date.localeCompare(b.date));
+
+                    let periods = [];
+                    let currentPeriod = null;
+                    items.forEach(item => {
+                        const d = new Date(item.date + "T00:00:00");
+                        if (!currentPeriod) {
+                            currentPeriod = { start: d, end: d, count: 1, status: item.status, updatedBy: item.updatedBy };
+                        } else {
+                            let prevEnd = new Date(currentPeriod.end);
+                            prevEnd.setDate(prevEnd.getDate() + 1);
+                            const sameOwner = currentPeriod.updatedBy === item.updatedBy;
+                            if (d.getTime() === prevEnd.getTime() && sameOwner) {
+                                currentPeriod.end = d;
+                                currentPeriod.count++;
+                            } else {
+                                periods.push(currentPeriod);
+                                currentPeriod = { start: d, end: d, count: 1, status: item.status, updatedBy: item.updatedBy };
+                            }
+                        }
+                    });
+                    if (currentPeriod) periods.push(currentPeriod);
+
+                    periods.forEach(p => {
+                        const startStr = `${String(p.start.getDate()).padStart(2,'0')}/${String(p.start.getMonth()+1).padStart(2,'0')}/${p.start.getFullYear()}`;
+                        const endStr = `${String(p.end.getDate()).padStart(2,'0')}/${String(p.end.getMonth()+1).padStart(2,'0')}/${p.end.getFullYear()}`;
+                        const badge = p.status === 'APROBADO' 
+                            ? '<span class="print-badge-approved">APROBADO</span>' 
+                            : '<span class="print-badge-pending">EN REVISIÓN</span>';
+
+                        tablaHTML += `
+                            <tr>
+                                <td class="emp-name">${emp}</td>
+                                <td>${startStr}</td>
+                                <td>${endStr}</td>
+                                <td><strong>${p.count}</strong></td>
+                                <td>${badge}</td>
+                                <td class="sup-name">${p.updatedBy}</td>
+                            </tr>`;
+                    });
+                });
+
+                tablaHTML += `</tbody></table>`;
+            }
+        }
+
+        // Armar el HTML completo para el área de impresión
+        const filtroTexto = mode === 'mine' ? 'Solo mis registros' : 
+                           (mode === 'employee' ? `Historial de ${empleado}` : 'Todos los supervisores');
+
+        printArea.innerHTML = `
+            <div class="print-header">
+                <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo" onerror="this.src='https://placehold.co/60x60/E67E00/white?text=M'">
+                <div class="print-header-text">
+                    <h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1>
+                    <h2>${headerTitle} — ${headerSub}</h2>
+                    <div class="print-meta">
+                        👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>
+                        🕐 Impreso el ${fechaImp}<br>
+                        🔎 Filtro: <strong>${filtroTexto}</strong>
+                    </div>
+                </div>
+            </div>
+            ${tablaHTML}
+            ${resumenHTML}
+            <div class="print-footer">
+                Documento generado automáticamente por el sistema Calendario Vacacional de Minerar S.A.<br>
+                Minerar S.A. © 2026 — Todos los derechos reservados.
+            </div>
+        `;
+    }
+
     function renderPrintVacationSummary() {
+        // Este es el resumen que se ve EN PANTALLA (no impresión)
         const summaryContainer = document.getElementById("printSummaryContainer");
         if (!summaryContainer) return;
 
@@ -1683,7 +2119,6 @@
         for (let key in notesData) {
             if (key.startsWith(`${year}-${mm}`)) {
                 notesData[key].forEach(rec => {
-                    // Aplicar filtro
                     if (currentFilter !== 'ALL' && rec.updatedBy !== currentUser) return;
                     
                     const empName = rec.text.toUpperCase().trim();
@@ -1697,8 +2132,7 @@
             }
         }
 
-        const empNames = Object.keys(employeeDays);
-        const filterLabel = currentFilter === 'ALL' ? 'Todos los supervisores' : 'Solo mis registros';
+        const empNames = Object.keys(employeeDays).sort();
         const filterTag = currentFilter === 'ALL' 
             ? '' 
             : `<span class="summary-filter-tag">📄 SOLO MIS REGISTROS</span>`;
@@ -1716,7 +2150,7 @@
         let html = `
             <div class="summary-card">
                 <div class="summary-header">📋 NOMINA DE PERSONAL Y DÍAS DE VACACIONES - ${monthNames[month].toUpperCase()} ${year} ${filterTag}</div>
-                <div class="summary-sub">SUPERVISOR: <strong>${currentUser || 'NO ESPECIFICADO'}</strong> &nbsp;|&nbsp; FILTRO: <strong>${filterLabel}</strong></div>
+                <div class="summary-sub">SUPERVISOR: <strong>${currentUser || 'NO ESPECIFICADO'}</strong></div>
                 <table class="summary-table">
                     <thead>
                         <tr>
@@ -1778,6 +2212,9 @@
         summaryContainer.innerHTML = html;
     }
 
+    // ============================================================
+    // PANEL DEL DÍA
+    // ============================================================
     function renderDayPanel() {
         if (!selectedDateStr) return;
 
@@ -1787,7 +2224,6 @@
         const otherContainer = document.getElementById("otherRecordsContainer");
         const otherList = document.getElementById("otherRecordsList");
         const myForm = document.getElementById("myRecordForm");
-        const lockedMsg = document.getElementById("lockedMessage");
 
         if (otherRegs.length > 0) {
             otherContainer.style.display = "block";
@@ -1814,15 +2250,12 @@
             document.getElementById("notes").value = myReg.text;
             document.getElementById("singleApprovalStatus").value = myReg.status || "APROBADO";
             document.getElementById("supervisorNote").value = myReg.supervisorNote || "";
-            myForm.style.display = "block";
-            lockedMsg.style.display = "none";
         } else {
             document.getElementById("notes").value = "";
             document.getElementById("singleApprovalStatus").value = "APROBADO";
             document.getElementById("supervisorNote").value = "";
-            myForm.style.display = "block";
-            lockedMsg.style.display = "none";
         }
+        myForm.style.display = "block";
     }
 
     function selectDate(dateKey, day, monthName, year) {
@@ -2168,6 +2601,9 @@
         m += delta;
         if (m < 0) { m = 11; y--; }
         if (m > 11) { m = 0; y++; }
+        // Asegurar que el año esté en el rango del select
+        if (y < 2024) y = 2024;
+        if (y > 2030) y = 2030;
         document.getElementById("monthSelect").value = m;
         document.getElementById("yearSelect").value = y;
         updateCalendar();
@@ -2179,12 +2615,22 @@
         const filterSelect = document.getElementById("filterSelect");
         if (!monthSelect || !yearSelect) return;
 
-        // Leer filtro actual
         if (filterSelect) currentFilter = filterSelect.value;
 
         const month = parseInt(monthSelect.value);
         const year = parseInt(yearSelect.value);
         document.getElementById("monthYearTitle").innerText = `${monthNames[month]} ${year}`;
+
+        // Aviso de feriados móviles para años > 2027
+        const futureWarning = document.getElementById("futureWarning");
+        if (futureWarning) {
+            if (year > 2027) {
+                futureWarning.classList.add("visible");
+                futureWarning.innerHTML = `⚠️ <b>Aviso:</b> Los feriados móviles (Carnaval, Viernes Santo, etc.) pueden no estar actualizados para el año ${year}. Consultar el calendario oficial de feriados nacionales.`;
+            } else {
+                futureWarning.classList.remove("visible");
+            }
+        }
 
         const grid = document.getElementById("calendarGrid");
         grid.innerHTML = "";
@@ -2240,9 +2686,6 @@
             const records = getDayRecords(keyDate);
             records.forEach(rec => {
                 const isMine = rec.updatedBy === currentUser;
-                
-                // APLICAR FILTRO VISUAL
-                // Si estamos en "Solo los míos" y el registro es ajeno → ocultar
                 if (currentFilter === 'MINE' && !isMine) return;
 
                 const contentDiv = document.createElement("div");
@@ -2282,66 +2725,6 @@
         renderPrintVacationSummary();
     }
 
-    async function saveNote() {
-        if (!selectedDateStr) {
-            document.getElementById("selectedDateText").innerText = "⚠️ Selecciona primero un día en el calendario.";
-            return;
-        }
-        const val = document.getElementById("notes").value.trim().toUpperCase();
-        const status = document.getElementById("singleApprovalStatus").value;
-        const supervisorNote = document.getElementById("supervisorNote").value.trim();
-
-        if (!val) {
-            alert("Por favor escribí el nombre del empleado.");
-            return;
-        }
-
-        const misRegs = getMyRecordsForDay(selectedDateStr);
-
-        try {
-            if (misRegs.length > 0) {
-                const { error } = await supabase.from('vacaciones')
-                    .update({
-                        employee_name: val,
-                        status: status,
-                        supervisor_note: supervisorNote,
-                        updated_by: currentUser
-                    })
-                    .eq('id', misRegs[0].id);
-                if (error) throw error;
-            } else {
-                const { error } = await supabase.from('vacaciones').insert([{
-                    date_key: selectedDateStr,
-                    employee_name: val,
-                    status: status,
-                    supervisor_note: supervisorNote,
-                    updated_by: currentUser
-                }]);
-                if (error) throw error;
-            }
-            await recargarVacaciones();
-            renderDayPanel();
-            triggerEquityCheckOnSingle();
-        } catch (err) {
-            console.error(err);
-            alert("Error guardando: " + err.message);
-        }
-    }
-
-    function printMyRecords() {
-        // Cambiar filtro a "Solo los míos" y disparar impresión
-        const filterSelect = document.getElementById("filterSelect");
-        if (filterSelect) {
-            filterSelect.value = 'MINE';
-            currentFilter = 'MINE';
-            updateCalendar();
-        }
-        // Esperar un momento a que se actualice la vista y luego imprimir
-        setTimeout(() => {
-            window.print();
-        }, 400);
-    }
-
     function showHoverModal(e, keyHoliday, keyDate) {
         const modal = document.getElementById("hoverModal");
         const details = holidayDetails[keyHoliday];
@@ -2371,7 +2754,7 @@
     }
 
     // ============================================================
-    // MODAL DE AYUDA Y ACORDEÓN
+    // MODAL DE AYUDA
     // ============================================================
     function openHelpModal() {
         const modal = document.getElementById("helpModal");
@@ -2430,6 +2813,8 @@
     window.triggerEquityCheckOnSingle = triggerEquityCheckOnSingle;
     window.checkRangeEquity = checkRangeEquity;
     window.printMyRecords = printMyRecords;
+    window.printFullReport = printFullReport;
+    window.printEmployeeHistory = printEmployeeHistory;
 
     // Inicialización
     window.onload = async function() {
