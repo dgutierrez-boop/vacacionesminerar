@@ -6,8 +6,6 @@
     <title>CALENDARIO VACACIONAL - MINERAR S.A.</title>
     <link rel="icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
     <link rel="shortcut icon" type="image/gif" href="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif">
-
-    <!-- SheetJS para Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <style>
@@ -16,8 +14,8 @@
         @page { size: auto; margin: 8mm 10mm; }
         @keyframes vibrate { 0%{transform:translateX(0)} 20%{transform:translateX(-8px) rotate(-5deg)} 40%{transform:translateX(8px) rotate(5deg)} 60%{transform:translateX(-8px) rotate(-5deg)} 80%{transform:translateX(8px) rotate(5deg)} 100%{transform:translateX(0)} }
         .shake { animation: vibrate 0.4s ease-in-out; }
+        @keyframes fadeInModal { from { opacity:0; transform: scale(0.9); } to { opacity:1; transform: scale(1); } }
 
-        /* LOGIN */
         .login-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.92); display:flex; justify-content:center; align-items:center; z-index:9999; backdrop-filter: blur(8px); }
         .login-box { background:#1e272e; padding:32px 28px; border-radius:14px; width:420px; box-shadow:0 15px 35px rgba(0,0,0,0.85); text-align:center; border-top:5px solid #E67E00; color:white; position:relative; }
         .login-logo-box { width:100%; text-align:center; margin-bottom:10px; }
@@ -35,7 +33,6 @@
         .login-info { font-size:0.82rem; color:#a4b0be; margin-top:12px; line-height:1.4; }
         .login-error { font-size:0.85rem; color:#ff6b6b; font-weight:bold; margin-top:10px; display:none; background: rgba(255,107,107,0.1); padding:8px; border-radius:6px; }
 
-        /* CONTAINER */
         .container { width:100%; max-width:1550px; margin:0 auto; background: rgba(255,255,255,0.03); border-radius:12px; padding:25px; box-shadow:0 10px 25px rgba(0,0,0,0.6); display:none; margin-top:10px; }
         header { background:#1e272e; color:#fff; padding:20px 25px 15px 25px; border-radius:12px; margin-bottom:25px; box-shadow:0 8px 20px rgba(0,0,0,0.4); border-top:4px solid #E67E00; border-bottom:2px solid rgba(230,126,0,0.4); position:relative; }
         .header-top-row { display:flex; align-items:center; justify-content:flex-start; gap:20px; margin-bottom:15px; flex-wrap:nowrap; width:100%; }
@@ -65,7 +62,6 @@
         .help-btn { background:#3498db; } .help-btn:hover { background:#2980b9; }
         .backup-btn { background:#8e44ad; } .backup-btn:hover { background:#6c3483; }
 
-        /* Menú desplegable Exportar */
         .export-menu-wrapper { position:relative; display:inline-block; }
         .export-dropdown { display:none; position:absolute; top:100%; right:0; margin-top:5px; background:#2f3640; border-radius:8px; box-shadow:0 8px 20px rgba(0,0,0,0.5); min-width:220px; z-index:100; overflow:hidden; border:2px solid #E67E00; }
         .export-dropdown.open { display:block; }
@@ -73,7 +69,6 @@
         .export-dropdown button:last-child { border-bottom:none; }
         .export-dropdown button:hover { background:#E67E00; }
 
-        /* Summary */
         .print-summary-container { margin-top:15px; width:100%; }
         .summary-card { background:#fff; color:#2d3436; border-radius:8px; padding:12px 16px; border:2px solid #E67E00; box-shadow:0 4px 10px rgba(0,0,0,0.15); }
         .summary-header { font-size:0.95rem; font-weight:900; color:#1e272e; text-transform:uppercase; border-bottom:2px solid #E67E00; padding-bottom:4px; margin-bottom:6px; }
@@ -92,7 +87,6 @@
         .badge-restantes-fin { background:#95a5a6; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
         .badge-restantes-ultimo { background:#e74c3c; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
 
-        /* Calendar */
         .main-content { display:flex; gap:15px; align-items:stretch; }
         .calendar-section { flex:3; background-color:#fff; border-radius:12px; padding:15px; box-shadow:0 10px 20px rgba(0,0,0,0.3); display:flex; flex-direction:column; color:#333; }
         .month-navigation { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:10px 15px; background:#2d3436; border-radius:8px; color:white; border-bottom:2px solid #E67E00; }
@@ -128,7 +122,6 @@
         .calendar-day.selected { outline:3px solid #E67E00 !important; z-index:2; }
         .empty-day { background:#f5f5f5; min-height:110px; }
 
-        /* Panel */
         .notes-section { flex:1; min-width:340px; background-color:#1e272e; color:#fff; border-radius:12px; padding:20px; box-shadow:0 10px 20px rgba(0,0,0,0.4); display:flex; flex-direction:column; border-top:5px solid #E67E00; }
         .notes-section h2 { color:#f5f6fa; margin-bottom:12px; font-size:1.2rem; text-align:center; font-weight:800; text-transform:uppercase; border-bottom:2px solid #E67E00; padding-bottom:8px; letter-spacing:0.5px; }
         .panel-tabs { display:flex; gap:3px; margin-bottom:12px; background: rgba(0,0,0,0.3); padding:4px; border-radius:8px; flex-wrap:wrap; }
@@ -181,7 +174,6 @@
         .employee-print-form label { font-size:0.75rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px; margin-top:8px; }
         .employee-print-form select { width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; font-weight:bold; cursor:pointer; }
 
-        /* Pestaña empleados */
         .emp-form-box { background: rgba(0,0,0,0.3); padding:12px; border-radius:8px; border-left:4px solid #27ae60; margin-bottom:12px; }
         .emp-form-box label { font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px; margin-top:8px; }
         .emp-form-box input, .emp-form-box textarea { width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem; outline:none; }
@@ -196,7 +188,6 @@
         .emp-btn-mini:hover { opacity:0.85; }
         .emp-btn-mini.danger { background:#c0392b; }
 
-        /* Recordatorios */
         .reminder-section { margin-bottom:12px; }
         .reminder-title { font-size:0.8rem; font-weight:900; color:#fbc531; text-transform:uppercase; margin-bottom:6px; padding-bottom:4px; border-bottom:1px solid #485460; }
         .reminder-item { background:#2d3436; padding:8px 10px; border-radius:6px; margin-bottom:5px; border-left:3px solid #3498db; font-size:0.8rem; }
@@ -214,10 +205,18 @@
         .toggle-switch::after { content:''; position:absolute; top:3px; left:3px; width:20px; height:20px; background:white; border-radius:50%; transition: left 0.3s; }
         .toggle-switch.on::after { left:27px; }
 
+        /* Multi-selector para filtro múltiple */
+        .multi-selector-box { background:#2f3640; border-radius:8px; padding:10px; margin-bottom:10px; }
+        .multi-selector-box select { width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#222f3e; color:white; font-size:0.85rem; font-weight:bold; cursor:pointer; margin-bottom:8px; }
+        .multi-selected-list { background:#222f3e; border-radius:6px; padding:6px; max-height:180px; overflow-y:auto; margin-bottom:8px; }
+        .multi-selected-item { display:flex; justify-content:space-between; align-items:center; padding:6px 8px; background:#2d3436; border-radius:4px; margin-bottom:4px; font-size:0.8rem; border-left:3px solid #27ae60; }
+        .multi-selected-item .ms-name { font-weight:bold; color:#fff; }
+        .multi-selected-item .ms-remove { background:#c0392b; color:white; border:none; border-radius:4px; padding:2px 8px; font-size:0.7rem; font-weight:bold; cursor:pointer; }
+        .multi-selected-item .ms-remove:hover { background:#a93226; }
+
         /* MODALES */
-        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index:10001; justify-content:center; align-items:center; padding:20px; }
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index:10001; justify-content:center; align-items:center; padding:20px; overflow-y:auto; }
         .modal-overlay.active { display:flex; animation: fadeInModal 0.25s ease-out; }
-        @keyframes fadeInModal { from { opacity:0; transform: scale(0.9); } to { opacity:1; transform: scale(1); } }
         .modal-box { background:#1e272e; width:100%; max-width:480px; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.8); border-top:5px solid #E67E00; text-align:center; padding:30px 25px 25px 25px; color:white; position:relative; }
         .modal-box.tipo-success { border-top-color:#27ae60; }
         .modal-box.tipo-warning { border-top-color:#f39c12; }
@@ -227,7 +226,7 @@
         .modal-box.tipo-medical { border-top-color:#8e44ad; }
         .modal-emoji { font-size:3.5rem; margin-bottom:12px; display:block; }
         .modal-title { font-size:1.2rem; font-weight:900; color:#fbc531; text-transform:uppercase; margin-bottom:10px; letter-spacing:0.5px; }
-        .modal-message { font-size:0.9rem; color:#dcdde1; line-height:1.5; margin-bottom:20px; }
+        .modal-message { font-size:0.9rem; color:#dcdde1; line-height:1.5; margin-bottom:20px; text-align:left; }
         .modal-message strong { color:#fff; }
         .modal-actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
         .modal-btn { padding:10px 22px; border:none; border-radius:8px; font-weight:bold; font-size:0.9rem; cursor:pointer; transition: transform 0.1s, background 0.2s; min-width:110px; }
@@ -238,7 +237,28 @@
         .modal-btn.secondary { background:#485460; color:white; }
         .modal-btn.secondary:hover { background:#3d4451; transform:translateY(-1px); }
 
-        /* Ayuda */
+        /* Modal multi-selector */
+        .multi-modal { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index:10002; justify-content:center; align-items:center; padding:20px; }
+        .multi-modal.active { display:flex; animation: fadeInModal 0.25s ease-out; }
+        .multi-modal-box { background:#1e272e; width:100%; max-width:520px; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.8); border-top:5px solid #E67E00; color:white; display:flex; flex-direction:column; max-height:85vh; }
+        .multi-modal-header { padding:18px 22px; border-bottom:2px solid #E67E00; display:flex; justify-content:space-between; align-items:center; }
+        .multi-modal-header h2 { font-size:1.05rem; color:#fbc531; font-weight:900; text-transform:uppercase; }
+        .multi-modal-close { background:#c0392b; color:white; border:none; border-radius:6px; width:32px; height:32px; font-size:1rem; font-weight:bold; cursor:pointer; }
+        .multi-modal-body { padding:18px 22px; overflow-y:auto; flex:1; }
+        .multi-search { width:100%; padding:9px 12px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px; outline:none; }
+        .multi-search:focus { border-color:#E67E00; }
+        .multi-actions-row { display:flex; gap:6px; margin-bottom:10px; }
+        .multi-actions-row button { flex:1; padding:7px; border:none; border-radius:6px; font-size:0.75rem; font-weight:bold; cursor:pointer; }
+        .multi-actions-row .btn-all { background:#27ae60; color:white; }
+        .multi-actions-row .btn-none { background:#7f8c8d; color:white; }
+        .multi-check-list { max-height:340px; overflow-y:auto; background:#2f3640; border-radius:8px; padding:8px; }
+        .multi-check-item { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:6px; cursor:pointer; transition: background 0.15s; }
+        .multi-check-item:hover { background:#3d4451; }
+        .multi-check-item input[type=checkbox] { width:18px; height:18px; cursor:pointer; accent-color:#27ae60; }
+        .multi-check-item label { flex:1; cursor:pointer; font-size:0.85rem; font-weight:bold; color:#fff; }
+        .multi-modal-footer { padding:14px 22px; border-top:2px solid #E67E00; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+        .multi-counter { font-size:0.82rem; color:#fbc531; font-weight:bold; }
+
         #helpModal { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index:10001; justify-content:center; align-items:flex-start; padding:30px 15px; overflow-y:auto; }
         #helpModal.active { display:flex !important; }
         .help-modal-box { background:#1e272e; width:100%; max-width:850px; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.8); border-top:5px solid #E67E00; position:relative; animation: fadeInModal 0.25s ease-out; }
@@ -261,10 +281,9 @@
         .accordion-content .tip-box { background: rgba(230,126,0,0.15); border-left:3px solid #E67E00; padding:10px 12px; border-radius:6px; margin:10px 0; font-size:0.83rem; color:#f1c40f; }
         .accordion-content .warn-box { background: rgba(231,76,60,0.15); border-left:3px solid #e74c3c; padding:10px 12px; border-radius:6px; margin:10px 0; font-size:0.83rem; color:#ff7675; }
 
-        /* IMPRESIÓN */
         #printArea { display:none; }
         @media print {
-            #helpModal, .help-btn, #hoverModal, .export-dropdown, .modal-overlay { display:none !important; }
+            #helpModal, .help-btn, #hoverModal, .export-dropdown, .modal-overlay, .multi-modal { display:none !important; }
             @page { size: portrait; margin: 10mm 10mm; }
             body { background:#fff !important; color:#000 !important; padding:0 !important; margin:0 !important; }
             .login-overlay, .header-actions, .notes-section, .nav-btn, .forgot-pass-link, .container, .filter-summary-banner { display:none !important; }
@@ -290,7 +309,6 @@
             .print-footer { margin-top:20px; padding-top:10px; border-top:1px solid #bdc3c7; font-size:0.7rem; color:#7f8c8d; text-align:center; font-style:italic; }
         }
 
-        /* RESPONSIVE */
         @media (max-width: 1024px) {
             body { padding:12px; } .container { padding:15px; } .main-content { flex-direction:column; }
             .calendar-section, .notes-section { width:100%; min-width:0; } .notes-section { margin-top:15px; }
@@ -350,7 +368,6 @@
     </style>
 </head>
 <body>
-
     <!-- LOGIN -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
@@ -359,15 +376,12 @@
             </div>
             <div class="login-title">Calendario Vacacional</div>
             <div class="login-subtitle">Minerar S.A.</div>
-
             <div class="lock-icon-container" id="lockIcon">🔒</div>
             <h3>Ingreso al Sistema</h3>
-
             <div style="display:flex; gap:6px; margin-bottom:12px;">
                 <button type="button" id="loginModeBtn" onclick="setLoginMode('login')" style="flex:1; padding:8px; border-radius:6px; border:none; background:#E67E00; color:white; font-weight:bold; font-size:0.8rem; cursor:pointer;">👤 Iniciar Sesión</button>
                 <button type="button" id="registerModeBtn" onclick="setLoginMode('register')" style="flex:1; padding:8px; border-radius:6px; border:2px solid #E67E00; background:transparent; color:#E67E00; font-weight:bold; font-size:0.8rem; cursor:pointer;">➕ Crear Cuenta</button>
             </div>
-
             <select id="userSelect" onchange="handleUserSelectChange()"></select>
             <input type="text" id="usernameInput" placeholder="Nombre completo" autocomplete="off" style="display:none;">
             <input type="email" id="emailInput" placeholder="Correo electrónico" autocomplete="off" style="display:none;">
@@ -435,14 +449,14 @@
         <div class="modal-box tipo-success">
             <span class="modal-emoji">👋</span>
             <div class="modal-title" id="welcomeTitle">¡Bienvenido!</div>
-            <div class="modal-message" id="welcomeMessage">Que tengas un excelente día.</div>
+            <div class="modal-message" id="welcomeMessage" style="text-align:center;">Que tengas un excelente día.</div>
             <div class="modal-actions">
                 <button class="modal-btn primary" onclick="closeWelcomeModal()">Comenzar</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL RECORDATORIOS DIARIOS -->
+    <!-- MODAL RECORDATORIOS -->
     <div class="modal-overlay" id="remindersModal">
         <div class="modal-box tipo-info" style="max-width:600px;">
             <span class="modal-emoji">🔔</span>
@@ -454,7 +468,46 @@
         </div>
     </div>
 
-    <!-- CONTAINER -->
+    <!-- MODAL PEDIR CONTRASEÑA (para eliminar empleados) -->
+    <div class="modal-overlay" id="passConfirmModal">
+        <div class="modal-box tipo-warning">
+            <span class="modal-emoji">🔐</span>
+            <div class="modal-title">Confirmar acción</div>
+            <div class="modal-message" id="passConfirmMsg" style="text-align:center;">Ingresá tu contraseña para confirmar.</div>
+            <input type="password" id="passConfirmInput" placeholder="Tu contraseña" style="width:100%; padding:11px; border-radius:8px; border:2px solid #485460; background:#2f3640; color:white; font-size:0.95rem; margin-bottom:15px; outline:none; text-align:center;">
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closePassConfirmModal()">Cancelar</button>
+                <button class="modal-btn danger" onclick="confirmPassAction()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL MULTI-SELECTOR (filtro múltiple) -->
+    <div class="multi-modal" id="multiSelectModal">
+        <div class="multi-modal-box">
+            <div class="multi-modal-header">
+                <h2>🏷️ Seleccionar Empleados</h2>
+                <button class="multi-modal-close" onclick="closeMultiSelectModal()">✕</button>
+            </div>
+            <div class="multi-modal-body">
+                <input type="text" class="multi-search" id="multiSearchInput" placeholder="🔍 Buscar empleado..." oninput="filterMultiList()">
+                <div class="multi-actions-row">
+                    <button class="btn-all" onclick="multiSelectAll()">✅ Todos</button>
+                    <button class="btn-none" onclick="multiDeselectAll()">✕ Ninguno</button>
+                </div>
+                <div class="multi-check-list" id="multiCheckList"></div>
+            </div>
+            <div class="multi-modal-footer">
+                <div class="multi-counter" id="multiCounter">0 seleccionados</div>
+                <div style="display:flex; gap:8px;">
+                    <button class="modal-btn secondary" onclick="closeMultiSelectModal()">Cancelar</button>
+                    <button class="modal-btn primary" onclick="applyMultiSelect()">✅ Aplicar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTAINER PRINCIPAL -->
     <div class="container" id="mainContainer">
         <header>
             <div class="header-top-row">
@@ -490,18 +543,21 @@
                     <div class="field-group">
                         <span>VER:</span>
                         <select id="filterSelect" onchange="onFilterChange()">
-                            <option value="ALL">Todos</option>
+                            <option value="ALL">🌐 Todos</option>
                             <option value="MINE">📄 Solo los míos</option>
                             <option value="VAC">🏖️ Solo vacaciones</option>
                             <option value="ENF">🏥 Solo enfermedades</option>
                             <option value="EMPLEADO">👤 Por empleado...</option>
+                            <option value="MULTI">✏️ Varios empleados...</option>
                         </select>
                     </div>
                     <div class="field-group" id="employeeFilterGroup" style="display:none;">
-                        <span>👤</span>
-                        <select id="employeeFilterSelect" onchange="updateCalendar()" style="border:2px solid #27ae60; min-width:200px;">
+                        <select id="employeeFilterSelect" onchange="updateCalendar()" style="border:2px solid #27ae60; min-width:180px;">
                             <option value="">-- Elegí empleado --</option>
                         </select>
+                    </div>
+                    <div class="field-group" id="multiFilterGroup" style="display:none;">
+                        <button class="backup-btn" style="background:#27ae60;" onclick="openMultiSelectModal()">🏷️ <span id="multiFilterLabel">Seleccionar empleados</span></button>
                     </div>
                     <div id="cloudStatusBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:bold; background: rgba(46,204,113,0.15); color:#2ecc71; padding:5px 10px; border-radius:20px; border:1px solid rgba(46,204,113,0.4);">
                         <span style="display:inline-block; width:8px; height:8px; background:#2ecc71; border-radius:50%; box-shadow:0 0 8px #2ecc71;" id="cloudDot"></span>
@@ -536,7 +592,7 @@
 
                 <div class="filter-summary-banner" id="filterSummaryBanner">
                     <div class="filter-summary-left">
-                        <div class="filter-summary-emoji">👤</div>
+                        <div class="filter-summary-emoji" id="filterSummaryEmoji">👤</div>
                         <div class="filter-summary-info">
                             <div class="filter-summary-name" id="filterSummaryName">EMPLEADO</div>
                             <div class="filter-summary-counts" id="filterSummaryCounts">0 días</div>
@@ -560,13 +616,13 @@
 
             <div class="notes-section">
                 <h2>Gestión</h2>
-
                 <div class="panel-tabs">
                     <button class="tab-btn active" onclick="switchTab('single')">📌 Casilla</button>
                     <button class="tab-btn" onclick="switchTab('range')">🗓️ Rango</button>
                     <button class="tab-btn" onclick="switchTab('equity')">⚖️ Historial</button>
                     <button class="tab-btn" onclick="switchTab('coordination')">🤝 Coord.</button>
-                    <button class="tab-btn" onclick="switchTab('employee')">📄 Reporte</button>
+                    <button class="tab-btn" onclick="switchTab('reporte')">📄 Reporte</button>
+                    <button class="tab-btn" onclick="switchTab('multi')">🔍 Filtro Múltiple</button>
                     <button class="tab-btn" onclick="switchTab('empleados')">👥 Empleados</button>
                     <button class="tab-btn" onclick="switchTab('recordatorios')">🔔 Record.</button>
                 </div>
@@ -629,25 +685,46 @@
                     <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar MIS Registros</button>
                 </div>
 
-                <!-- TAB EQUITY -->
+                <!-- TAB HISTORIAL -->
                 <div id="tabEquity" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:8px;">Buscar historial:</p>
-                    <input type="text" id="searchWorkerInput" placeholder="Nombre..." style="width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem; margin-bottom:8px; text-transform:uppercase;" oninput="searchEmployeeHistory()">
-                    <div id="historyResults" class="history-list">
-                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresá un nombre.</p>
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📊 Consultá el historial de un empleado (en pantalla).</p>
+                    <div class="employee-print-form">
+                        <label>👤 Empleado:</label>
+                        <select id="historyEmployeeSelect" onchange="renderEmployeeHistory()">
+                            <option value="">-- Elegí un empleado --</option>
+                        </select>
+                        <label>📅 Año:</label>
+                        <select id="historyYearSelect" onchange="renderEmployeeHistory()">
+                            <option value="ALL">Todos los años</option>
+                            <option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option>
+                            <option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option>
+                        </select>
                     </div>
+                    <div id="historyResults" style="margin-top:10px;"></div>
                 </div>
 
-                <!-- TAB COORDINACIÓN -->
+                <!-- TAB COORDINACION -->
                 <div id="tabCoordination" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Resumen del mes:</p>
+                    <div class="employee-print-form">
+                        <label>👤 Supervisor:</label>
+                        <select id="coordSupervisorSelect" onchange="renderCoordinationSummary()">
+                            <option value="ALL">Todos los supervisores</option>
+                        </select>
+                        <label>📅 Mes:</label>
+                        <select id="coordMonthSelect" onchange="renderCoordinationSummary()">
+                            <option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option>
+                            <option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option>
+                            <option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option>
+                            <option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option>
+                        </select>
+                    </div>
                     <div id="coordinationSummary" class="history-list" style="max-height:360px;"></div>
                     <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar</button>
                 </div>
 
-                <!-- TAB EMPLEADO (reporte) -->
-                <div id="tabEmployee" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📄 Reporte individual.</p>
+                <!-- TAB REPORTE -->
+                <div id="tabReporte" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📄 Reporte individual en pantalla.</p>
                     <div class="employee-print-form">
                         <label>👤 Empleado:</label>
                         <select id="employeePrintSelect"><option value="">-- Elegir --</option></select>
@@ -658,10 +735,29 @@
                             <option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option>
                         </select>
                     </div>
-                    <button class="save-btn" onclick="printEmployeeHistory()">🖨️ Imprimir Historial</button>
+                    <button class="save-btn" onclick="previewEmployeeReport()">📊 Ver Reporte en Pantalla</button>
+                    <button class="btn-secondary" style="background:#2980b9; margin-top:6px;" onclick="printEmployeeHistory()">🖨️ Imprimir Reporte</button>
+                    <div id="employeePreviewContainer" style="margin-top:15px;"></div>
                 </div>
 
-                <!-- TAB EMPLEADOS (CRUD) -->
+                <!-- TAB FILTRO MULTIPLE -->
+                <div id="tabMulti" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">🔍 Elegí varios empleados para ver solo sus registros.</p>
+                    <div class="multi-selector-box">
+                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:6px;">➕ Agregar empleado:</label>
+                        <select id="multiAddSelect" onchange="addToMultiSelect(this.value)">
+                            <option value="">-- Elegí un empleado --</option>
+                        </select>
+                    </div>
+                    <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">📋 Seleccionados:</label>
+                    <div class="multi-selected-list" id="multiSelectedList">
+                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center; padding:15px;">Sin empleados seleccionados.</p>
+                    </div>
+                    <button class="save-btn" style="background:#27ae60;" onclick="applyMultiFilter()">✅ Aplicar Filtro</button>
+                    <button class="btn-secondary" style="background:#7f8c8d;" onclick="clearMultiFilter()">✕ Limpiar Selección</button>
+                </div>
+
+                <!-- TAB EMPLEADOS (solo admins) -->
                 <div id="tabEmpleados" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">👥 Gestión de empleados y saldos.</p>
                     <div class="emp-form-box">
@@ -686,13 +782,11 @@
                 <!-- TAB RECORDATORIOS -->
                 <div id="tabRecordatorios" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">🔔 Recordatorios y avisos.</p>
-
                     <div class="avisos-toggle-box">
                         <span>🔔 Avisos automáticos</span>
                         <div class="toggle-switch" id="avisosToggle" onclick="toggleAvisos()"></div>
                     </div>
                     <p style="font-size:0.72rem; color:#a4b0be; margin-bottom:12px; line-height:1.4;">Si está activado, al abrir el sistema vas a ver un aviso con los inicios, últimos días y fines de vacaciones del día.</p>
-
                     <div class="reminder-section">
                         <div class="reminder-title" style="color:#27ae60;">🟢 Iniciando hoy</div>
                         <div id="remindersIniciando"></div>
@@ -717,7 +811,7 @@
 
     <div id="printArea"></div>
 
-    <!-- AYUDA -->
+    <!-- AYUDA ACTUALIZADA -->
     <div id="helpModal">
         <div class="help-modal-box">
             <div class="help-modal-header">
@@ -725,37 +819,70 @@
                 <button class="help-close-btn" onclick="closeHelpModal()">✕</button>
             </div>
             <div class="help-modal-body">
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔐 1. Ingreso <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p><strong>Primera vez:</strong> clic en "➕ Crear Cuenta", completá datos y listo.</p><p><strong>Ya tenés usuario:</strong> seleccionalo, ingresá contraseña y "Ingresar".</p>
-                    <div class="tip-box">💡 La sesión queda guardada, no hace falta loguearse cada vez.</div></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔐 1. Ingreso al Sistema <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p><strong>Primera vez:</strong> clic en "➕ Crear Cuenta", completá y listo.</p><p><strong>Ya tenés usuario:</strong> seleccionalo, ingresá contraseña y "Ingresar".</p>
+                    <div class="tip-box">💡 La sesión queda guardada. No hace falta loguearse cada vez.</div></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📅 2. Asignar vacaciones <span class="arrow">▼</span></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📅 2. Asignar Vacaciones <span class="arrow">▼</span></div>
                     <div class="accordion-content">
-                        <p><strong>Casilla por casilla:</strong> clic en el día, escribí nombre, tipo de licencia y estado. Guardar.</p>
-                        <p><strong>Por rango:</strong> pestaña "🗓️ Rango", completá desde/hasta/nombre/tipo/estado. Asignar.</p>
-                        <div class="tip-box">✨ Podés cargar varios empleados el mismo día. El sistema los apila.</div>
+                        <p><strong>Casilla por casilla:</strong> clic en el día, escribí nombre, tipo y estado. Guardar.</p>
+                        <p><strong>Por rango:</strong> pestaña "🗓️ Rango", completá desde/hasta/nombre/tipo/estado.</p>
+                        <div class="tip-box">✨ Podés cargar varios empleados el mismo día.</div>
                     </div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏥 3. Enfermedad <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En el tipo de licencia elegí "🏥 ENFERMEDAD". Se registra igual que vacaciones pero con otro color y se contabiliza por separado.</p></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏥 3. Registrar Enfermedad <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>En "Tipo de Licencia" elegí 🏥 ENFERMEDAD. Se registra igual que vacaciones pero con color violeta y se contabiliza por separado.</p></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👤 4. Filtro por empleado <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y el calendario muestra solo sus días. Arriba aparece un banner con el resumen.</p></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🗑️ 4. Borrar Registros <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Igual que para cargar: por casilla o por rango. Solo podés borrar lo tuyo.</p></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👥 5. Gestión de empleados <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Pestaña "👥 Empleados". Podés agregar, editar, eliminar y cargar la fecha de ingreso. El sistema calcula automáticamente los días por antigüedad:</p>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔒 5. Permisos y Bloqueo <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Cada supervisor es dueño de sus registros. Solo podés editar/borrar los tuyos. Los ajenos se ven pero con candado 🔒.</p></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👤 6. Filtro por Empleado <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y el calendario muestra solo sus días. Arriba aparece un banner naranja con el resumen.</p></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔍 7. Filtro Múltiple <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "✏️ Varios empleados..." y hacé clic en el botón "🏷️ Seleccionar empleados". Se abre un modal con checkboxes. Tildá los que quieras y clic en "✅ Aplicar".</p>
+                    <div class="tip-box">💡 También podés usar la pestaña "🔍 Filtro Múltiple" del panel derecho.</div></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👥 8. Gestión de Empleados <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Solo ADMINISTRADOR y EDGARDO SAAVEDRA ven la pestaña "👥 Empleados". Cargá nombre + fecha de ingreso. El sistema calcula los días por antigüedad:</p>
                     <ul><li>0-5 años: 14 días</li><li>5-10 años: 21 días</li><li>10-20 años: 28 días</li><li>+20 años: 35 días</li></ul>
-                    <div class="tip-box">💡 Podés sobrescribir el valor con "días override" si hay convenio especial.</div></div>
+                    <div class="tip-box">💡 El campo "Días override" solo se usa si hay convenio especial.</div></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔔 6. Recordatorios <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Pestaña "🔔 Record.": muestra inicios, últimos días, fines y próximos 7 días.</p><p>Podés activar/desactivar los avisos automáticos.</p></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📊 9. Reporte Individual <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Pestaña "📄 Reporte": elegí empleado + año, clic en "📊 Ver Reporte en Pantalla". Muestra días usados, restantes, saldo anual y todos los períodos.</p></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📤 7. Exportar <span class="arrow">▼</span></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔔 10. Recordatorios <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Pestaña "🔔 Record.": muestra inicios, últimos días, fines y próximos 7 días. Podés activar/desactivar los avisos automáticos.</p></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📤 11. Exportar <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>Botón "📤 Exportar":</p>
-                    <ul><li>🖨️ Imprimir</li><li>📄 PDF (diálogo de impresión → Guardar como PDF)</li><li>📊 Excel (.xlsx)</li><li>💾 Backup JSON (respaldo técnico completo)</li><li>📋 Solo Mis Registros</li></ul></div>
+                    <ul><li>🖨️ Imprimir</li><li>📄 PDF (guardar como PDF)</li><li>📊 Excel (.xlsx)</li><li>💾 Backup JSON (respaldo técnico)</li><li>📋 Solo Mis Registros</li></ul></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">☁️ 8. Datos en la nube <span class="arrow">▼</span></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🎨 12. Colores <span class="arrow">▼</span></div>
+                    <div class="accordion-content">
+                    <table style="width:100%; color:#dcdde1; font-size:0.82rem;">
+                        <tr><td>🟧 Naranja</td><td>Casilla seleccionada / Filtro activo</td></tr>
+                        <tr><td>🟥 Rojo claro</td><td>Feriado Nacional</td></tr>
+                        <tr><td>🟦 Azul</td><td>Vacaciones</td></tr>
+                        <tr><td>🟪 Violeta</td><td>Enfermedad</td></tr>
+                    </table></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📱 13. Celular y Tablet <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>El sistema se adapta automáticamente. En celular, girá el dispositivo horizontalmente para mejor visualización.</p></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">☁️ 14. Datos en la Nube <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>Todo se guarda en <strong>Supabase</strong>. No se pierde, todos ven los cambios en tiempo real.</p></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">❓ 15. Preguntas Frecuentes <span class="arrow">▼</span></div>
+                    <div class="accordion-content">
+                    <p><strong>¿Puedo cargar varios empleados el mismo día?</strong> Sí, se apilan.</p>
+                    <p><strong>¿Puedo escribir en minúsculas?</strong> Sí, se convierte a MAYÚSCULAS automáticamente.</p>
+                    <p><strong>¿Puedo editar lo de otro supervisor?</strong> No, solo lo tuyo.</p>
+                    <p><strong>¿Los feriados se cargan solos?</strong> Sí, los nacionales argentinos 🇦🇷.</p>
+                    </div>
                 </div>
                 <div style="text-align:center; margin-top:25px; padding-top:20px; border-top:2px solid #E67E00;">
                     <div style="color:#fbc531; font-weight:900; margin-bottom:8px;">🌟 Calendario Vacacional de Minerar S.A. 🌟</div>
@@ -773,6 +900,8 @@
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    const ADMINS_AUTORIZADOS = ['ADMINISTRADOR', 'EDGARDO SAAVEDRA'];
+
     let currentUser = "";
     let notesData = {};
     let empleadosData = [];
@@ -780,10 +909,13 @@
     let isRegisteringNew = false;
     let currentFilter = 'ALL';
     let selectedEmployeeFilter = '';
+    let selectedMultiFilter = [];
+    let tempMultiSelection = [];
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
     let selectedDateStr = "";
     let avisosEnabled = true;
+    let passConfirmCallback = null;
 
     const LOCAL_SESION_KEY = 'minerar_sesion_activa';
     const AVISOS_KEY = 'minerar_avisos_enabled';
@@ -809,8 +941,9 @@
 
     function normalizar(str) { return !str ? "" : String(str).toUpperCase().trim(); }
     function hoyStr() { const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+    function isAdmin() { return ADMINS_AUTORIZADOS.includes(normalizar(currentUser)); }
 
-    // ==================== MODALES GENÉRICOS ====================
+    // ==================== MODALES ====================
     function showModal(opts) {
         const modal = document.getElementById('genericModal');
         const box = document.getElementById('genericModalBox');
@@ -824,6 +957,7 @@
         title.innerText = opts.titulo || '';
         msg.innerHTML = opts.mensaje || '';
         actions.innerHTML = '';
+        if (opts.centered) msg.style.textAlign = 'center'; else msg.style.textAlign = 'left';
 
         const buttons = opts.botones || [{label:'Aceptar', clase:'primary', onClick:()=>closeGenericModal()}];
         buttons.forEach(b => {
@@ -836,23 +970,126 @@
         modal.classList.add('active');
     }
     function closeGenericModal() { document.getElementById('genericModal').classList.remove('active'); }
-    function alertSuccess(msg, titulo='¡Listo!') { showModal({tipo:'success', emoji:'✅', titulo, mensaje:msg, botones:[{label:'Aceptar', clase:'primary', onClick:closeGenericModal}]}); }
-    function alertError(msg, titulo='Error') { showModal({tipo:'error', emoji:'❌', titulo, mensaje:msg, botones:[{label:'Aceptar', clase:'danger', onClick:closeGenericModal}]}); }
-    function alertWarning(msg, titulo='Atención') { showModal({tipo:'warning', emoji:'⚠️', titulo, mensaje:msg, botones:[{label:'Entendido', clase:'primary', onClick:closeGenericModal}]}); }
-    function alertInfo(msg, titulo='Información') { showModal({tipo:'info', emoji:'ℹ️', titulo, mensaje:msg, botones:[{label:'Aceptar', clase:'primary', onClick:closeGenericModal}]}); }
+    function alertSuccess(msg, titulo='¡Listo!') { showModal({tipo:'success', emoji:'✅', titulo, mensaje:msg}); }
+    function alertError(msg, titulo='Error') { showModal({tipo:'error', emoji:'❌', titulo, mensaje:msg}); }
+    function alertWarning(msg, titulo='Atención') { showModal({tipo:'warning', emoji:'⚠️', titulo, mensaje:msg}); }
+    function alertInfo(msg, titulo='Información') { showModal({tipo:'info', emoji:'ℹ️', titulo, mensaje:msg}); }
     function confirmDialog(msg, onOk, titulo='¿Confirmás?') {
         showModal({tipo:'ask', emoji:'❓', titulo, mensaje:msg, botones:[
             {label:'Cancelar', clase:'secondary', onClick:closeGenericModal},
             {label:'Confirmar', clase:'primary', onClick:()=>{ closeGenericModal(); onOk(); }}
         ]});
     }
+    function openPassConfirm(msg, onOk) {
+        passConfirmCallback = onOk;
+        document.getElementById('passConfirmMsg').innerText = msg;
+        document.getElementById('passConfirmInput').value = '';
+        document.getElementById('passConfirmModal').classList.add('active');
+        setTimeout(() => document.getElementById('passConfirmInput').focus(), 200);
+    }
+    function closePassConfirmModal() {
+        document.getElementById('passConfirmModal').classList.remove('active');
+        passConfirmCallback = null;
+        document.getElementById('passConfirmInput').value = '';
+    }
+    function confirmPassAction() {
+        const pass = document.getElementById('passConfirmInput').value.trim();
+        if (!pass) { alertWarning("Ingresá tu contraseña."); return; }
+        if (!usersDB[currentUser] || usersDB[currentUser].password !== pass) {
+            alertError("Contraseña incorrecta.");
+            return;
+        }
+        const cb = passConfirmCallback;
+        closePassConfirmModal();
+        if (cb) cb();
+    }
 
     function openHelpModal() { document.getElementById('helpModal').classList.add('active'); }
     function closeHelpModal() { document.getElementById('helpModal').classList.remove('active'); }
     function toggleAccordion(el) { el.parentElement.classList.toggle('open'); }
-
     function closeWelcomeModal() { document.getElementById('welcomeModal').classList.remove('active'); }
     function closeRemindersModal() { document.getElementById('remindersModal').classList.remove('active'); }
+
+    // ==================== MULTI-SELECTOR ====================
+    function openMultiSelectModal() {
+        tempMultiSelection = [...selectedMultiFilter];
+        const list = document.getElementById('multiCheckList');
+        list.innerHTML = '';
+        const nombres = getAllEmployeeNames();
+        if (!nombres.length) {
+            list.innerHTML = '<p style="text-align:center; padding:15px; color:#a4b0be;">No hay empleados cargados.</p>';
+        } else {
+            nombres.forEach(n => {
+                const div = document.createElement('div');
+                div.className = 'multi-check-item';
+                div.dataset.name = n;
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.value = n;
+                cb.checked = tempMultiSelection.includes(n);
+                cb.onchange = () => { toggleMultiItem(n, cb.checked); };
+                const lb = document.createElement('label');
+                lb.innerText = n;
+                lb.onclick = (e) => { e.preventDefault(); cb.checked = !cb.checked; toggleMultiItem(n, cb.checked); };
+                div.appendChild(cb);
+                div.appendChild(lb);
+                list.appendChild(div);
+            });
+        }
+        updateMultiCounter();
+        document.getElementById('multiSelectModal').classList.add('active');
+    }
+    function closeMultiSelectModal() {
+        document.getElementById('multiSelectModal').classList.remove('active');
+        document.getElementById('multiSearchInput').value = '';
+    }
+    function toggleMultiItem(nombre, checked) {
+        if (checked) {
+            if (!tempMultiSelection.includes(nombre)) tempMultiSelection.push(nombre);
+        } else {
+            tempMultiSelection = tempMultiSelection.filter(x => x !== nombre);
+        }
+        updateMultiCounter();
+    }
+    function updateMultiCounter() {
+        document.getElementById('multiCounter').innerText = `${tempMultiSelection.length} seleccionado${tempMultiSelection.length !== 1 ? 's' : ''}`;
+    }
+    function filterMultiList() {
+        const q = normalizar(document.getElementById('multiSearchInput').value);
+        document.querySelectorAll('.multi-check-item').forEach(item => {
+            const name = item.dataset.name;
+            item.style.display = (!q || name.includes(q)) ? 'flex' : 'none';
+        });
+    }
+    function multiSelectAll() {
+        document.querySelectorAll('.multi-check-item').forEach(item => {
+            if (item.style.display !== 'none') {
+                const cb = item.querySelector('input[type=checkbox]');
+                cb.checked = true;
+                if (!tempMultiSelection.includes(item.dataset.name)) tempMultiSelection.push(item.dataset.name);
+            }
+        });
+        updateMultiCounter();
+    }
+    function multiDeselectAll() {
+        document.querySelectorAll('.multi-check-item').forEach(item => {
+            item.querySelector('input[type=checkbox]').checked = false;
+        });
+        tempMultiSelection = [];
+        updateMultiCounter();
+    }
+    function applyMultiSelect() {
+        selectedMultiFilter = [...tempMultiSelection];
+        closeMultiSelectModal();
+        if (selectedMultiFilter.length > 0) {
+            currentFilter = 'MULTI';
+            document.getElementById('filterSelect').value = 'MULTI';
+            document.getElementById('multiFilterLabel').innerText = `${selectedMultiFilter.length} empleado${selectedMultiFilter.length !== 1 ? 's' : ''}`;
+            updateCalendar();
+        } else {
+            clearEmployeeFilter();
+        }
+    }
 
     // ==================== SUPABASE ====================
     async function cargarTodo() {
@@ -891,7 +1128,7 @@
                 });
             });
             updateCalendar();
-            updateEmployeeDropdowns();
+            updateAllDropdowns();
             if (document.getElementById("tabCoordination")?.classList.contains("active")) renderCoordinationSummary();
             if (document.getElementById("tabRecordatorios")?.classList.contains("active")) renderReminders();
         } catch(err) { console.error(err); }
@@ -904,6 +1141,7 @@
             usersDB = {};
             if (data) data.forEach(u => { usersDB[normalizar(u.username)] = { password: u.password, email: u.email || '' }; });
             populateUserDropdown(currentUser || document.getElementById('userSelect')?.value);
+            updateCoordSupervisorDropdown();
         } catch(err) { console.error(err); }
     }
 
@@ -913,7 +1151,7 @@
             if (error) throw error;
             empleadosData = data || [];
             renderEmpleadosList();
-            updateEmployeeDropdowns();
+            updateAllDropdowns();
         } catch(err) { console.error(err); }
     }
 
@@ -936,12 +1174,10 @@
         for (let i=0;i<str.length;i++) hash = str.charCodeAt(i) + ((hash<<5)-hash);
         return `hsl(${Math.abs(hash)%360}, 70%, 80%)`;
     }
-
     function getFechaImpresion() {
         const n = new Date();
         return `${String(n.getDate()).padStart(2,'0')}/${String(n.getMonth()+1).padStart(2,'0')}/${n.getFullYear()} a las ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')} hs`;
     }
-
     function diasPorAntiguedad(fechaIngreso) {
         if (!fechaIngreso) return 14;
         const ing = new Date(fechaIngreso + "T00:00:00");
@@ -954,14 +1190,12 @@
         if (anios < 20) return 28;
         return 35;
     }
-
     function getDiasAsignados(nombre) {
         const emp = empleadosData.find(e => normalizar(e.nombre) === normalizar(nombre));
         if (!emp) return 14;
         if (emp.dias_override) return emp.dias_override;
         return diasPorAntiguedad(emp.fecha_ingreso);
     }
-
     function calcularDiasRestantesPeriodo(start, end) {
         const hoy = new Date(); hoy.setHours(0,0,0,0);
         const s = new Date(start + "T00:00:00"), e = new Date(end + "T00:00:00");
@@ -971,7 +1205,6 @@
         if (diff === 0) return { label: "Último día", clase: "ultimo" };
         return { label: diff + " día" + (diff>1?"s":""), clase: "curso" };
     }
-
     function calcularDiasUsadosAnio(nombre, anio) {
         let vac = 0, enf = 0;
         for (let k in notesData) {
@@ -984,16 +1217,38 @@
         }
         return { vac, enf, total: vac + enf };
     }
+    function getAllEmployeeNames() {
+        const nombres = new Set();
+        for (let k in notesData) notesData[k].forEach(r => { if (r.text) nombres.add(normalizar(r.text)); });
+        empleadosData.forEach(e => { if (e.nombre) nombres.add(normalizar(e.nombre)); });
+        return Array.from(nombres).sort();
+    }
+    function getAllSupervisorNames() {
+        const nombres = new Set();
+        for (let k in notesData) notesData[k].forEach(r => { if (r.updatedBy) nombres.add(normalizar(r.updatedBy)); });
+        return Array.from(nombres).sort();
+    }
 
     // ==================== FILTROS ====================
     function onFilterChange() {
         currentFilter = document.getElementById("filterSelect").value;
-        const grp = document.getElementById("employeeFilterGroup");
+        const empGroup = document.getElementById("employeeFilterGroup");
+        const multiGroup = document.getElementById("multiFilterGroup");
         if (currentFilter === 'EMPLEADO') {
-            grp.style.display = 'flex';
+            empGroup.style.display = 'flex';
+            multiGroup.style.display = 'none';
             updateEmployeeFilterSelect();
+        } else if (currentFilter === 'MULTI') {
+            empGroup.style.display = 'none';
+            multiGroup.style.display = 'flex';
+            if (selectedMultiFilter.length === 0) {
+                openMultiSelectModal();
+            } else {
+                document.getElementById('multiFilterLabel').innerText = `${selectedMultiFilter.length} empleado${selectedMultiFilter.length !== 1 ? 's' : ''}`;
+            }
         } else {
-            grp.style.display = 'none';
+            empGroup.style.display = 'none';
+            multiGroup.style.display = 'none';
             selectedEmployeeFilter = '';
         }
         updateCalendar();
@@ -1002,10 +1257,7 @@
     function updateEmployeeFilterSelect() {
         const sel = document.getElementById("employeeFilterSelect");
         if (!sel) return;
-        const nombres = new Set();
-        for (let k in notesData) notesData[k].forEach(r => { if (r.text) nombres.add(normalizar(r.text)); });
-        empleadosData.forEach(e => { if (e.nombre) nombres.add(normalizar(e.nombre)); });
-        const lista = Array.from(nombres).sort();
+        const lista = getAllEmployeeNames();
         const actual = sel.value;
         sel.innerHTML = '<option value="">-- Elegí empleado --</option>';
         lista.forEach(n => {
@@ -1016,29 +1268,46 @@
 
     function clearEmployeeFilter() {
         selectedEmployeeFilter = '';
-        document.getElementById("filterSelect").value = 'ALL';
+        selectedMultiFilter = [];
         currentFilter = 'ALL';
+        document.getElementById("filterSelect").value = 'ALL';
         document.getElementById("employeeFilterGroup").style.display = 'none';
+        document.getElementById("multiFilterGroup").style.display = 'none';
         document.getElementById("filterSummaryBanner").classList.remove('visible');
         updateCalendar();
     }
 
-    function updateEmployeeDropdowns() {
-        const selReporte = document.getElementById("employeePrintSelect");
-        if (selReporte) {
-            const nombres = new Set();
-            for (let k in notesData) notesData[k].forEach(r => { if (r.text) nombres.add(normalizar(r.text)); });
-            empleadosData.forEach(e => { if (e.nombre) nombres.add(normalizar(e.nombre)); });
-            const lista = Array.from(nombres).sort();
-            const act = normalizar(selReporte.value);
-            selReporte.innerHTML = '<option value="">-- Elegir --</option>';
-            lista.forEach(n => { const o = document.createElement('option'); o.value = n; o.innerText = n; selReporte.appendChild(o); });
-            if (act && lista.includes(act)) selReporte.value = act;
-        }
-        updateEmployeeFilterSelect();
+    function updateAllDropdowns() {
+        const lista = getAllEmployeeNames();
+        const selectors = ['employeePrintSelect', 'historyEmployeeSelect', 'employeeFilterSelect', 'multiAddSelect'];
+        selectors.forEach(id => {
+            const sel = document.getElementById(id);
+            if (!sel) return;
+            const actual = sel.value;
+            sel.innerHTML = id === 'employeeFilterSelect' 
+                ? '<option value="">-- Elegí empleado --</option>' 
+                : '<option value="">-- Elegir --</option>';
+            lista.forEach(n => {
+                const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o);
+            });
+            if (actual && lista.includes(actual)) sel.value = actual;
+        });
+        updateCoordSupervisorDropdown();
     }
 
-    // ==================== TABLA EMPLEADOS ====================
+    function updateCoordSupervisorDropdown() {
+        const sel = document.getElementById('coordSupervisorSelect');
+        if (!sel) return;
+        const lista = getAllSupervisorNames();
+        const actual = sel.value;
+        sel.innerHTML = '<option value="ALL">Todos los supervisores</option>';
+        lista.forEach(n => {
+            const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o);
+        });
+        if (actual) sel.value = actual;
+    }
+
+    // ==================== EMPLEADOS ====================
     function renderEmpleadosList() {
         const cont = document.getElementById("empList");
         if (!cont) return;
@@ -1049,21 +1318,21 @@
         cont.innerHTML = empleadosData.map(e => {
             const dias = e.dias_override ? e.dias_override + " (override)" : diasPorAntiguedad(e.fecha_ingreso) + " días/año";
             const fIng = e.fecha_ingreso ? new Date(e.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'Sin cargar';
-            return `
-                <div class="emp-item">
-                    <div class="emp-item-info">
-                        <div class="emp-item-name">👤 ${e.nombre}</div>
-                        <div class="emp-item-meta">📅 Ingreso: ${fIng} · ${dias}</div>
-                    </div>
-                    <div class="emp-item-actions">
-                        <button class="emp-btn-mini" onclick="editEmployee('${e.id}')">✏️</button>
-                        <button class="emp-btn-mini danger" onclick="deleteEmployee('${e.id}')">🗑️</button>
-                    </div>
-                </div>`;
+            return `<div class="emp-item">
+                <div class="emp-item-info">
+                    <div class="emp-item-name">👤 ${e.nombre}</div>
+                    <div class="emp-item-meta">📅 Ingreso: ${fIng} · ${dias}</div>
+                </div>
+                <div class="emp-item-actions">
+                    <button class="emp-btn-mini" onclick="editEmployee('${e.id}')">✏️</button>
+                    <button class="emp-btn-mini danger" onclick="deleteEmployee('${e.id}')">🗑️</button>
+                </div>
+            </div>`;
         }).join("");
     }
 
     function editEmployee(id) {
+        if (!isAdmin()) { alertError("Solo ADMINISTRADOR o EDGARDO SAAVEDRA pueden editar."); return; }
         const e = empleadosData.find(x => x.id === id);
         if (!e) return;
         document.getElementById("empEditId").value = e.id;
@@ -1080,14 +1349,13 @@
     }
 
     async function saveEmployee() {
+        if (!isAdmin()) { alertError("Solo ADMINISTRADOR o EDGARDO SAAVEDRA pueden guardar."); return; }
         const id = document.getElementById("empEditId").value;
         const nombre = normalizar(document.getElementById("empNombre").value);
         const fecha = document.getElementById("empFechaIngreso").value || null;
         const override = document.getElementById("empDiasOverride").value;
         const dias_override = override ? parseInt(override) : null;
-
         if (!nombre) { alertError("Ingresá el nombre del empleado."); return; }
-
         try {
             if (id) {
                 const { error } = await supabase.from('empleados').update({ nombre, fecha_ingreso: fecha, dias_override }).eq('id', id);
@@ -1100,23 +1368,21 @@
             }
             resetEmployeeForm();
             await recargarEmpleados();
-        } catch(err) {
-            console.error(err);
-            alertError("Error guardando: " + err.message);
-        }
+        } catch(err) { console.error(err); alertError("Error guardando: " + err.message); }
     }
 
     function deleteEmployee(id) {
+        if (!isAdmin()) { alertError("Solo ADMINISTRADOR o EDGARDO SAAVEDRA pueden eliminar."); return; }
         const e = empleadosData.find(x => x.id === id);
         if (!e) return;
-        confirmDialog(`¿Eliminar a <strong>${e.nombre}</strong>? Las vacaciones ya cargadas quedan intactas.`, async () => {
+        openPassConfirm(`¿Eliminar a ${e.nombre}? Ingresá tu contraseña para confirmar.`, async () => {
             try {
                 const { error } = await supabase.from('empleados').delete().eq('id', id);
                 if (error) throw error;
                 alertSuccess(`Empleado eliminado: <strong>${e.nombre}</strong>`);
                 await recargarEmpleados();
             } catch(err) { alertError("Error: " + err.message); }
-        }, "Confirmar eliminación");
+        });
     }
 
     // ==================== CALENDARIO ====================
@@ -1129,6 +1395,16 @@
         document.getElementById("monthSelect").value = currentMonth;
         document.getElementById("yearSelect").value = currentYear;
         updateCalendar();
+    }
+
+    function shouldShowRecord(rec) {
+        const isMine = rec.updatedBy === currentUser;
+        if (currentFilter === 'MINE' && !isMine) return false;
+        if (currentFilter === 'VAC' && rec.type !== 'VACACIONES') return false;
+        if (currentFilter === 'ENF' && rec.type !== 'ENFERMEDAD') return false;
+        if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter && normalizar(rec.text) !== selectedEmployeeFilter) return false;
+        if (currentFilter === 'MULTI' && selectedMultiFilter.length > 0 && !selectedMultiFilter.includes(normalizar(rec.text))) return false;
+        return true;
     }
 
     function updateCalendar() {
@@ -1153,12 +1429,23 @@
         const daysIn = new Date(currentYear, currentMonth+1, 0).getDate();
         for (let i=0;i<first;i++) { const e = document.createElement("div"); e.className = "empty-day"; grid.appendChild(e); }
 
-        // Banner resumen si hay filtro por empleado
+        // Banner resumen
         const banner = document.getElementById("filterSummaryBanner");
         if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter) {
             const usados = calcularDiasUsadosAnio(selectedEmployeeFilter, currentYear);
+            document.getElementById("filterSummaryEmoji").innerText = "👤";
             document.getElementById("filterSummaryName").innerText = selectedEmployeeFilter;
             document.getElementById("filterSummaryCounts").innerText = `${usados.vac} días vacaciones · ${usados.enf} días enfermedad · Total ${usados.total} días`;
+            banner.classList.add("visible");
+        } else if (currentFilter === 'MULTI' && selectedMultiFilter.length > 0) {
+            let totalVac = 0, totalEnf = 0;
+            selectedMultiFilter.forEach(n => {
+                const u = calcularDiasUsadosAnio(n, currentYear);
+                totalVac += u.vac; totalEnf += u.enf;
+            });
+            document.getElementById("filterSummaryEmoji").innerText = "🏷️";
+            document.getElementById("filterSummaryName").innerText = `${selectedMultiFilter.length} EMPLEADOS FILTRADOS`;
+            document.getElementById("filterSummaryCounts").innerText = `${selectedMultiFilter.join(' · ')} — ${totalVac} vac · ${totalEnf} enf`;
             banner.classList.add("visible");
         } else {
             banner.classList.remove("visible");
@@ -1170,10 +1457,7 @@
             const mm = String(currentMonth+1).padStart(2,'0'), dd = String(day).padStart(2,'0');
             const keyDate = `${currentYear}-${mm}-${dd}`;
             const keyHol = `${mm}-${dd}`;
-
-            if (holidayDetails[keyHol]) {
-                cell.classList.add("holiday-day");
-            }
+            if (holidayDetails[keyHol]) cell.classList.add("holiday-day");
             if (selectedDateStr === keyDate) cell.classList.add("selected");
 
             const hd = document.createElement("div"); hd.className = "day-number"; hd.innerHTML = `<span>${day}</span>`;
@@ -1187,38 +1471,22 @@
 
             const records = getDayRecords(keyDate);
             records.forEach(rec => {
+                if (!shouldShowRecord(rec)) return;
                 const isMine = rec.updatedBy === currentUser;
-
-                // Aplicar filtros
-                if (currentFilter === 'MINE' && !isMine) return;
-                if (currentFilter === 'VAC' && rec.type !== 'VACACIONES') return;
-                if (currentFilter === 'ENF' && rec.type !== 'ENFERMEDAD') return;
-                if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter && normalizar(rec.text) !== selectedEmployeeFilter) return;
-
                 const div = document.createElement("div");
                 div.className = "day-content " + (rec.type === 'ENFERMEDAD' ? 'enf' : 'vac');
                 div.style.backgroundColor = getColorForSupervisor(rec.updatedBy);
-
-                if (!isMine) { div.style.opacity = "0.75"; }
-
+                if (!isMine) div.style.opacity = "0.75";
                 const statusIcon = rec.status === 'APROBADO' ? '✔' : '⏳';
                 const lockIcon = isMine ? '' : '🔒';
                 const tipoIcon = rec.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
-
-                div.innerHTML = `
-                    <div class="emp-name-line">
-                        <span>${tipoIcon} ${rec.text}</span>
-                        <span class="lock-mini">${lockIcon}</span>
-                    </div>
-                    <span class="sup-tag">👤 ${rec.updatedBy} ${statusIcon}</span>
-                `;
+                div.innerHTML = `<div class="emp-name-line"><span>${tipoIcon} ${rec.text}</span><span class="lock-mini">${lockIcon}</span></div><span class="sup-tag">👤 ${rec.updatedBy} ${statusIcon}</span>`;
                 cell.appendChild(div);
             });
 
             cell.onclick = (e) => { e.stopPropagation(); selectDate(keyDate, day, monthNames[currentMonth], currentYear); };
             grid.appendChild(cell);
         }
-
         renderPrintVacationSummary();
     }
 
@@ -1236,7 +1504,6 @@
         const otherRegs = getOtherRecordsForDay(selectedDateStr);
         const oc = document.getElementById("otherRecordsContainer");
         const ol = document.getElementById("otherRecordsList");
-
         if (otherRegs.length) {
             oc.style.display = "block";
             ol.innerHTML = otherRegs.map(r => {
@@ -1251,7 +1518,6 @@
                 </div>`;
             }).join("");
         } else oc.style.display = "none";
-
         if (myRegs.length) {
             const r = myRegs[0];
             document.getElementById("notes").value = r.text;
@@ -1321,24 +1587,21 @@
 
     // ==================== GUARDAR / BORRAR ====================
     async function saveNote() {
-        if (!selectedDateStr) { alertWarning("Seleccioná primero un día en el calendario."); return; }
+        if (!selectedDateStr) { alertWarning("Seleccioná primero un día."); return; }
         const val = normalizar(document.getElementById("notes").value);
         const status = document.getElementById("singleApprovalStatus").value;
         const type = document.getElementById("singleType").value;
         const note = document.getElementById("supervisorNote").value.trim();
-
         if (!val) { alertWarning("Escribí el nombre del empleado."); return; }
-
         const mis = getMyRecordsForDay(selectedDateStr);
         const ex = mis.find(r => normalizar(r.text) === val);
-
         try {
             if (ex) {
                 const { error } = await supabase.from('vacaciones').update({
                     employee_name: val, status, supervisor_note: note, type, updated_by: normalizar(currentUser)
                 }).eq('id', ex.id);
                 if (error) throw error;
-                alertSuccess(`Registro actualizado: <strong>${val}</strong> (${type}).`);
+                alertSuccess(`Actualizado: <strong>${val}</strong><br>${type === 'ENFERMEDAD' ? '🏥 Enfermedad' : '🏖️ Vacaciones'} · ${status}`);
             } else {
                 const { error } = await supabase.from('vacaciones').insert([{
                     date_key: selectedDateStr, employee_name: val, status, supervisor_note: note, type, updated_by: normalizar(currentUser)
@@ -1348,7 +1611,7 @@
             }
             await recargarVacaciones();
             renderDayPanel();
-        } catch(err) { console.error(err); alertError("Error guardando: " + err.message); }
+        } catch(err) { console.error(err); alertError("Error: " + err.message); }
     }
 
     async function saveRange() {
@@ -1357,31 +1620,27 @@
         const name = normalizar(document.getElementById("rangeEmployeeName").value);
         const status = document.getElementById("rangeApprovalStatus").value;
         const type = document.getElementById("rangeType").value;
-
-        if (!s || !e || !name) { alertWarning("Completá fecha de inicio, fin y nombre."); return; }
+        if (!s || !e || !name) { alertWarning("Completá fechas y nombre."); return; }
         const sd = new Date(s + "T00:00:00"), ed = new Date(e + "T00:00:00");
-        if (sd > ed) { alertWarning("La fecha de inicio debe ser anterior o igual al fin."); return; }
-
+        if (sd > ed) { alertWarning("Fecha inicio debe ser anterior al fin."); return; }
         const fechas = [];
         const cur = new Date(sd);
         while (cur <= ed) {
             fechas.push(`${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`);
             cur.setDate(cur.getDate() + 1);
         }
-
         const registros = fechas.map(f => ({
             date_key: f, employee_name: name, status, type,
             supervisor_note: `Asignado por rango el ${new Date().toLocaleDateString()}`,
             updated_by: normalizar(currentUser) || "SUPERVISOR"
         }));
-
         try {
             const { error } = await supabase.from('vacaciones').insert(registros);
             if (error) throw error;
             await recargarVacaciones();
-            alertSuccess(`Se registraron <strong>${fechas.length} días</strong> para <strong>${name}</strong><br>${type === 'ENFERMEDAD' ? '🏥 Enfermedad' : '🏖️ Vacaciones'} · ${status}`);
+            alertSuccess(`Registrados <strong>${fechas.length} días</strong> para <strong>${name}</strong><br>${type === 'ENFERMEDAD' ? '🏥 Enfermedad' : '🏖️ Vacaciones'} · ${status}`);
             document.getElementById("rangeEmployeeName").value = "";
-        } catch(err) { console.error(err); alertError("Error guardando rango: " + err.message); }
+        } catch(err) { console.error(err); alertError("Error: " + err.message); }
     }
 
     async function deleteSelectedDay() {
@@ -1406,7 +1665,7 @@
         const s = document.getElementById("rangeStart").value;
         const e = document.getElementById("rangeEnd").value;
         const name = normalizar(document.getElementById("rangeEmployeeName").value);
-        if (!s || !e) { alertWarning("Seleccioná inicio y fin del rango."); return; }
+        if (!s || !e) { alertWarning("Seleccioná inicio y fin."); return; }
         const sd = new Date(s + "T00:00:00"), ed = new Date(e + "T00:00:00");
         if (sd > ed) { alertWarning("Fecha inicio debe ser anterior al fin."); return; }
         const fechas = [];
@@ -1427,61 +1686,128 @@
                 const { error } = await supabase.from('vacaciones').delete().in('id', ids);
                 if (error) throw error;
                 await recargarVacaciones();
-                alertSuccess(`Se eliminaron <strong>${ids.length}</strong> registros.`);
+                alertSuccess(`Eliminados <strong>${ids.length}</strong> registros.`);
             } catch(err) { alertError("Error: " + err.message); }
         });
     }
 
     // ==================== HISTORIAL / COORDINACIÓN ====================
-    function searchEmployeeHistory() {
-        const q = normalizar(document.getElementById("searchWorkerInput").value);
-        const cont = document.getElementById("historyResults");
-        if (!q) { cont.innerHTML = '<p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Ingresá un nombre.</p>'; return; }
-        const found = {};
+    function renderEmployeeHistory() {
+        const empleado = normalizar(document.getElementById('historyEmployeeSelect').value);
+        const anio = document.getElementById('historyYearSelect').value;
+        const cont = document.getElementById('historyResults');
+        if (!empleado) { cont.innerHTML = '<p style="font-size:0.75rem; color:#a4b0be; text-align:center;">Elegí un empleado arriba.</p>'; return; }
+        const emp = empleadosData.find(e => normalizar(e.nombre) === empleado);
+        const diasAsig = getDiasAsignados(empleado);
+        const fIng = emp && emp.fecha_ingreso ? new Date(emp.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'No cargada';
+        const anioRef = anio === 'ALL' ? currentYear : parseInt(anio);
+        const usados = calcularDiasUsadosAnio(empleado, anioRef);
+        const restantes = Math.max(0, diasAsig - usados.vac);
+
+        const periodos = [];
         for (let k in notesData) {
+            if (anio !== 'ALL' && !k.startsWith(anio + "-")) continue;
             notesData[k].forEach(r => {
-                if (r.text && normalizar(r.text).includes(q)) {
-                    const y = k.split("-")[0];
-                    if (!found[y]) found[y] = [];
-                    found[y].push({ date: k, updatedBy: r.updatedBy, type: r.type });
-                }
+                if (normalizar(r.text) === empleado) periodos.push({ date: k, ...r });
             });
         }
-        const years = Object.keys(found).sort();
-        if (!years.length) { cont.innerHTML = `<p style="font-size:0.8rem; color:#e74c3c; text-align:center;">No hay registros para "${q}".</p>`; return; }
-        cont.innerHTML = years.map(y => {
-            const d = found[y].sort((a,b) => a.date.localeCompare(b.date));
-            return `<div class="history-item">
-                <div class="history-item-name">🗓️ Año ${y} (${d.length} días)</div>
-                <div class="history-item-dates">Desde ${d[0].date} hasta ${d[d.length-1].date}</div>
-            </div>`;
-        }).join("");
+        periodos.sort((a,b) => a.date.localeCompare(b.date));
+
+        let html = `<div class="summary-card" style="margin-bottom:10px;">
+            <div class="summary-header">📊 ${empleado} — ${anioRef}</div>
+            <div style="font-size:0.82rem; color:#2c3e50; line-height:1.6; padding-top:6px;">
+                📅 Fecha ingreso: <strong>${fIng}</strong><br>
+                ⏱️ Días asignados por ley: <strong>${diasAsig} días</strong><br>
+                🏖️ Días vacaciones usados: <strong>${usados.vac}</strong><br>
+                🏥 Días enfermedad: <strong>${usados.enf}</strong><br>
+                ✅ Días restantes: <strong>${restantes} días</strong>
+            </div>
+        </div>`;
+
+        if (!periodos.length) {
+            html += `<p style="font-size:0.8rem; color:#a4b0be; text-align:center; padding:10px;">Sin registros en el período.</p>`;
+        } else {
+            html += '<div style="max-height:280px; overflow-y:auto;">';
+            periodos.forEach(p => {
+                const tipo = p.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
+                const sb = p.status === 'APROBADO' ? 'APROBADO' : 'PENDIENTE';
+                html += `<div style="background:#2d3436; padding:8px 10px; border-radius:6px; margin-bottom:5px; font-size:0.78rem; border-left:3px solid ${p.type === 'ENFERMEDAD' ? '#8e44ad' : '#2980b9'};">
+                    <div style="color:#fff; font-weight:bold;">${tipo} ${p.date}</div>
+                    <div style="color:#a4b0be; font-size:0.7rem;">${sb} · Cargó: ${p.updatedBy}</div>
+                </div>`;
+            });
+            html += '</div>';
+        }
+        cont.innerHTML = html;
     }
 
     function renderCoordinationSummary() {
         const cont = document.getElementById("coordinationSummary");
         if (!cont) return;
-        const mm = String(currentMonth+1).padStart(2,'0');
+        const supFiltro = document.getElementById('coordSupervisorSelect')?.value || 'ALL';
+        const mesFiltro = parseInt(document.getElementById('coordMonthSelect')?.value ?? currentMonth);
+        const mm = String(mesFiltro+1).padStart(2,'0');
         const items = [];
         for (let k in notesData) {
             if (k.startsWith(`${currentYear}-${mm}`)) {
-                notesData[k].forEach(r => { if (currentFilter === 'ALL' || r.updatedBy === currentUser) items.push({ date: k, data: r }); });
+                notesData[k].forEach(r => {
+                    if (supFiltro === 'ALL' || r.updatedBy === supFiltro) items.push({ date: k, data: r });
+                });
             }
         }
-        if (!items.length) { cont.innerHTML = `<p style="font-size:0.8rem; color:#a4b0be; text-align:center;">No hay registros en ${monthNames[currentMonth]} ${currentYear}.</p>`; return; }
+        if (!items.length) { cont.innerHTML = `<p style="font-size:0.8rem; color:#a4b0be; text-align:center;">No hay registros.</p>`; return; }
         items.sort((a,b) => a.date.localeCompare(b.date));
-        cont.innerHTML = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">${monthNames[currentMonth]} ${currentYear}:</div>` +
+        cont.innerHTML = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">${monthNames[mesFiltro]} ${currentYear}:</div>` +
             items.map(it => {
                 const day = it.date.split("-")[2];
                 const sb = it.data.status === 'APROBADO' ? '<span class="status-badge approved">APROBADO</span>' : '<span class="status-badge pending">PENDIENTE</span>';
                 const tipo = it.data.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
                 return `<div class="coordination-card" style="border-left-color:${getColorForSupervisor(it.data.updatedBy)};">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <strong>Día ${day} · ${tipo} ${it.data.text}</strong>${sb}
-                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;"><strong>Día ${day} · ${tipo} ${it.data.text}</strong>${sb}</div>
                     <div style="font-size:0.72rem; color:#fbc531; margin-top:4px;">👤 ${it.data.updatedBy}</div>
                 </div>`;
             }).join("");
+    }
+
+    function previewEmployeeReport() {
+        const empleado = normalizar(document.getElementById('employeePrintSelect').value);
+        const anio = document.getElementById('employeeYearSelect').value;
+        const cont = document.getElementById('employeePreviewContainer');
+        if (!empleado) { alertWarning("Seleccioná un empleado."); return; }
+        const emp = empleadosData.find(e => normalizar(e.nombre) === empleado);
+        const diasAsig = getDiasAsignados(empleado);
+        const fIng = emp && emp.fecha_ingreso ? new Date(emp.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'No cargada';
+        const anioRef = anio === 'ALL' ? currentYear : parseInt(anio);
+        const usados = calcularDiasUsadosAnio(empleado, anioRef);
+        const restantes = Math.max(0, diasAsig - usados.vac);
+
+        const regs = [];
+        for (let k in notesData) {
+            if (anio !== 'ALL' && !k.startsWith(anio + "-")) continue;
+            notesData[k].forEach(r => { if (normalizar(r.text) === empleado) regs.push({ date: k, ...r }); });
+        }
+        regs.sort((a,b) => a.date.localeCompare(b.date));
+
+        let html = `<div class="summary-card">
+            <div class="summary-header">📄 ${empleado} — ${anioRef}</div>
+            <div style="font-size:0.82rem; color:#2c3e50; line-height:1.7; padding-top:6px;">
+                📅 Ingreso: <strong>${fIng}</strong><br>
+                ⏱️ Días por ley: <strong>${diasAsig}</strong><br>
+                🏖️ Usados: <strong>${usados.vac}</strong><br>
+                🏥 Enfermedad: <strong>${usados.enf}</strong><br>
+                ✅ Restantes: <strong>${restantes} días</strong>
+            </div>`;
+        if (regs.length) {
+            html += '<table class="summary-table" style="margin-top:8px;"><thead><tr><th>FECHA</th><th>TIPO</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>';
+            regs.forEach(r => {
+                const tipo = r.type === 'ENFERMEDAD' ? '🏥 ENF' : '🏖️ VAC';
+                const sb = r.status === 'APROBADO' ? '<span class="status-badge approved">APROB</span>' : '<span class="status-badge pending">PEND</span>';
+                html += `<tr><td>${r.date}</td><td>${tipo}</td><td>${sb}</td><td class="sup-name">${r.updatedBy}</td></tr>`;
+            });
+            html += '</tbody></table>';
+        }
+        html += '</div>';
+        cont.innerHTML = html;
     }
 
     // ==================== RECORDATORIOS ====================
@@ -1489,37 +1815,9 @@
         avisosEnabled = !avisosEnabled;
         document.getElementById("avisosToggle").classList.toggle("on", avisosEnabled);
         try { localStorage.setItem(AVISOS_KEY, avisosEnabled ? '1' : '0'); } catch(e) {}
-        alertInfo(avisosEnabled ? "🔔 Avisos activados. Verás un modal al abrir el sistema si hay novedades." : "🔕 Avisos desactivados. Podés seguir viendo todo en la pestaña Recordatorios.", avisosEnabled ? "Avisos activados" : "Avisos desactivados");
-    }
-
-    function getReminders() {
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        const hoyK = hoyStr();
-        const manana = new Date(hoy); manana.setDate(manana.getDate()+1);
-        const manK = `${manana.getFullYear()}-${String(manana.getMonth()+1).padStart(2,'0')}-${String(manana.getDate()).padStart(2,'0')}`;
-        const en7 = new Date(hoy); en7.setDate(en7.getDate()+7);
-
-        const iniciando = [], ultimo = [], terminando = [], proximos = [];
-
-        // Agrupar por empleado + rango (períodos)
-        const periodos = agruparPeriodos();
-
-        periodos.forEach(p => {
-            if (p.tipo !== 'VACACIONES') return; // recordatorios solo de vacaciones
-            const s = new Date(p.start + "T00:00:00"), e = new Date(p.end + "T00:00:00");
-            if (p.start === hoyK) iniciando.push(p);
-            if (p.end === hoyK) { ultimo.push(p); terminando.push(p); }
-            else if (p.end === manK) terminando.push(p);
-
-            // Próximos 7 días
-            if ((s > hoy && s <= en7) || (e > hoy && e <= en7)) proximos.push(p);
-        });
-
-        return { iniciando, ultimo, terminando, proximos };
     }
 
     function agruparPeriodos() {
-        // Agrupa registros por empleado+supervisor+tipo en períodos continuos
         const grupos = {};
         for (let k in notesData) {
             notesData[k].forEach(r => {
@@ -1547,11 +1845,29 @@
         return periodos;
     }
 
+    function getReminders() {
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        const hoyK = hoyStr();
+        const manana = new Date(hoy); manana.setDate(manana.getDate()+1);
+        const manK = `${manana.getFullYear()}-${String(manana.getMonth()+1).padStart(2,'0')}-${String(manana.getDate()).padStart(2,'0')}`;
+        const en7 = new Date(hoy); en7.setDate(en7.getDate()+7);
+        const iniciando = [], ultimo = [], terminando = [], proximos = [];
+        const periodos = agruparPeriodos();
+        periodos.forEach(p => {
+            if (p.tipo !== 'VACACIONES') return;
+            const s = new Date(p.start + "T00:00:00"), e = new Date(p.end + "T00:00:00");
+            if (p.start === hoyK) iniciando.push(p);
+            if (p.end === hoyK) { ultimo.push(p); terminando.push(p); }
+            else if (p.end === manK) terminando.push(p);
+            if ((s > hoy && s <= en7) || (e > hoy && e <= en7)) proximos.push(p);
+        });
+        return { iniciando, ultimo, terminando, proximos };
+    }
+
     function renderReminders() {
         const r = getReminders();
-        const fmt = k => { const d = new Date(k+"T00:00:00"); return d.toLocaleDateString('es-AR'); };
+        const fmt = k => new Date(k+"T00:00:00").toLocaleDateString('es-AR');
         const fmtFull = p => `${fmt(p.start)} al ${fmt(p.end)}`;
-
         const renderList = (arr, clase) => {
             if (!arr.length) return '<p style="font-size:0.75rem; color:#7f8c8d; padding:4px 8px;">Sin novedades.</p>';
             return arr.map(p => `<div class="reminder-item ${clase}">
@@ -1559,12 +1875,9 @@
                 <div class="rem-dates">📅 ${fmtFull(p)}</div>
             </div>`).join("");
         };
-
         document.getElementById("remindersIniciando").innerHTML = renderList(r.iniciando, 'iniciando');
         document.getElementById("remindersUltimo").innerHTML = renderList(r.ultimo, 'ultimo');
         document.getElementById("remindersTerminando").innerHTML = renderList(r.terminando, 'terminando');
-
-        // Próximos 7 días (sin duplicar los de hoy)
         const proxFiltrados = r.proximos.filter(p => p.start !== hoyStr() && p.end !== hoyStr());
         document.getElementById("remindersProximos").innerHTML = renderList(proxFiltrados, 'proximo');
     }
@@ -1575,38 +1888,31 @@
             const last = localStorage.getItem(LAST_REMINDER_KEY);
             if (last === hoyStr()) return;
         } catch(e) {}
-
         const r = getReminders();
         const total = r.iniciando.length + r.ultimo.length + r.terminando.length;
-        if (total === 0) {
-            try { localStorage.setItem(LAST_REMINDER_KEY, hoyStr()); } catch(e) {}
-            return;
-        }
-
+        if (total === 0) { try { localStorage.setItem(LAST_REMINDER_KEY, hoyStr()); } catch(e) {} return; }
         const fmt = k => new Date(k+"T00:00:00").toLocaleDateString('es-AR');
         let html = '';
         if (r.iniciando.length) {
-            html += `<div style="background:rgba(39,174,96,0.15);border-left:3px solid #27ae60;padding:10px;border-radius:6px;margin-bottom:10px;text-align:left;">
+            html += `<div style="background:rgba(39,174,96,0.15);border-left:3px solid #27ae60;padding:10px;border-radius:6px;margin-bottom:10px;">
                 <div style="color:#27ae60;font-weight:900;margin-bottom:6px;">🟢 INICIAN VACACIONES HOY</div>
-                ${r.iniciando.map(p => `<div style="margin-bottom:4px;"><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}
+                ${r.iniciando.map(p => `<div><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}
             </div>`;
         }
         if (r.ultimo.length) {
-            html += `<div style="background:rgba(231,76,60,0.15);border-left:3px solid #e74c3c;padding:10px;border-radius:6px;margin-bottom:10px;text-align:left;">
+            html += `<div style="background:rgba(231,76,60,0.15);border-left:3px solid #e74c3c;padding:10px;border-radius:6px;margin-bottom:10px;">
                 <div style="color:#e74c3c;font-weight:900;margin-bottom:6px;">🔴 ÚLTIMO DÍA DE VACACIONES</div>
-                ${r.ultimo.map(p => `<div style="margin-bottom:4px;"><strong>${p.nombre}</strong> retoma actividades mañana</div>`).join("")}
+                ${r.ultimo.map(p => `<div><strong>${p.nombre}</strong> retoma actividades mañana</div>`).join("")}
             </div>`;
         }
         if (r.terminando.length && !r.ultimo.length) {
-            html += `<div style="background:rgba(230,126,34,0.15);border-left:3px solid #e67e22;padding:10px;border-radius:6px;margin-bottom:10px;text-align:left;">
+            html += `<div style="background:rgba(230,126,34,0.15);border-left:3px solid #e67e22;padding:10px;border-radius:6px;margin-bottom:10px;">
                 <div style="color:#e67e22;font-weight:900;margin-bottom:6px;">🟠 FINALIZAN VACACIONES</div>
-                ${r.terminando.map(p => `<div style="margin-bottom:4px;"><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}
+                ${r.terminando.map(p => `<div><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}
             </div>`;
         }
-
         document.getElementById("remindersContent").innerHTML = html;
         document.getElementById("remindersModal").classList.add("active");
-
         try { localStorage.setItem(LAST_REMINDER_KEY, hoyStr()); } catch(e) {}
     }
 
@@ -1630,47 +1936,34 @@
         const cont = document.getElementById("printSummaryContainer");
         if (!cont) return;
         const mm = String(currentMonth+1).padStart(2,'0');
-
         const employeeDays = {};
         for (let k in notesData) {
             if (k.startsWith(`${currentYear}-${mm}`)) {
                 notesData[k].forEach(r => {
-                    if (currentFilter === 'MINE' && r.updatedBy !== currentUser) return;
-                    if (currentFilter === 'VAC' && r.type !== 'VACACIONES') return;
-                    if (currentFilter === 'ENF' && r.type !== 'ENFERMEDAD') return;
-                    if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter && normalizar(r.text) !== selectedEmployeeFilter) return;
+                    if (!shouldShowRecord(r)) return;
                     const emp = normalizar(r.text);
                     if (!employeeDays[emp]) employeeDays[emp] = [];
                     employeeDays[emp].push({ date: k, status: r.status, updatedBy: r.updatedBy, type: r.type });
                 });
             }
         }
-
         const empNames = Object.keys(employeeDays).sort();
         let filterTag = '';
         if (currentFilter === 'MINE') filterTag = '<span class="summary-filter-tag">📄 SOLO MÍOS</span>';
-        if (currentFilter === 'VAC') filterTag = '<span class="summary-filter-tag">🏖️ SOLO VACACIONES</span>';
-        if (currentFilter === 'ENF') filterTag = '<span class="summary-filter-tag">🏥 SOLO ENFERMEDAD</span>';
+        if (currentFilter === 'VAC') filterTag = '<span class="summary-filter-tag">🏖️ VACACIONES</span>';
+        if (currentFilter === 'ENF') filterTag = '<span class="summary-filter-tag">🏥 ENFERMEDAD</span>';
         if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter) filterTag = `<span class="summary-filter-tag">👤 ${selectedEmployeeFilter}</span>`;
-
+        if (currentFilter === 'MULTI' && selectedMultiFilter.length > 0) filterTag = `<span class="summary-filter-tag">🏷️ ${selectedMultiFilter.length} EMPLEADOS</span>`;
         if (!empNames.length) {
-            cont.innerHTML = `<div class="summary-card">
-                <div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear} ${filterTag}</div>
-                <p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No hay registros.</p>
-            </div>`;
+            cont.innerHTML = `<div class="summary-card"><div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear} ${filterTag}</div><p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No hay registros.</p></div>`;
             return;
         }
-
-        let html = `<div class="summary-card">
-            <div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear} ${filterTag}</div>
-            <table class="summary-table"><thead><tr>
-                <th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th>
-            </tr></thead><tbody>`;
-
+        let html = `<div class="summary-card"><div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear} ${filterTag}</div><table class="summary-table"><thead><tr>
+            <th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th>
+        </tr></thead><tbody>`;
         empNames.forEach(emp => {
             const items = employeeDays[emp];
             items.sort((a,b) => a.date.localeCompare(b.date));
-            // Agrupar en períodos
             const periods = [];
             let cur = null;
             items.forEach(it => {
@@ -1678,39 +1971,23 @@
                 if (!cur) cur = { start: d, end: d, count: 1, status: it.status, updatedBy: it.updatedBy, type: it.type };
                 else {
                     const prevEnd = new Date(cur.end); prevEnd.setDate(prevEnd.getDate()+1);
-                    if (d.getTime() === prevEnd.getTime() && cur.updatedBy === it.updatedBy && cur.type === it.type) {
-                        cur.end = d; cur.count++;
-                    } else {
-                        periods.push(cur);
-                        cur = { start: d, end: d, count: 1, status: it.status, updatedBy: it.updatedBy, type: it.type };
-                    }
+                    if (d.getTime() === prevEnd.getTime() && cur.updatedBy === it.updatedBy && cur.type === it.type) { cur.end = d; cur.count++; }
+                    else { periods.push(cur); cur = { start: d, end: d, count: 1, status: it.status, updatedBy: it.updatedBy, type: it.type }; }
                 }
             });
             if (cur) periods.push(cur);
-
             periods.forEach(p => {
                 const sStr = p.start.toLocaleDateString('es-AR');
                 const eStr = p.end.toLocaleDateString('es-AR');
-                const sKey = `${p.start.getFullYear()}-${String(p.start.getMonth()+1).padStart(2,'0')}-${String(p.start.getDate()).padStart(2,'0')}`;
-                const eKey = `${p.end.getFullYear()}-${String(p.end.getMonth()+1).padStart(2,'0')}-${String(p.end.getDate()).padStart(2,'0')}`;
-                const rest = calcularDiasRestantesPeriodo(sKey, eKey);
+                const sK = `${p.start.getFullYear()}-${String(p.start.getMonth()+1).padStart(2,'0')}-${String(p.start.getDate()).padStart(2,'0')}`;
+                const eK = `${p.end.getFullYear()}-${String(p.end.getMonth()+1).padStart(2,'0')}-${String(p.end.getDate()).padStart(2,'0')}`;
+                const rest = calcularDiasRestantesPeriodo(sK, eK);
                 const typeBadge = p.type === 'ENFERMEDAD' ? '<span class="badge-type-enf">🏥 ENF</span>' : '<span class="badge-type-vac">🏖️ VAC</span>';
                 const sb = p.status === 'APROBADO' ? '<span class="status-badge approved">APROBADO</span>' : '<span class="status-badge pending">PENDIENTE</span>';
                 const restBadge = `<span class="badge-restantes-${rest.clase}">${rest.label}</span>`;
-
-                html += `<tr>
-                    <td class="emp-name">${emp}</td>
-                    <td>${typeBadge}</td>
-                    <td><strong>${sStr}</strong></td>
-                    <td><strong>${eStr}</strong></td>
-                    <td><strong>${p.count}</strong></td>
-                    <td>${restBadge}</td>
-                    <td>${sb}</td>
-                    <td class="sup-name">${p.updatedBy}</td>
-                </tr>`;
+                html += `<tr><td class="emp-name">${emp}</td><td>${typeBadge}</td><td><strong>${sStr}</strong></td><td><strong>${eStr}</strong></td><td><strong>${p.count}</strong></td><td>${restBadge}</td><td>${sb}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
             });
         });
-
         html += `</tbody></table></div>`;
         cont.innerHTML = html;
     }
@@ -1728,40 +2005,29 @@
 
     function exportExcel() {
         closeExportMenu();
-        if (typeof XLSX === 'undefined') { alertError("La librería de Excel no está cargada. Verificá tu conexión."); return; }
-
+        if (typeof XLSX === 'undefined') { alertError("La librería de Excel no está cargada."); return; }
         const mm = String(currentMonth+1).padStart(2,'0');
         const rows = [];
         for (let k in notesData) {
             if (k.startsWith(`${currentYear}-${mm}`)) {
                 notesData[k].forEach(r => {
-                    if (currentFilter === 'MINE' && r.updatedBy !== currentUser) return;
-                    if (currentFilter === 'VAC' && r.type !== 'VACACIONES') return;
-                    if (currentFilter === 'ENF' && r.type !== 'ENFERMEDAD') return;
-                    if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter && normalizar(r.text) !== selectedEmployeeFilter) return;
+                    if (!shouldShowRecord(r)) return;
                     rows.push({
                         'Empleado': normalizar(r.text),
                         'Tipo': r.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES',
-                        'Fecha': k,
-                        'Estado': r.status,
-                        'Supervisor': r.updatedBy,
-                        'Nota': r.supervisorNote || ''
+                        'Fecha': k, 'Estado': r.status, 'Supervisor': r.updatedBy, 'Nota': r.supervisorNote || ''
                     });
                 });
             }
         }
-
         if (!rows.length) { alertWarning("No hay registros para exportar en el mes seleccionado."); return; }
-
         rows.sort((a,b) => a.Fecha.localeCompare(b.Fecha) || a.Empleado.localeCompare(b.Empleado));
-
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.json_to_sheet(rows);
         ws['!cols'] = [{wch:28},{wch:14},{wch:14},{wch:12},{wch:20},{wch:30}];
         XLSX.utils.book_append_sheet(wb, ws, "Vacaciones");
-        const nombreArchivo = `Minerar_${monthNames[currentMonth]}_${currentYear}.xlsx`;
-        XLSX.writeFile(wb, nombreArchivo);
-        alertSuccess(`Excel generado: <strong>${nombreArchivo}</strong><br>${rows.length} registros exportados.`);
+        XLSX.writeFile(wb, `Minerar_${monthNames[currentMonth]}_${currentYear}.xlsx`);
+        alertSuccess(`Excel generado: <strong>Minerar_${monthNames[currentMonth]}_${currentYear}.xlsx</strong><br>${rows.length} registros exportados.`);
     }
 
     async function downloadBackupJSON() {
@@ -1771,28 +2037,19 @@
             const { data: usr } = await supabase.from('usuarios').select('*');
             const { data: emp } = await supabase.from('empleados').select('*');
             const backup = {
-                version: "1.0",
-                generado: new Date().toISOString(),
-                generado_por: currentUser,
-                resumen: {
-                    vacaciones: (vac || []).length,
-                    usuarios: (usr || []).length,
-                    empleados: (emp || []).length
-                },
-                vacaciones: vac || [],
-                usuarios: usr || [],
-                empleados: emp || []
+                version: "1.0", generado: new Date().toISOString(), generado_por: currentUser,
+                resumen: { vacaciones: (vac || []).length, usuarios: (usr || []).length, empleados: (emp || []).length },
+                vacaciones: vac || [], usuarios: usr || [], empleados: emp || []
             };
             const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            const hoy = hoyStr();
-            a.download = `backup_minerar_${hoy}.json`;
+            a.download = `backup_minerar_${hoyStr()}.json`;
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
             alertSuccess(`Backup generado:<br><strong>${(vac||[]).length} vacaciones · ${(usr||[]).length} usuarios · ${(emp||[]).length} empleados</strong>`);
-        } catch(err) { alertError("Error generando backup: " + err.message); }
+        } catch(err) { alertError("Error: " + err.message); }
     }
 
     function toggleExportMenu(e) {
@@ -1816,27 +2073,18 @@
             for (let k in notesData) {
                 const y = k.split("-")[0];
                 if (anio !== 'ALL' && y !== anio) continue;
-                notesData[k].forEach(r => {
-                    if (normalizar(r.text) === normalizar(empleado)) {
-                        regs.push({ date: k, status: r.status, updatedBy: r.updatedBy, type: r.type });
-                    }
-                });
+                notesData[k].forEach(r => { if (normalizar(r.text) === normalizar(empleado)) regs.push({ date: k, status: r.status, updatedBy: r.updatedBy, type: r.type }); });
             }
             regs.sort((a,b) => a.date.localeCompare(b.date));
-            if (!regs.length) {
-                tablaHTML = '<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No hay registros para este empleado.</p>';
-            } else {
-                // Separar vacaciones y enfermedad
+            if (!regs.length) { tablaHTML = '<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No hay registros para este empleado.</p>'; }
+            else {
                 const vacRegs = regs.filter(r => r.type !== 'ENFERMEDAD');
                 const enfRegs = regs.filter(r => r.type === 'ENFERMEDAD');
-
-                const construirTabla = (arr, titulo) => {
+                const construir = (arr, titulo) => {
                     if (!arr.length) return '';
                     let h = `<h3 style="color:#1e272e; font-size:0.9rem; margin:15px 0 5px 0;">${titulo}</h3>`;
                     h += `<table class="print-table"><thead><tr><th>AÑO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>`;
-                    // Agrupar períodos
-                    const periods = [];
-                    let cur = null;
+                    const periods = []; let cur = null;
                     arr.forEach(it => {
                         const d = new Date(it.date + "T00:00:00");
                         if (!cur) cur = { start: d, end: d, count: 1, status: it.status, updatedBy: it.updatedBy };
@@ -1854,13 +2102,9 @@
                         const badge = p.status === 'APROBADO' ? '<span class="print-badge-approved">APROBADO</span>' : '<span class="print-badge-pending">PENDIENTE</span>';
                         h += `<tr><td><strong>${an}</strong></td><td>${s}</td><td>${e}</td><td><strong>${p.count}</strong></td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
                     });
-                    h += `</tbody></table>`;
-                    return h;
+                    return h + `</tbody></table>`;
                 };
-
-                tablaHTML = construirTabla(vacRegs, "🏖️ VACACIONES") + construirTabla(enfRegs, "🏥 ENFERMEDAD");
-
-                // Resumen
+                tablaHTML = construir(vacRegs, "🏖️ VACACIONES") + construir(enfRegs, "🏥 ENFERMEDAD");
                 const diasAsig = getDiasAsignados(empleado);
                 const emp = empleadosData.find(e => normalizar(e.nombre) === normalizar(empleado));
                 const fIng = emp && emp.fecha_ingreso ? new Date(emp.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'No cargada';
@@ -1868,21 +2112,15 @@
                 let anioRef = anio === 'ALL' ? currentYear : parseInt(anio);
                 regs.forEach(r => {
                     const y = parseInt(r.date.split("-")[0]);
-                    if (anio === 'ALL' || y === anioRef) {
-                        if (r.type === 'ENFERMEDAD') totalEnf++; else totalVac++;
-                    }
+                    if (anio === 'ALL' || y === anioRef) { if (r.type === 'ENFERMEDAD') totalEnf++; else totalVac++; }
                 });
                 const restantes = Math.max(0, diasAsig - totalVac);
-
-                resumenHTML = `
-                    <div class="print-summary-box">
-                        <div class="title">📊 RESUMEN ANUAL ${anioRef}</div>
-                        <div class="row"><span>Fecha de ingreso:</span> <strong>${fIng}</strong></div>
-                        <div class="row"><span>Días asignados por ley:</span> <strong>${diasAsig} días</strong></div>
-                        <div class="row"><span>Días de vacaciones usados:</span> <strong>${totalVac} días</strong></div>
-                        <div class="row"><span>Días de enfermedad:</span> <strong>${totalEnf} días</strong></div>
-                        <div class="row" style="border-top:1px solid #bdc3c7; padding-top:6px; margin-top:6px;"><span>Saldo vacaciones restantes:</span> <strong>${restantes} días</strong></div>
-                    </div>`;
+                resumenHTML = `<div class="print-summary-box"><div class="title">📊 RESUMEN ANUAL ${anioRef}</div>
+                    <div class="row"><span>Fecha de ingreso:</span> <strong>${fIng}</strong></div>
+                    <div class="row"><span>Días asignados por ley:</span> <strong>${diasAsig} días</strong></div>
+                    <div class="row"><span>Días vacaciones usados:</span> <strong>${totalVac} días</strong></div>
+                    <div class="row"><span>Días de enfermedad:</span> <strong>${totalEnf} días</strong></div>
+                    <div class="row" style="border-top:1px solid #bdc3c7;padding-top:6px;margin-top:6px;"><span>Saldo restante:</span> <strong>${restantes} días</strong></div></div>`;
             }
         } else {
             headerTitle = "NÓMINA DE PERSONAL Y DÍAS DE VACACIONES";
@@ -1892,7 +2130,7 @@
                 if (k.startsWith(`${currentYear}-${mm}`)) {
                     notesData[k].forEach(r => {
                         if (mode === 'mine' && r.updatedBy !== currentUser) return;
-                        if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter && normalizar(r.text) !== selectedEmployeeFilter) return;
+                        if (!shouldShowRecord(r)) return;
                         const emp = normalizar(r.text);
                         if (!empDays[emp]) empDays[emp] = [];
                         empDays[emp].push({ date: k, status: r.status, updatedBy: r.updatedBy, type: r.type });
@@ -1900,16 +2138,12 @@
                 }
             }
             const empNames = Object.keys(empDays).sort();
-            if (!empNames.length) {
-                tablaHTML = '<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No hay registros en el período.</p>';
-            } else {
-                tablaHTML = `<table class="print-table"><thead><tr>
-                    <th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th>
-                </tr></thead><tbody>`;
+            if (!empNames.length) { tablaHTML = '<p style="text-align:center;color:#7f8c8d;padding:20px;font-weight:bold;">No hay registros.</p>'; }
+            else {
+                tablaHTML = `<table class="print-table"><thead><tr><th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>`;
                 empNames.forEach(emp => {
                     const items = empDays[emp].sort((a,b) => a.date.localeCompare(b.date));
-                    const periods = [];
-                    let cur = null;
+                    const periods = []; let cur = null;
                     items.forEach(it => {
                         const d = new Date(it.date + "T00:00:00");
                         if (!cur) cur = { start: d, end: d, count: 1, status: it.status, updatedBy: it.updatedBy, type: it.type };
@@ -1928,42 +2162,13 @@
                         const rest = calcularDiasRestantesPeriodo(sK, eK);
                         const tipoTxt = p.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES';
                         const badge = p.status === 'APROBADO' ? '<span class="print-badge-approved">APROBADO</span>' : '<span class="print-badge-pending">PENDIENTE</span>';
-                        tablaHTML += `<tr>
-                            <td class="emp-name">${emp}</td>
-                            <td>${tipoTxt}</td>
-                            <td>${sStr}</td>
-                            <td>${eStr}</td>
-                            <td><strong>${p.count}</strong></td>
-                            <td>${rest.label}</td>
-                            <td>${badge}</td>
-                            <td class="sup-name">${p.updatedBy}</td>
-                        </tr>`;
+                        tablaHTML += `<tr><td class="emp-name">${emp}</td><td>${tipoTxt}</td><td>${sStr}</td><td>${eStr}</td><td><strong>${p.count}</strong></td><td>${rest.label}</td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
                     });
                 });
                 tablaHTML += `</tbody></table>`;
             }
         }
-
-        area.innerHTML = `
-            <div class="print-header">
-                <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo" onerror="this.src='https://placehold.co/60x60/E67E00/white?text=M'">
-                <div class="print-header-text">
-                    <h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1>
-                    <h2>${headerTitle} — ${headerSub}</h2>
-                    <div class="print-meta">
-                        👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>
-                        🕐 Impreso el ${fechaImp}<br>
-                        🔎 Filtro: <strong>${mode === 'mine' ? 'Solo mis registros' : (mode === 'employee' ? 'Historial de ' + empleado : 'Todos')}</strong>
-                    </div>
-                </div>
-            </div>
-            ${tablaHTML}
-            ${resumenHTML}
-            <div class="print-footer">
-                Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>
-                Minerar S.A. © 2026 — Todos los derechos reservados.
-            </div>
-        `;
+        area.innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo" onerror="this.src='https://placehold.co/60x60/E67E00/white?text=M'"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>${headerTitle} — ${headerSub}</h2><div class="print-meta">👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>🕐 Impreso el ${fechaImp}<br>🔎 Filtro: <strong>${mode === 'mine' ? 'Solo mis registros' : (mode === 'employee' ? 'Historial de ' + empleado : 'Todos')}</strong></div></div></div>${tablaHTML}${resumenHTML}<div class="print-footer">Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>Minerar S.A. © 2026 — Todos los derechos reservados.</div>`;
     }
 
     function printEmployeeHistory() {
@@ -1994,14 +2199,23 @@
     function hideHoverModal() { document.getElementById("hoverModal").classList.remove("active"); }
 
     function switchTab(name) {
+        if (name === 'empleados' && !isAdmin()) {
+            alertError("Solo ADMINISTRADOR y EDGARDO SAAVEDRA tienen acceso a la pestaña Empleados.");
+            return;
+        }
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        const idx = {single:0, range:1, equity:2, coordination:3, employee:4, empleados:5, recordatorios:6}[name];
-        document.querySelectorAll('.tab-btn')[idx].classList.add('active');
-        document.getElementById('tab' + name.charAt(0).toUpperCase() + name.slice(1)).classList.add('active');
+        const tabs = ['single','range','equity','coordination','reporte','multi','empleados','recordatorios'];
+        const idx = tabs.indexOf(name);
+        if (idx >= 0) {
+            document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+            const el = document.getElementById('tab' + name.charAt(0).toUpperCase() + name.slice(1));
+            if (el) el.classList.add('active');
+        }
         if (name === 'coordination') renderCoordinationSummary();
         if (name === 'recordatorios') renderReminders();
         if (name === 'empleados') renderEmpleadosList();
+        if (name === 'equity') renderEmployeeHistory();
     }
 
     // ==================== LOGIN ====================
@@ -2012,13 +2226,10 @@
         try {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
             const o = ctx.createOscillator(); const g = ctx.createGain();
-            o.type = 'sine';
-            o.frequency.setValueAtTime(520, ctx.currentTime);
+            o.type = 'sine'; o.frequency.setValueAtTime(520, ctx.currentTime);
             o.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
-            g.gain.setValueAtTime(0.3, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-            o.connect(g); g.connect(ctx.destination);
-            o.start(); o.stop(ctx.currentTime + 0.25);
+            g.gain.setValueAtTime(0.3, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+            o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.25);
         } catch(e) {}
     }
 
@@ -2037,8 +2248,7 @@
         });
         if (!sel && us.length) s.value = us[0];
         const n = document.createElement("option"); n.value = "NEW_USER"; n.innerText = "➕ NUEVO SUPERVISOR";
-        n.style.fontWeight = "bold"; n.style.color = "#E67E00";
-        s.appendChild(n);
+        n.style.fontWeight = "bold"; n.style.color = "#E67E00"; s.appendChild(n);
         handleUserSelectChange();
     }
 
@@ -2062,7 +2272,6 @@
         const p = document.getElementById("passwordInput"), c = document.getElementById("confirmPasswordInput");
         const b = document.getElementById("submitBtn"), i = document.getElementById("infoText"), f = document.getElementById("forgotBtn");
         const lm = document.getElementById("loginModeBtn"), rm = document.getElementById("registerModeBtn");
-
         if (s.value === "NEW_USER") {
             isRegisteringNew = true;
             u.style.display = "block"; e.style.display = "block"; c.style.display = "block";
@@ -2094,7 +2303,6 @@
         const pass = document.getElementById("passwordInput").value.trim();
         const lock = document.getElementById("lockIcon");
         const shake = () => { lock.innerText = "🔒"; lock.classList.remove("shake"); void lock.offsetWidth; lock.classList.add("shake"); };
-
         if (isRegisteringNew) {
             const username = normalizar(document.getElementById("usernameInput").value);
             const email = document.getElementById("emailInput").value.trim().toLowerCase();
@@ -2117,19 +2325,21 @@
             if (!pass || !usersDB[username] || usersDB[username].password !== pass) { shake(); showLoginError("Contraseña incorrecta."); return; }
             currentUser = username;
         }
-
         lock.innerText = "🔓";
         playUnlockSound();
         try { localStorage.setItem(LOCAL_SESION_KEY, currentUser); } catch(e) {}
-
         setTimeout(() => {
             document.getElementById("loginOverlay").style.display = "none";
             document.getElementById("mainContainer").style.display = "block";
             document.getElementById("supervisorInput").value = currentUser;
+            // Ocultar pestaña Empleados si no es admin
+            if (!isAdmin()) {
+                const tabs = document.querySelectorAll('.tab-btn');
+                if (tabs[6]) tabs[6].style.display = 'none';
+            }
             updateCalendar();
-            // Bienvenida + recordatorios
-            setTimeout(() => { mostrarBienvenida(); }, 500);
-            setTimeout(() => { mostrarAvisosDelDia(); }, 1500);
+            setTimeout(() => mostrarBienvenida(), 500);
+            setTimeout(() => mostrarAvisosDelDia(), 1500);
         }, 300);
     }
 
@@ -2169,7 +2379,6 @@
     }
 
     function closeRecoveryModal() { document.getElementById("recoveryModal").style.display = "none"; }
-
     function openDeleteAccountModal() {
         document.getElementById("deleteConfirmPassword").value = "";
         document.getElementById("deleteModalMsg").innerText = "";
@@ -2202,9 +2411,49 @@
         document.getElementById("confirmPasswordInput").value = "";
         document.getElementById("lockIcon").innerText = "🔒";
         try { localStorage.removeItem(LOCAL_SESION_KEY); } catch(e) {}
-        currentUser = ""; currentFilter = 'ALL'; selectedEmployeeFilter = '';
+        currentUser = ""; currentFilter = 'ALL'; selectedEmployeeFilter = ''; selectedMultiFilter = [];
         populateUserDropdown(last);
         hideLoginError();
+    }
+
+    // ==================== MULTI FILTRO (pestaña) ====================
+    function addToMultiSelect(nombre) {
+        if (!nombre) return;
+        if (!selectedMultiFilter.includes(nombre)) {
+            selectedMultiFilter.push(nombre);
+            renderMultiSelectedList();
+        }
+        document.getElementById('multiAddSelect').value = '';
+    }
+    function removeFromMultiSelect(nombre) {
+        selectedMultiFilter = selectedMultiFilter.filter(x => x !== nombre);
+        renderMultiSelectedList();
+    }
+    function renderMultiSelectedList() {
+        const cont = document.getElementById('multiSelectedList');
+        if (!cont) return;
+        if (!selectedMultiFilter.length) {
+            cont.innerHTML = '<p style="font-size:0.75rem; color:#a4b0be; text-align:center; padding:15px;">Sin empleados seleccionados.</p>';
+            return;
+        }
+        cont.innerHTML = selectedMultiFilter.map(n => `<div class="multi-selected-item">
+            <span class="ms-name">👤 ${n}</span>
+            <button class="ms-remove" onclick="removeFromMultiSelect('${n}')">✕</button>
+        </div>`).join("");
+    }
+    function applyMultiFilter() {
+        if (!selectedMultiFilter.length) { alertWarning("Seleccioná al menos un empleado."); return; }
+        currentFilter = 'MULTI';
+        document.getElementById('filterSelect').value = 'MULTI';
+        document.getElementById('multiFilterGroup').style.display = 'flex';
+        document.getElementById('multiFilterLabel').innerText = `${selectedMultiFilter.length} empleado${selectedMultiFilter.length !== 1 ? 's' : ''}`;
+        updateCalendar();
+        alertSuccess(`Filtro aplicado: <strong>${selectedMultiFilter.length} empleados</strong><br>El calendario muestra solo sus registros.`);
+    }
+    function clearMultiFilter() {
+        selectedMultiFilter = [];
+        renderMultiSelectedList();
+        if (currentFilter === 'MULTI') clearEmployeeFilter();
     }
 
     // ==================== INICIALIZACIÓN ====================
@@ -2217,9 +2466,10 @@
 
         const notesArea = document.getElementById("notes");
         if (notesArea) notesArea.addEventListener("input", triggerEquityCheckOnSingle);
-        document.getElementById("rangeEmployeeName").addEventListener("input", checkRangeEquity);
+        document.getElementById("rangeEmployeeName")?.addEventListener("input", checkRangeEquity);
         document.getElementById("monthSelect").value = currentMonth;
         document.getElementById("yearSelect").value = currentYear;
+        document.getElementById("coordMonthSelect").value = currentMonth;
 
         await cargarTodo();
 
@@ -2230,6 +2480,10 @@
                 document.getElementById("loginOverlay").style.display = "none";
                 document.getElementById("mainContainer").style.display = "block";
                 document.getElementById("supervisorInput").value = currentUser;
+                if (!isAdmin()) {
+                    const tabs = document.querySelectorAll('.tab-btn');
+                    if (tabs[6]) tabs[6].style.display = 'none';
+                }
                 updateCalendar();
                 setTimeout(() => mostrarBienvenida(), 500);
                 setTimeout(() => mostrarAvisosDelDia(), 1500);
@@ -2255,7 +2509,6 @@
     window.deleteSelectedDay = deleteSelectedDay;
     window.saveRange = saveRange;
     window.deleteRange = deleteRange;
-    window.searchEmployeeHistory = searchEmployeeHistory;
     window.renderCoordinationSummary = renderCoordinationSummary;
     window.triggerEquityCheckOnSingle = triggerEquityCheckOnSingle;
     window.checkRangeEquity = checkRangeEquity;
@@ -2281,6 +2534,20 @@
     window.closeWelcomeModal = closeWelcomeModal;
     window.closeRemindersModal = closeRemindersModal;
     window.closeGenericModal = closeGenericModal;
+    window.openMultiSelectModal = openMultiSelectModal;
+    window.closeMultiSelectModal = closeMultiSelectModal;
+    window.filterMultiList = filterMultiList;
+    window.multiSelectAll = multiSelectAll;
+    window.multiDeselectAll = multiDeselectAll;
+    window.applyMultiSelect = applyMultiSelect;
+    window.addToMultiSelect = addToMultiSelect;
+    window.removeFromMultiSelect = removeFromMultiSelect;
+    window.applyMultiFilter = applyMultiFilter;
+    window.clearMultiFilter = clearMultiFilter;
+    window.previewEmployeeReport = previewEmployeeReport;
+    window.renderEmployeeHistory = renderEmployeeHistory;
+    window.closePassConfirmModal = closePassConfirmModal;
+    window.confirmPassAction = confirmPassAction;
 </script>
 </body>
 </html>
