@@ -87,6 +87,48 @@
         .badge-restantes-fin { background:#95a5a6; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
         .badge-restantes-ultimo { background:#e74c3c; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
 
+        /* Sábana de datos */
+        .sabana-card { background:#fff; color:#2d3436; border-radius:8px; padding:14px 16px; border:2px solid #E67E00; box-shadow:0 4px 10px rgba(0,0,0,0.15); margin-top:15px; }
+        .sabana-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:2px solid #E67E00; padding-bottom:8px; margin-bottom:10px; }
+        .sabana-title { font-size:0.95rem; font-weight:900; color:#1e272e; text-transform:uppercase; }
+        .sabana-subtitle { font-size:0.75rem; color:#7f8c8d; margin-top:3px; font-weight:600; }
+        .sabana-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; padding:10px; background:#f8f9fa; border-radius:6px; border-left:3px solid #E67E00; }
+        .sabana-filters .sf-group { display:flex; align-items:center; gap:5px; }
+        .sabana-filters label { font-size:0.7rem; font-weight:bold; color:#2c3e50; text-transform:uppercase; }
+        .sabana-filters select { padding:5px 8px; border:1px solid #ccc; border-radius:4px; font-size:0.78rem; font-weight:bold; color:#2c3e50; background:#fff; }
+        .sabana-table { width:100%; border-collapse:collapse; font-size:0.8rem; }
+        .sabana-table th { background:#1e272e; color:#fff; text-align:left; padding:6px 8px; font-size:0.72rem; text-transform:uppercase; }
+        .sabana-table td { padding:6px 8px; border-bottom:1px solid #dcdde1; color:#2d3436; }
+        .sabana-table tr:nth-child(even) { background:#f8f9fa; }
+        .sabana-table tr.en-curso { background:#e8f8ef !important; border-left:3px solid #27ae60; }
+        .sabana-table tr.proximo { background:#fef9e7 !important; border-left:3px solid #f39c12; }
+        .sabana-table tr.finalizado { background:#f4f6f7 !important; border-left:3px solid #95a5a6; }
+        .sabana-table .emp-name { font-weight:900; color:#d35400; text-transform:uppercase; }
+        .sabana-table .sup-name { font-weight:700; color:#2980b9; font-size:0.75rem; }
+        .sabana-totales { margin-top:12px; padding:10px 12px; background:#fff9e6; border-radius:6px; border-left:4px solid #E67E00; }
+        .sabana-totales .st-title { font-size:0.75rem; font-weight:900; color:#1e272e; text-transform:uppercase; margin-bottom:6px; padding-bottom:4px; border-bottom:1px solid #ddd; }
+        .sabana-totales .st-item { font-size:0.8rem; color:#2d3436; padding:4px 0; border-bottom:1px dashed #eee; }
+        .sabana-totales .st-item:last-child { border-bottom:none; }
+        .sabana-totales .st-emp { font-weight:900; color:#d35400; text-transform:uppercase; font-size:0.82rem; }
+        .sabana-totales .st-num { font-weight:bold; color:#27ae60; }
+        .sabana-totales .st-num-rojo { font-weight:bold; color:#e74c3c; }
+        .sabana-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; padding-top:10px; border-top:1px solid #ddd; }
+        .sabana-actions button { padding:9px 14px; border:none; border-radius:6px; font-size:0.8rem; font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:6px; }
+        .btn-sabana-print { background:#27ae60; color:white; }
+        .btn-sabana-print:hover { background:#219653; }
+        .btn-sabana-almanaque { background:#8e44ad; color:white; }
+        .btn-sabana-almanaque:hover { background:#6c3483; }
+        .btn-sabana-excel { background:#2980b9; color:white; }
+        .btn-sabana-excel:hover { background:#1f6391; }
+        .btn-sabana-pdf { background:#c0392b; color:white; }
+        .btn-sabana-pdf:hover { background:#a93226; }
+        .sabana-empty { text-align:center; padding:25px; font-size:0.85rem; color:#7f8c8d; font-weight:bold; }
+        .sabana-aviso-varios { background:#fef9e7; border-left:3px solid #f39c12; padding:8px 12px; border-radius:6px; font-size:0.75rem; color:#7d6608; margin-top:8px; }
+        .badge-venc-curso { background:#27ae60; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
+        .badge-venc-prox { background:#f39c12; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
+        .badge-venc-fin { background:#95a5a6; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
+        .badge-venc-hoy { background:#e74c3c; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
+
         .main-content { display:flex; gap:15px; align-items:stretch; }
         .calendar-section { flex:3; background-color:#fff; border-radius:12px; padding:15px; box-shadow:0 10px 20px rgba(0,0,0,0.3); display:flex; flex-direction:column; color:#333; }
         .month-navigation { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:10px 15px; background:#2d3436; border-radius:8px; color:white; border-bottom:2px solid #E67E00; }
@@ -205,7 +247,6 @@
         .toggle-switch::after { content:''; position:absolute; top:3px; left:3px; width:20px; height:20px; background:white; border-radius:50%; transition: left 0.3s; }
         .toggle-switch.on::after { left:27px; }
 
-        /* Multi-selector para filtro múltiple */
         .multi-selector-box { background:#2f3640; border-radius:8px; padding:10px; margin-bottom:10px; }
         .multi-selector-box select { width:100%; padding:9px; border-radius:6px; border:1px solid #485460; background:#222f3e; color:white; font-size:0.85rem; font-weight:bold; cursor:pointer; margin-bottom:8px; }
         .multi-selected-list { background:#222f3e; border-radius:6px; padding:6px; max-height:180px; overflow-y:auto; margin-bottom:8px; }
@@ -214,7 +255,6 @@
         .multi-selected-item .ms-remove { background:#c0392b; color:white; border:none; border-radius:4px; padding:2px 8px; font-size:0.7rem; font-weight:bold; cursor:pointer; }
         .multi-selected-item .ms-remove:hover { background:#a93226; }
 
-        /* MODALES */
         .modal-overlay { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index:10001; justify-content:center; align-items:center; padding:20px; overflow-y:auto; }
         .modal-overlay.active { display:flex; animation: fadeInModal 0.25s ease-out; }
         .modal-box { background:#1e272e; width:100%; max-width:480px; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.8); border-top:5px solid #E67E00; text-align:center; padding:30px 25px 25px 25px; color:white; position:relative; }
@@ -237,7 +277,6 @@
         .modal-btn.secondary { background:#485460; color:white; }
         .modal-btn.secondary:hover { background:#3d4451; transform:translateY(-1px); }
 
-        /* Modal multi-selector */
         .multi-modal { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index:10002; justify-content:center; align-items:center; padding:20px; }
         .multi-modal.active { display:flex; animation: fadeInModal 0.25s ease-out; }
         .multi-modal-box { background:#1e272e; width:100%; max-width:520px; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.8); border-top:5px solid #E67E00; color:white; display:flex; flex-direction:column; max-height:85vh; }
@@ -342,6 +381,7 @@
             .tab-btn { font-size:0.6rem; padding:6px 2px; min-width:48px; }
             .summary-table { display:block; overflow-x:auto; white-space:nowrap; font-size:0.7rem; }
             .summary-table th, .summary-table td { padding:4px 6px; }
+            .sabana-table { display:block; overflow-x:auto; white-space:nowrap; font-size:0.72rem; }
             .login-box { width:95%; max-width:380px; padding:22px 18px; }
             .login-logo-box img { width:70px; height:70px; }
             .login-title { font-size:1.05rem; } .login-subtitle { font-size:0.7rem; letter-spacing:2px; }
@@ -468,7 +508,7 @@
         </div>
     </div>
 
-    <!-- MODAL PEDIR CONTRASEÑA (para eliminar empleados) -->
+    <!-- MODAL PEDIR CONTRASEÑA -->
     <div class="modal-overlay" id="passConfirmModal">
         <div class="modal-box tipo-warning">
             <span class="modal-emoji">🔐</span>
@@ -482,7 +522,7 @@
         </div>
     </div>
 
-    <!-- MODAL MULTI-SELECTOR (filtro múltiple) -->
+    <!-- MODAL MULTI-SELECTOR -->
     <div class="multi-modal" id="multiSelectModal">
         <div class="multi-modal-box">
             <div class="multi-modal-header">
@@ -611,24 +651,55 @@
                     <span><span style="color:#8e44ad;">&#9632;</span> Enfermedad</span>
                 </div>
 
+                <!-- Contenedor de la Sábana (arriba de la Nómina) -->
+                <div id="sabanaContainer"></div>
+
+                <!-- Nómina (solo se muestra cuando NO hay filtro) -->
                 <div id="printSummaryContainer" class="print-summary-container"></div>
             </div>
 
             <div class="notes-section">
                 <h2>Gestión</h2>
                 <div class="panel-tabs">
-                    <button class="tab-btn active" onclick="switchTab('single')">📌 Casilla</button>
-                    <button class="tab-btn" onclick="switchTab('range')">🗓️ Rango</button>
-                    <button class="tab-btn" onclick="switchTab('equity')">⚖️ Historial</button>
-                    <button class="tab-btn" onclick="switchTab('coordination')">🤝 Coord.</button>
-                    <button class="tab-btn" onclick="switchTab('reporte')">📄 Reporte</button>
+                    <button class="tab-btn active" onclick="switchTab('range')">🗓️ Rango</button>
+                    <button class="tab-btn" onclick="switchTab('single')">📌 Día Suelto</button>
                     <button class="tab-btn" onclick="switchTab('multi')">🔍 Filtro Múltiple</button>
+                    <button class="tab-btn" onclick="switchTab('reporte')">📄 Reporte Individual</button>
+                    <button class="tab-btn" onclick="switchTab('coordination')">🤝 Coordinación RRHH</button>
+                    <button class="tab-btn" onclick="switchTab('equity')">⚖️ Historial</button>
                     <button class="tab-btn" onclick="switchTab('empleados')">👥 Empleados</button>
-                    <button class="tab-btn" onclick="switchTab('recordatorios')">🔔 Record.</button>
+                    <button class="tab-btn" onclick="switchTab('recordatorios')">🔔 Recordatorios</button>
+                </div>
+
+                <!-- TAB RANGO (activa por defecto) -->
+                <div id="tabRange" class="tab-content active">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna o elimina un rango completo:</p>
+                    <div class="range-inputs">
+                        <div><label>Desde:</label><input type="date" id="rangeStart"></div>
+                        <div><label>Hasta:</label><input type="date" id="rangeEnd"></div>
+                    </div>
+                    <input type="text" id="rangeEmployeeName" placeholder="Nombre del empleado" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px; text-transform:uppercase;" oninput="checkRangeEquity()">
+                    <div style="margin-bottom:10px;">
+                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Tipo:</label>
+                        <select id="rangeType" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;">
+                            <option value="VACACIONES">🏖️ VACACIONES</option>
+                            <option value="ENFERMEDAD">🏥 ENFERMEDAD</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Estado:</label>
+                        <select id="rangeApprovalStatus" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;">
+                            <option value="APROBADO">✅ APROBADO</option>
+                            <option value="PENDIENTE">⏳ PENDIENTE</option>
+                        </select>
+                    </div>
+                    <div id="rangeEquityAlert" class="equity-alert" style="display:none;"></div>
+                    <button class="save-btn" onclick="saveRange()">📅 Asignar Rango</button>
+                    <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar MIS Registros</button>
                 </div>
 
                 <!-- TAB SINGLE -->
-                <div id="tabSingle" class="tab-content active">
+                <div id="tabSingle" class="tab-content">
                     <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla</div>
                     <div id="otherRecordsContainer" class="other-records-section" style="display:none;">
                         <div class="other-records-title">🔒 Otros supervisores</div>
@@ -658,49 +729,39 @@
                     </div>
                 </div>
 
-                <!-- TAB RANGO -->
-                <div id="tabRange" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna o elimina un rango completo:</p>
-                    <div class="range-inputs">
-                        <div><label>Desde:</label><input type="date" id="rangeStart"></div>
-                        <div><label>Hasta:</label><input type="date" id="rangeEnd"></div>
-                    </div>
-                    <input type="text" id="rangeEmployeeName" placeholder="Nombre del empleado" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px; text-transform:uppercase;" oninput="checkRangeEquity()">
-                    <div style="margin-bottom:10px;">
-                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Tipo:</label>
-                        <select id="rangeType" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;">
-                            <option value="VACACIONES">🏖️ VACACIONES</option>
-                            <option value="ENFERMEDAD">🏥 ENFERMEDAD</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom:10px;">
-                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Estado:</label>
-                        <select id="rangeApprovalStatus" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;">
-                            <option value="APROBADO">✅ APROBADO</option>
-                            <option value="PENDIENTE">⏳ PENDIENTE</option>
-                        </select>
-                    </div>
-                    <div id="rangeEquityAlert" class="equity-alert" style="display:none;"></div>
-                    <button class="save-btn" onclick="saveRange()">📅 Asignar Rango</button>
-                    <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar MIS Registros</button>
-                </div>
-
-                <!-- TAB HISTORIAL -->
-                <div id="tabEquity" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📊 Consultá el historial de un empleado (en pantalla).</p>
-                    <div class="employee-print-form">
-                        <label>👤 Empleado:</label>
-                        <select id="historyEmployeeSelect" onchange="renderEmployeeHistory()">
+                <!-- TAB FILTRO MULTIPLE -->
+                <div id="tabMulti" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">🔍 Elegí varios empleados para ver solo sus registros.</p>
+                    <div class="multi-selector-box">
+                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:6px;">➕ Agregar empleado:</label>
+                        <select id="multiAddSelect" onchange="addToMultiSelect(this.value)">
                             <option value="">-- Elegí un empleado --</option>
                         </select>
+                    </div>
+                    <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">📋 Seleccionados:</label>
+                    <div class="multi-selected-list" id="multiSelectedList">
+                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center; padding:15px;">Sin empleados seleccionados.</p>
+                    </div>
+                    <button class="save-btn" style="background:#27ae60;" onclick="applyMultiFilter()">✅ Aplicar Filtro</button>
+                    <button class="btn-secondary" style="background:#7f8c8d;" onclick="clearMultiFilter()">✕ Limpiar Selección</button>
+                </div>
+
+                <!-- TAB REPORTE -->
+                <div id="tabReporte" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📄 Reporte individual en pantalla.</p>
+                    <div class="employee-print-form">
+                        <label>👤 Empleado:</label>
+                        <select id="employeePrintSelect"><option value="">-- Elegir --</option></select>
                         <label>📅 Año:</label>
-                        <select id="historyYearSelect" onchange="renderEmployeeHistory()">
-                            <option value="ALL">Todos los años</option>
+                        <select id="employeeYearSelect">
+                            <option value="ALL">Todos</option>
                             <option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option>
                             <option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option>
                         </select>
                     </div>
-                    <div id="historyResults" style="margin-top:10px;"></div>
+                    <button class="save-btn" onclick="previewEmployeeReport()">📊 Ver Reporte en Pantalla</button>
+                    <button class="btn-secondary" style="background:#2980b9; margin-top:6px;" onclick="printEmployeeHistory()">🖨️ Imprimir Reporte</button>
+                    <div id="employeePreviewContainer" style="margin-top:15px;"></div>
                 </div>
 
                 <!-- TAB COORDINACION -->
@@ -722,42 +783,25 @@
                     <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar</button>
                 </div>
 
-                <!-- TAB REPORTE -->
-                <div id="tabReporte" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📄 Reporte individual en pantalla.</p>
+                <!-- TAB HISTORIAL -->
+                <div id="tabEquity" class="tab-content">
+                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📊 Consultá el historial de un empleado (en pantalla).</p>
                     <div class="employee-print-form">
                         <label>👤 Empleado:</label>
-                        <select id="employeePrintSelect"><option value="">-- Elegir --</option></select>
+                        <select id="historyEmployeeSelect" onchange="renderEmployeeHistory()">
+                            <option value="">-- Elegí un empleado --</option>
+                        </select>
                         <label>📅 Año:</label>
-                        <select id="employeeYearSelect">
-                            <option value="ALL">Todos</option>
+                        <select id="historyYearSelect" onchange="renderEmployeeHistory()">
+                            <option value="ALL">Todos los años</option>
                             <option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option>
                             <option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option>
                         </select>
                     </div>
-                    <button class="save-btn" onclick="previewEmployeeReport()">📊 Ver Reporte en Pantalla</button>
-                    <button class="btn-secondary" style="background:#2980b9; margin-top:6px;" onclick="printEmployeeHistory()">🖨️ Imprimir Reporte</button>
-                    <div id="employeePreviewContainer" style="margin-top:15px;"></div>
+                    <div id="historyResults" style="margin-top:10px;"></div>
                 </div>
 
-                <!-- TAB FILTRO MULTIPLE -->
-                <div id="tabMulti" class="tab-content">
-                    <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">🔍 Elegí varios empleados para ver solo sus registros.</p>
-                    <div class="multi-selector-box">
-                        <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:6px;">➕ Agregar empleado:</label>
-                        <select id="multiAddSelect" onchange="addToMultiSelect(this.value)">
-                            <option value="">-- Elegí un empleado --</option>
-                        </select>
-                    </div>
-                    <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">📋 Seleccionados:</label>
-                    <div class="multi-selected-list" id="multiSelectedList">
-                        <p style="font-size:0.75rem; color:#a4b0be; text-align:center; padding:15px;">Sin empleados seleccionados.</p>
-                    </div>
-                    <button class="save-btn" style="background:#27ae60;" onclick="applyMultiFilter()">✅ Aplicar Filtro</button>
-                    <button class="btn-secondary" style="background:#7f8c8d;" onclick="clearMultiFilter()">✕ Limpiar Selección</button>
-                </div>
-
-                <!-- TAB EMPLEADOS (solo admins) -->
+                <!-- TAB EMPLEADOS -->
                 <div id="tabEmpleados" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">👥 Gestión de empleados y saldos.</p>
                     <div class="emp-form-box">
@@ -811,7 +855,7 @@
 
     <div id="printArea"></div>
 
-    <!-- AYUDA ACTUALIZADA -->
+    <!-- AYUDA -->
     <div id="helpModal">
         <div class="help-modal-box">
             <div class="help-modal-header">
@@ -825,43 +869,41 @@
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📅 2. Asignar Vacaciones <span class="arrow">▼</span></div>
                     <div class="accordion-content">
-                        <p><strong>Casilla por casilla:</strong> clic en el día, escribí nombre, tipo y estado. Guardar.</p>
-                        <p><strong>Por rango:</strong> pestaña "🗓️ Rango", completá desde/hasta/nombre/tipo/estado.</p>
+                        <p><strong>Por rango (recomendado):</strong> pestaña "🗓️ Rango", completá desde/hasta/nombre/tipo/estado.</p>
+                        <p><strong>Por día suelto:</strong> clic en un día del calendario y completá el formulario.</p>
                         <div class="tip-box">✨ Podés cargar varios empleados el mismo día.</div>
                     </div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏥 3. Registrar Enfermedad <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "Tipo de Licencia" elegí 🏥 ENFERMEDAD. Se registra igual que vacaciones pero con color violeta y se contabiliza por separado.</p></div>
+                    <div class="accordion-content"><p>En "Tipo" elegí 🏥 ENFERMEDAD. Se registra igual que vacaciones pero con color violeta y se contabiliza por separado.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🗑️ 4. Borrar Registros <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Igual que para cargar: por casilla o por rango. Solo podés borrar lo tuyo.</p></div>
+                    <div class="accordion-content"><p>Por rango o por día suelto. Solo podés borrar lo tuyo.</p></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔒 5. Permisos y Bloqueo <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Cada supervisor es dueño de sus registros. Solo podés editar/borrar los tuyos. Los ajenos se ven pero con candado 🔒.</p></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👤 5. Filtro por Empleado <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y vas a ver la <strong>Sábana de Datos</strong> con todos sus períodos.</p></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👤 6. Filtro por Empleado <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y el calendario muestra solo sus días. Arriba aparece un banner naranja con el resumen.</p></div>
-                </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔍 7. Filtro Múltiple <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "VER:" elegí "✏️ Varios empleados..." y hacé clic en el botón "🏷️ Seleccionar empleados". Se abre un modal con checkboxes. Tildá los que quieras y clic en "✅ Aplicar".</p>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏷️ 6. Filtro Múltiple <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "✏️ Varios empleados..." y clic en el botón "🏷️ Seleccionar empleados". Se abre un modal con checkboxes.</p>
                     <div class="tip-box">💡 También podés usar la pestaña "🔍 Filtro Múltiple" del panel derecho.</div></div>
+                </div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📋 7. Sábana de Datos <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Cuando filtrás, aparece la <strong>Sábana</strong> abajo del calendario con TODOS los períodos sin importar el mes. Incluye filtros internos (Año, Tipo, Estado, Orden).</p>
+                    <div class="tip-box">💡 Si filtrás 1 empleado, podés imprimir también el <strong>Almanaque visual</strong> con sus días marcados.</div></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👥 8. Gestión de Empleados <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>Solo ADMINISTRADOR y EDGARDO SAAVEDRA ven la pestaña "👥 Empleados". Cargá nombre + fecha de ingreso. El sistema calcula los días por antigüedad:</p>
                     <ul><li>0-5 años: 14 días</li><li>5-10 años: 21 días</li><li>10-20 años: 28 días</li><li>+20 años: 35 días</li></ul>
                     <div class="tip-box">💡 El campo "Días override" solo se usa si hay convenio especial.</div></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📊 9. Reporte Individual <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Pestaña "📄 Reporte": elegí empleado + año, clic en "📊 Ver Reporte en Pantalla". Muestra días usados, restantes, saldo anual y todos los períodos.</p></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔔 9. Recordatorios <span class="arrow">▼</span></div>
+                    <div class="accordion-content"><p>Pestaña "🔔 Recordatorios": muestra inicios, últimos días, fines y próximos 7 días. Podés activar/desactivar los avisos automáticos.</p></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔔 10. Recordatorios <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Pestaña "🔔 Record.": muestra inicios, últimos días, fines y próximos 7 días. Podés activar/desactivar los avisos automáticos.</p></div>
-                </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📤 11. Exportar <span class="arrow">▼</span></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📤 10. Exportar <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>Botón "📤 Exportar":</p>
                     <ul><li>🖨️ Imprimir</li><li>📄 PDF (guardar como PDF)</li><li>📊 Excel (.xlsx)</li><li>💾 Backup JSON (respaldo técnico)</li><li>📋 Solo Mis Registros</li></ul></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🎨 12. Colores <span class="arrow">▼</span></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🎨 11. Colores <span class="arrow">▼</span></div>
                     <div class="accordion-content">
                     <table style="width:100%; color:#dcdde1; font-size:0.82rem;">
                         <tr><td>🟧 Naranja</td><td>Casilla seleccionada / Filtro activo</td></tr>
@@ -870,19 +912,8 @@
                         <tr><td>🟪 Violeta</td><td>Enfermedad</td></tr>
                     </table></div>
                 </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📱 13. Celular y Tablet <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>El sistema se adapta automáticamente. En celular, girá el dispositivo horizontalmente para mejor visualización.</p></div>
-                </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">☁️ 14. Datos en la Nube <span class="arrow">▼</span></div>
+                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">☁️ 12. Datos en la Nube <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>Todo se guarda en <strong>Supabase</strong>. No se pierde, todos ven los cambios en tiempo real.</p></div>
-                </div>
-                <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">❓ 15. Preguntas Frecuentes <span class="arrow">▼</span></div>
-                    <div class="accordion-content">
-                    <p><strong>¿Puedo cargar varios empleados el mismo día?</strong> Sí, se apilan.</p>
-                    <p><strong>¿Puedo escribir en minúsculas?</strong> Sí, se convierte a MAYÚSCULAS automáticamente.</p>
-                    <p><strong>¿Puedo editar lo de otro supervisor?</strong> No, solo lo tuyo.</p>
-                    <p><strong>¿Los feriados se cargan solos?</strong> Sí, los nacionales argentinos 🇦🇷.</p>
-                    </div>
                 </div>
                 <div style="text-align:center; margin-top:25px; padding-top:20px; border-top:2px solid #E67E00;">
                     <div style="color:#fbc531; font-weight:900; margin-bottom:8px;">🌟 Calendario Vacacional de Minerar S.A. 🌟</div>
@@ -891,7 +922,6 @@
             </div>
         </div>
     </div>
-
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -916,6 +946,7 @@
     let selectedDateStr = "";
     let avisosEnabled = true;
     let passConfirmCallback = null;
+    let sabanaFilters = { anio: 'ALL', tipo: 'ALL', estado: 'ALL', orden: 'fecha' };
 
     const LOCAL_SESION_KEY = 'minerar_sesion_activa';
     const AVISOS_KEY = 'minerar_avisos_enabled';
@@ -951,14 +982,11 @@
         const title = document.getElementById('genericModalTitle');
         const msg = document.getElementById('genericModalMessage');
         const actions = document.getElementById('genericModalActions');
-
         box.className = 'modal-box ' + (opts.tipo ? 'tipo-' + opts.tipo : '');
         emoji.innerText = opts.emoji || 'ℹ️';
         title.innerText = opts.titulo || '';
         msg.innerHTML = opts.mensaje || '';
         actions.innerHTML = '';
-        if (opts.centered) msg.style.textAlign = 'center'; else msg.style.textAlign = 'left';
-
         const buttons = opts.botones || [{label:'Aceptar', clase:'primary', onClick:()=>closeGenericModal()}];
         buttons.forEach(b => {
             const btn = document.createElement('button');
@@ -995,10 +1023,7 @@
     function confirmPassAction() {
         const pass = document.getElementById('passConfirmInput').value.trim();
         if (!pass) { alertWarning("Ingresá tu contraseña."); return; }
-        if (!usersDB[currentUser] || usersDB[currentUser].password !== pass) {
-            alertError("Contraseña incorrecta.");
-            return;
-        }
+        if (!usersDB[currentUser] || usersDB[currentUser].password !== pass) { alertError("Contraseña incorrecta."); return; }
         const cb = passConfirmCallback;
         closePassConfirmModal();
         if (cb) cb();
@@ -1024,15 +1049,13 @@
                 div.className = 'multi-check-item';
                 div.dataset.name = n;
                 const cb = document.createElement('input');
-                cb.type = 'checkbox';
-                cb.value = n;
+                cb.type = 'checkbox'; cb.value = n;
                 cb.checked = tempMultiSelection.includes(n);
                 cb.onchange = () => { toggleMultiItem(n, cb.checked); };
                 const lb = document.createElement('label');
                 lb.innerText = n;
                 lb.onclick = (e) => { e.preventDefault(); cb.checked = !cb.checked; toggleMultiItem(n, cb.checked); };
-                div.appendChild(cb);
-                div.appendChild(lb);
+                div.appendChild(cb); div.appendChild(lb);
                 list.appendChild(div);
             });
         }
@@ -1044,11 +1067,8 @@
         document.getElementById('multiSearchInput').value = '';
     }
     function toggleMultiItem(nombre, checked) {
-        if (checked) {
-            if (!tempMultiSelection.includes(nombre)) tempMultiSelection.push(nombre);
-        } else {
-            tempMultiSelection = tempMultiSelection.filter(x => x !== nombre);
-        }
+        if (checked) { if (!tempMultiSelection.includes(nombre)) tempMultiSelection.push(nombre); }
+        else { tempMultiSelection = tempMultiSelection.filter(x => x !== nombre); }
         updateMultiCounter();
     }
     function updateMultiCounter() {
@@ -1057,24 +1077,20 @@
     function filterMultiList() {
         const q = normalizar(document.getElementById('multiSearchInput').value);
         document.querySelectorAll('.multi-check-item').forEach(item => {
-            const name = item.dataset.name;
-            item.style.display = (!q || name.includes(q)) ? 'flex' : 'none';
+            item.style.display = (!q || item.dataset.name.includes(q)) ? 'flex' : 'none';
         });
     }
     function multiSelectAll() {
         document.querySelectorAll('.multi-check-item').forEach(item => {
             if (item.style.display !== 'none') {
-                const cb = item.querySelector('input[type=checkbox]');
-                cb.checked = true;
+                item.querySelector('input[type=checkbox]').checked = true;
                 if (!tempMultiSelection.includes(item.dataset.name)) tempMultiSelection.push(item.dataset.name);
             }
         });
         updateMultiCounter();
     }
     function multiDeselectAll() {
-        document.querySelectorAll('.multi-check-item').forEach(item => {
-            item.querySelector('input[type=checkbox]').checked = false;
-        });
+        document.querySelectorAll('.multi-check-item').forEach(item => { item.querySelector('input[type=checkbox]').checked = false; });
         tempMultiSelection = [];
         updateMultiCounter();
     }
@@ -1086,9 +1102,7 @@
             document.getElementById('filterSelect').value = 'MULTI';
             document.getElementById('multiFilterLabel').innerText = `${selectedMultiFilter.length} empleado${selectedMultiFilter.length !== 1 ? 's' : ''}`;
             updateCalendar();
-        } else {
-            clearEmployeeFilter();
-        }
+        } else { clearEmployeeFilter(); }
     }
 
     // ==================== SUPABASE ====================
@@ -1103,7 +1117,6 @@
             await recargarEmpleados();
             populateUserDropdown(currentUser || "");
             updateCloudBadge(true, "Nube Sincronizada");
-
             supabase.channel('vac-real').on('postgres_changes',{event:'*',schema:'public',table:'vacaciones'},recargarVacaciones).subscribe();
             supabase.channel('usr-real').on('postgres_changes',{event:'*',schema:'public',table:'usuarios'},recargarUsuarios).subscribe();
             supabase.channel('emp-real').on('postgres_changes',{event:'*',schema:'public',table:'empleados'},recargarEmpleados).subscribe();
@@ -1167,7 +1180,6 @@
     function getDayRecords(k) { return notesData[k] || []; }
     function getMyRecordsForDay(k) { return getDayRecords(k).filter(r => r.updatedBy === currentUser); }
     function getOtherRecordsForDay(k) { return getDayRecords(k).filter(r => r.updatedBy !== currentUser); }
-
     function getColorForSupervisor(name) {
         if (!name || !name.trim()) return "#bdc3c7";
         let hash = 0; const str = normalizar(name);
@@ -1241,11 +1253,8 @@
         } else if (currentFilter === 'MULTI') {
             empGroup.style.display = 'none';
             multiGroup.style.display = 'flex';
-            if (selectedMultiFilter.length === 0) {
-                openMultiSelectModal();
-            } else {
-                document.getElementById('multiFilterLabel').innerText = `${selectedMultiFilter.length} empleado${selectedMultiFilter.length !== 1 ? 's' : ''}`;
-            }
+            if (selectedMultiFilter.length === 0) openMultiSelectModal();
+            else document.getElementById('multiFilterLabel').innerText = `${selectedMultiFilter.length} empleado${selectedMultiFilter.length !== 1 ? 's' : ''}`;
         } else {
             empGroup.style.display = 'none';
             multiGroup.style.display = 'none';
@@ -1253,19 +1262,15 @@
         }
         updateCalendar();
     }
-
     function updateEmployeeFilterSelect() {
         const sel = document.getElementById("employeeFilterSelect");
         if (!sel) return;
         const lista = getAllEmployeeNames();
         const actual = sel.value;
         sel.innerHTML = '<option value="">-- Elegí empleado --</option>';
-        lista.forEach(n => {
-            const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o);
-        });
+        lista.forEach(n => { const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o); });
         if (actual && lista.includes(actual)) sel.value = actual;
     }
-
     function clearEmployeeFilter() {
         selectedEmployeeFilter = '';
         selectedMultiFilter = [];
@@ -1276,7 +1281,6 @@
         document.getElementById("filterSummaryBanner").classList.remove('visible');
         updateCalendar();
     }
-
     function updateAllDropdowns() {
         const lista = getAllEmployeeNames();
         const selectors = ['employeePrintSelect', 'historyEmployeeSelect', 'employeeFilterSelect', 'multiAddSelect'];
@@ -1284,26 +1288,19 @@
             const sel = document.getElementById(id);
             if (!sel) return;
             const actual = sel.value;
-            sel.innerHTML = id === 'employeeFilterSelect' 
-                ? '<option value="">-- Elegí empleado --</option>' 
-                : '<option value="">-- Elegir --</option>';
-            lista.forEach(n => {
-                const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o);
-            });
+            sel.innerHTML = id === 'employeeFilterSelect' ? '<option value="">-- Elegí empleado --</option>' : '<option value="">-- Elegir --</option>';
+            lista.forEach(n => { const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o); });
             if (actual && lista.includes(actual)) sel.value = actual;
         });
         updateCoordSupervisorDropdown();
     }
-
     function updateCoordSupervisorDropdown() {
         const sel = document.getElementById('coordSupervisorSelect');
         if (!sel) return;
         const lista = getAllSupervisorNames();
         const actual = sel.value;
         sel.innerHTML = '<option value="ALL">Todos los supervisores</option>';
-        lista.forEach(n => {
-            const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o);
-        });
+        lista.forEach(n => { const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o); });
         if (actual) sel.value = actual;
     }
 
@@ -1330,7 +1327,6 @@
             </div>`;
         }).join("");
     }
-
     function editEmployee(id) {
         if (!isAdmin()) { alertError("Solo ADMINISTRADOR o EDGARDO SAAVEDRA pueden editar."); return; }
         const e = empleadosData.find(x => x.id === id);
@@ -1340,14 +1336,12 @@
         document.getElementById("empFechaIngreso").value = e.fecha_ingreso || "";
         document.getElementById("empDiasOverride").value = e.dias_override || "";
     }
-
     function resetEmployeeForm() {
         document.getElementById("empEditId").value = "";
         document.getElementById("empNombre").value = "";
         document.getElementById("empFechaIngreso").value = "";
         document.getElementById("empDiasOverride").value = "";
     }
-
     async function saveEmployee() {
         if (!isAdmin()) { alertError("Solo ADMINISTRADOR o EDGARDO SAAVEDRA pueden guardar."); return; }
         const id = document.getElementById("empEditId").value;
@@ -1370,7 +1364,6 @@
             await recargarEmpleados();
         } catch(err) { console.error(err); alertError("Error guardando: " + err.message); }
     }
-
     function deleteEmployee(id) {
         if (!isAdmin()) { alertError("Solo ADMINISTRADOR o EDGARDO SAAVEDRA pueden eliminar."); return; }
         const e = empleadosData.find(x => x.id === id);
@@ -1396,7 +1389,6 @@
         document.getElementById("yearSelect").value = currentYear;
         updateCalendar();
     }
-
     function shouldShowRecord(rec) {
         const isMine = rec.updatedBy === currentUser;
         if (currentFilter === 'MINE' && !isMine) return false;
@@ -1406,30 +1398,21 @@
         if (currentFilter === 'MULTI' && selectedMultiFilter.length > 0 && !selectedMultiFilter.includes(normalizar(rec.text))) return false;
         return true;
     }
-
     function updateCalendar() {
         currentMonth = parseInt(document.getElementById("monthSelect").value);
         currentYear = parseInt(document.getElementById("yearSelect").value);
         currentFilter = document.getElementById("filterSelect").value;
         if (currentFilter === 'EMPLEADO') selectedEmployeeFilter = normalizar(document.getElementById("employeeFilterSelect").value);
-
         document.getElementById("monthYearTitle").innerText = `${monthNames[currentMonth]} ${currentYear}`;
-
         const fw = document.getElementById("futureWarning");
         if (currentYear > 2027) { fw.classList.add("visible"); fw.innerHTML = `⚠️ <b>Aviso:</b> Los feriados móviles pueden no estar actualizados para ${currentYear}.`; }
         else fw.classList.remove("visible");
-
         const grid = document.getElementById("calendarGrid");
         grid.innerHTML = "";
-        ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"].forEach(d => {
-            const el = document.createElement("div"); el.className = "calendar-day-header"; el.innerText = d; grid.appendChild(el);
-        });
-
+        ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"].forEach(d => { const el = document.createElement("div"); el.className = "calendar-day-header"; el.innerText = d; grid.appendChild(el); });
         const first = new Date(currentYear, currentMonth, 1).getDay();
         const daysIn = new Date(currentYear, currentMonth+1, 0).getDate();
         for (let i=0;i<first;i++) { const e = document.createElement("div"); e.className = "empty-day"; grid.appendChild(e); }
-
-        // Banner resumen
         const banner = document.getElementById("filterSummaryBanner");
         if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter) {
             const usados = calcularDiasUsadosAnio(selectedEmployeeFilter, currentYear);
@@ -1438,19 +1421,13 @@
             document.getElementById("filterSummaryCounts").innerText = `${usados.vac} días vacaciones · ${usados.enf} días enfermedad · Total ${usados.total} días`;
             banner.classList.add("visible");
         } else if (currentFilter === 'MULTI' && selectedMultiFilter.length > 0) {
-            let totalVac = 0, totalEnf = 0;
-            selectedMultiFilter.forEach(n => {
-                const u = calcularDiasUsadosAnio(n, currentYear);
-                totalVac += u.vac; totalEnf += u.enf;
-            });
+            let tV = 0, tE = 0;
+            selectedMultiFilter.forEach(n => { const u = calcularDiasUsadosAnio(n, currentYear); tV += u.vac; tE += u.enf; });
             document.getElementById("filterSummaryEmoji").innerText = "🏷️";
             document.getElementById("filterSummaryName").innerText = `${selectedMultiFilter.length} EMPLEADOS FILTRADOS`;
-            document.getElementById("filterSummaryCounts").innerText = `${selectedMultiFilter.join(' · ')} — ${totalVac} vac · ${totalEnf} enf`;
+            document.getElementById("filterSummaryCounts").innerText = `${tV} vac · ${tE} enf`;
             banner.classList.add("visible");
-        } else {
-            banner.classList.remove("visible");
-        }
-
+        } else { banner.classList.remove("visible"); }
         for (let day = 1; day <= daysIn; day++) {
             const cell = document.createElement("div");
             cell.className = "calendar-day";
@@ -1459,7 +1436,6 @@
             const keyHol = `${mm}-${dd}`;
             if (holidayDetails[keyHol]) cell.classList.add("holiday-day");
             if (selectedDateStr === keyDate) cell.classList.add("selected");
-
             const hd = document.createElement("div"); hd.className = "day-number"; hd.innerHTML = `<span>${day}</span>`;
             if (holidayDetails[keyHol]) {
                 const ht = document.createElement("span"); ht.className = "holiday-tag"; ht.innerText = "FERIADO"; hd.appendChild(ht);
@@ -1468,7 +1444,6 @@
                 cell.addEventListener("mouseleave", hideHoverModal);
             }
             cell.appendChild(hd);
-
             const records = getDayRecords(keyDate);
             records.forEach(rec => {
                 if (!shouldShowRecord(rec)) return;
@@ -1483,13 +1458,11 @@
                 div.innerHTML = `<div class="emp-name-line"><span>${tipoIcon} ${rec.text}</span><span class="lock-mini">${lockIcon}</span></div><span class="sup-tag">👤 ${rec.updatedBy} ${statusIcon}</span>`;
                 cell.appendChild(div);
             });
-
             cell.onclick = (e) => { e.stopPropagation(); selectDate(keyDate, day, monthNames[currentMonth], currentYear); };
             grid.appendChild(cell);
         }
         renderPrintVacationSummary();
     }
-
     function selectDate(key, day, mes, anio) {
         selectedDateStr = key;
         document.getElementById("selectedDateText").innerText = `Casilla: ${day} de ${mes} de ${anio}`;
@@ -1497,7 +1470,6 @@
         triggerEquityCheckOnSingle();
         updateCalendar();
     }
-
     function renderDayPanel() {
         if (!selectedDateStr) return;
         const myRegs = getMyRecordsForDay(selectedDateStr);
@@ -1531,7 +1503,6 @@
             document.getElementById("supervisorNote").value = "";
         }
     }
-
     function triggerEquityCheckOnSingle() {
         const nameVal = document.getElementById("notes").value.trim();
         const alertEl = document.getElementById("singleEquityAlert");
@@ -1548,7 +1519,6 @@
             alertEl.style.display = "block";
         }
     }
-
     function checkEquity(dateStr, workerName) {
         if (!dateStr || !workerName || workerName.trim().length < 2) return null;
         const clean = normalizar(workerName);
@@ -1566,7 +1536,6 @@
         }
         return matches;
     }
-
     function checkRangeEquity() {
         const nameVal = document.getElementById("rangeEmployeeName").value.trim();
         const startVal = document.getElementById("rangeStart").value;
@@ -1597,15 +1566,11 @@
         const ex = mis.find(r => normalizar(r.text) === val);
         try {
             if (ex) {
-                const { error } = await supabase.from('vacaciones').update({
-                    employee_name: val, status, supervisor_note: note, type, updated_by: normalizar(currentUser)
-                }).eq('id', ex.id);
+                const { error } = await supabase.from('vacaciones').update({ employee_name: val, status, supervisor_note: note, type, updated_by: normalizar(currentUser) }).eq('id', ex.id);
                 if (error) throw error;
                 alertSuccess(`Actualizado: <strong>${val}</strong><br>${type === 'ENFERMEDAD' ? '🏥 Enfermedad' : '🏖️ Vacaciones'} · ${status}`);
             } else {
-                const { error } = await supabase.from('vacaciones').insert([{
-                    date_key: selectedDateStr, employee_name: val, status, supervisor_note: note, type, updated_by: normalizar(currentUser)
-                }]);
+                const { error } = await supabase.from('vacaciones').insert([{ date_key: selectedDateStr, employee_name: val, status, supervisor_note: note, type, updated_by: normalizar(currentUser) }]);
                 if (error) throw error;
                 alertSuccess(`Registrado: <strong>${val}</strong><br>${type === 'ENFERMEDAD' ? '🏥 Enfermedad' : '🏖️ Vacaciones'} · ${status}`);
             }
@@ -1613,7 +1578,6 @@
             renderDayPanel();
         } catch(err) { console.error(err); alertError("Error: " + err.message); }
     }
-
     async function saveRange() {
         const s = document.getElementById("rangeStart").value;
         const e = document.getElementById("rangeEnd").value;
@@ -1642,7 +1606,6 @@
             document.getElementById("rangeEmployeeName").value = "";
         } catch(err) { console.error(err); alertError("Error: " + err.message); }
     }
-
     async function deleteSelectedDay() {
         if (!selectedDateStr) { alertWarning("Seleccioná primero una casilla."); return; }
         const mis = getMyRecordsForDay(selectedDateStr);
@@ -1660,7 +1623,6 @@
             } catch(err) { alertError("Error: " + err.message); }
         });
     }
-
     async function deleteRange() {
         const s = document.getElementById("rangeStart").value;
         const e = document.getElementById("rangeEnd").value;
@@ -1675,11 +1637,7 @@
             cur.setDate(cur.getDate() + 1);
         }
         const ids = [];
-        fechas.forEach(f => {
-            getMyRecordsForDay(f).forEach(r => {
-                if (!name || normalizar(r.text).includes(name)) ids.push(r.id);
-            });
-        });
+        fechas.forEach(f => { getMyRecordsForDay(f).forEach(r => { if (!name || normalizar(r.text).includes(name)) ids.push(r.id); }); });
         if (!ids.length) { alertWarning("No se encontraron TUS registros en ese rango."); return; }
         confirmDialog(`¿Eliminar <strong>${ids.length}</strong> registros tuyos?`, async () => {
             try {
@@ -1689,6 +1647,227 @@
                 alertSuccess(`Eliminados <strong>${ids.length}</strong> registros.`);
             } catch(err) { alertError("Error: " + err.message); }
         });
+    }
+
+    // ==================== SÁBANA DE DATOS ====================
+    function renderSabana() {
+        const cont = document.getElementById('sabanaContainer');
+        if (!cont) return;
+        if (currentFilter === 'ALL') { cont.innerHTML = ''; return; }
+        let registros = [];
+        const isFiltroEmpleado = (currentFilter === 'EMPLEADO' && selectedEmployeeFilter);
+        const isFiltroMulti = (currentFilter === 'MULTI' && selectedMultiFilter.length > 0);
+        const isFiltroMes = (currentFilter === 'MINE' || currentFilter === 'VAC' || currentFilter === 'ENF');
+        const mm = String(currentMonth+1).padStart(2,'0');
+        for (let k in notesData) {
+            notesData[k].forEach(r => {
+                if (currentFilter === 'MINE' && r.updatedBy !== currentUser) return;
+                if (currentFilter === 'VAC' && r.type !== 'VACACIONES') return;
+                if (currentFilter === 'ENF' && r.type !== 'ENFERMEDAD') return;
+                if (isFiltroEmpleado && normalizar(r.text) !== selectedEmployeeFilter) return;
+                if (isFiltroMulti && !selectedMultiFilter.includes(normalizar(r.text))) return;
+                if (isFiltroMes && !k.startsWith(`${currentYear}-${mm}`)) return;
+                registros.push({ date: k, emp: normalizar(r.text), type: r.type || 'VACACIONES', status: r.status, updatedBy: r.updatedBy });
+            });
+        }
+        if (sabanaFilters.anio !== 'ALL') registros = registros.filter(r => r.date.startsWith(sabanaFilters.anio + '-'));
+        if (sabanaFilters.tipo !== 'ALL') registros = registros.filter(r => r.type === sabanaFilters.tipo);
+        if (sabanaFilters.estado !== 'ALL') registros = registros.filter(r => r.status === sabanaFilters.estado);
+        if (!registros.length) {
+            cont.innerHTML = `<div class="sabana-card"><div class="sabana-header"><div><div class="sabana-title">📋 Sábana de Datos</div><div class="sabana-subtitle">Sin registros con los filtros actuales.</div></div></div><div class="sabana-empty">No hay datos para mostrar con los filtros aplicados.</div></div>`;
+            return;
+        }
+        registros.sort((a,b) => a.emp.localeCompare(b.emp) || a.date.localeCompare(b.date));
+        const periods = [];
+        let cur = null;
+        registros.forEach(r => {
+            const d = new Date(r.date + "T00:00:00");
+            if (!cur) cur = { emp: r.emp, start: d, end: d, count: 1, status: r.status, type: r.type, updatedBy: r.updatedBy };
+            else {
+                const prevEnd = new Date(cur.end); prevEnd.setDate(prevEnd.getDate()+1);
+                if (d.getTime() === prevEnd.getTime() && cur.emp === r.emp && cur.status === r.status && cur.type === r.type && cur.updatedBy === r.updatedBy) { cur.end = d; cur.count++; }
+                else { periods.push(cur); cur = { emp: r.emp, start: d, end: d, count: 1, status: r.status, type: r.type, updatedBy: r.updatedBy }; }
+            }
+        });
+        if (cur) periods.push(cur);
+        periods.forEach(p => {
+            const sK = `${p.start.getFullYear()}-${String(p.start.getMonth()+1).padStart(2,'0')}-${String(p.start.getDate()).padStart(2,'0')}`;
+            const eK = `${p.end.getFullYear()}-${String(p.end.getMonth()+1).padStart(2,'0')}-${String(p.end.getDate()).padStart(2,'0')}`;
+            p.venc = calcularDiasRestantesPeriodo(sK, eK);
+        });
+        if (sabanaFilters.orden === 'empleado') periods.sort((a,b) => a.emp.localeCompare(b.emp) || a.start - b.start);
+        else if (sabanaFilters.orden === 'estado') { const o = { curso: 0, ultimo: 0, pronto: 1, fin: 2 }; periods.sort((a,b) => (o[a.venc.clase] ?? 3) - (o[b.venc.clase] ?? 3)); }
+        else periods.sort((a,b) => a.start - b.start);
+        const empleadosUnicos = [...new Set(periods.map(p => p.emp))];
+        let tV = 0, tE = 0;
+        periods.forEach(p => { if (p.type === 'ENFERMEDAD') tE += p.count; else tV += p.count; });
+        let titulo = isFiltroEmpleado ? `📋 SÁBANA — ${selectedEmployeeFilter}` : (isFiltroMulti ? `📋 SÁBANA — ${empleadosUnicos.length} EMPLEADO${empleadosUnicos.length !== 1 ? 'S' : ''}` : `📋 SÁBANA — ${monthNames[currentMonth].toUpperCase()} ${currentYear}`);
+        let subtitulo = `${periods.length} período${periods.length !== 1 ? 's' : ''} · ${empleadosUnicos.length} empleado${empleadosUnicos.length !== 1 ? 's' : ''} · ${tV+tE} día${(tV+tE) !== 1 ? 's' : ''} totales`;
+        if (isFiltroMulti) subtitulo = selectedMultiFilter.join(' · ') + ' — ' + subtitulo;
+        let mesesInfo = '';
+        if (isFiltroEmpleado) {
+            const meses = [...new Set(periods.map(p => `${monthNames[p.start.getMonth()]} ${p.start.getFullYear()}`))];
+            if (meses.length > 1) mesesInfo = `<div style="font-size:0.72rem; color:#7f8c8d; margin-top:3px;">📅 Meses con registros: ${meses.join(' · ')}</div>`;
+        }
+        let tablaHTML = `<table class="sabana-table"><thead><tr>${!isFiltroEmpleado ? '<th>EMPLEADO</th>' : ''}<th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>VENCIMIENTO</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>`;
+        periods.forEach(p => {
+            const tipoIcon = p.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
+            const tipoTxt = p.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES';
+            const claseFila = p.venc.clase === 'curso' ? 'en-curso' : (p.venc.clase === 'pronto' ? 'proximo' : 'finalizado');
+            const badgeVenc = p.venc.clase === 'curso' ? `<span class="badge-venc-curso">🟢 ${p.venc.label}</span>` : p.venc.clase === 'ultimo' ? `<span class="badge-venc-hoy">🔴 ${p.venc.label}</span>` : p.venc.clase === 'pronto' ? `<span class="badge-venc-prox">🟡 ${p.venc.label}</span>` : `<span class="badge-venc-fin">⚪ ${p.venc.label}</span>`;
+            const badgeEst = p.status === 'APROBADO' ? '<span class="status-badge approved">✅ APROB</span>' : '<span class="status-badge pending">⏳ PEND</span>';
+            tablaHTML += `<tr class="${claseFila}">${!isFiltroEmpleado ? `<td class="emp-name">${p.emp}</td>` : ''}<td>${tipoIcon} ${tipoTxt}</td><td><strong>${p.start.toLocaleDateString('es-AR')}</strong></td><td><strong>${p.end.toLocaleDateString('es-AR')}</strong></td><td><strong>${p.count}</strong></td><td>${badgeVenc}</td><td>${badgeEst}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
+        });
+        tablaHTML += '</tbody></table>';
+        let totalesHTML = '';
+        if (empleadosUnicos.length > 1 || isFiltroEmpleado) {
+            totalesHTML = '<div class="sabana-totales"><div class="st-title">📊 Total por empleado</div>';
+            empleadosUnicos.forEach(emp => {
+                const pEmp = periods.filter(p => p.emp === emp);
+                let v = 0, e = 0;
+                pEmp.forEach(p => { if (p.type === 'ENFERMEDAD') e += p.count; else v += p.count; });
+                const diasAsig = getDiasAsignados(emp);
+                const restantes = Math.max(0, diasAsig - v);
+                const clase = restantes === 0 ? 'st-num-rojo' : 'st-num';
+                totalesHTML += `<div class="st-item"><span class="st-emp">👤 ${emp}</span> — 🏖️ <strong>${v}</strong> vac · 🏥 <strong>${e}</strong> enf — 📅 Asignados: <strong>${diasAsig}</strong> — ✅ Restantes: <span class="${clase}">${restantes}</span></div>`;
+            });
+            totalesHTML += '</div>';
+        }
+        const filtrosHTML = `<div class="sabana-filters">
+            <div class="sf-group"><label>Año:</label><select onchange="sabanaFilters.anio=this.value;renderSabana()">
+                <option value="ALL"${sabanaFilters.anio==='ALL'?' selected':''}>Todos</option>
+                <option value="2024"${sabanaFilters.anio==='2024'?' selected':''}>2024</option>
+                <option value="2025"${sabanaFilters.anio==='2025'?' selected':''}>2025</option>
+                <option value="2026"${sabanaFilters.anio==='2026'?' selected':''}>2026</option>
+                <option value="2027"${sabanaFilters.anio==='2027'?' selected':''}>2027</option>
+            </select></div>
+            <div class="sf-group"><label>Tipo:</label><select onchange="sabanaFilters.tipo=this.value;renderSabana()">
+                <option value="ALL"${sabanaFilters.tipo==='ALL'?' selected':''}>Todos</option>
+                <option value="VACACIONES"${sabanaFilters.tipo==='VACACIONES'?' selected':''}>🏖️ Vacaciones</option>
+                <option value="ENFERMEDAD"${sabanaFilters.tipo==='ENFERMEDAD'?' selected':''}>🏥 Enfermedad</option>
+            </select></div>
+            <div class="sf-group"><label>Estado:</label><select onchange="sabanaFilters.estado=this.value;renderSabana()">
+                <option value="ALL"${sabanaFilters.estado==='ALL'?' selected':''}>Todos</option>
+                <option value="APROBADO"${sabanaFilters.estado==='APROBADO'?' selected':''}>✅ Aprobado</option>
+                <option value="PENDIENTE"${sabanaFilters.estado==='PENDIENTE'?' selected':''}>⏳ Pendiente</option>
+            </select></div>
+            <div class="sf-group"><label>Orden:</label><select onchange="sabanaFilters.orden=this.value;renderSabana()">
+                <option value="fecha"${sabanaFilters.orden==='fecha'?' selected':''}>📅 Fecha</option>
+                <option value="empleado"${sabanaFilters.orden==='empleado'?' selected':''}>👤 Empleado</option>
+                <option value="estado"${sabanaFilters.orden==='estado'?' selected':''}>📊 Vencimiento</option>
+            </select></div>
+        </div>`;
+        let accionesHTML = `<div class="sabana-actions"><button class="btn-sabana-print" onclick="imprimirSabana()">🖨️ Imprimir Sábana</button>`;
+        if (isFiltroEmpleado) accionesHTML += `<button class="btn-sabana-almanaque" onclick="imprimirAlmanaque()">🗓️ Imprimir Almanaque</button>`;
+        accionesHTML += `<button class="btn-sabana-excel" onclick="exportarSabanaExcel()">📊 Excel</button><button class="btn-sabana-pdf" onclick="imprimirSabana()">📄 PDF</button></div>`;
+        let avisoVarios = isFiltroMulti ? `<div class="sabana-aviso-varios">💡 <strong>Aviso:</strong> Imprimir almanaque solo está disponible cuando filtrás 1 empleado.</div>` : '';
+        cont.innerHTML = `<div class="sabana-card"><div class="sabana-header"><div><div class="sabana-title">${titulo}</div><div class="sabana-subtitle">${subtitulo}</div>${mesesInfo}</div></div>${filtrosHTML}${tablaHTML}${totalesHTML}${avisoVarios}${accionesHTML}</div>`;
+    }
+    function obtenerPeriodosSabana() {
+        const registros = [];
+        const isFiltroMes = (currentFilter === 'MINE' || currentFilter === 'VAC' || currentFilter === 'ENF');
+        const mm = String(currentMonth+1).padStart(2,'0');
+        const isFiltroEmpleado = (currentFilter === 'EMPLEADO' && selectedEmployeeFilter);
+        const isFiltroMulti = (currentFilter === 'MULTI' && selectedMultiFilter.length > 0);
+        for (let k in notesData) {
+            notesData[k].forEach(r => {
+                if (currentFilter === 'MINE' && r.updatedBy !== currentUser) return;
+                if (currentFilter === 'VAC' && r.type !== 'VACACIONES') return;
+                if (currentFilter === 'ENF' && r.type !== 'ENFERMEDAD') return;
+                if (isFiltroEmpleado && normalizar(r.text) !== selectedEmployeeFilter) return;
+                if (isFiltroMulti && !selectedMultiFilter.includes(normalizar(r.text))) return;
+                if (isFiltroMes && !k.startsWith(`${currentYear}-${mm}`)) return;
+                registros.push({ date: k, emp: normalizar(r.text), type: r.type || 'VACACIONES', status: r.status, updatedBy: r.updatedBy });
+            });
+        }
+        if (sabanaFilters.anio !== 'ALL') registros = registros.filter(r => r.date.startsWith(sabanaFilters.anio + '-'));
+        if (sabanaFilters.tipo !== 'ALL') registros = registros.filter(r => r.type === sabanaFilters.tipo);
+        if (sabanaFilters.estado !== 'ALL') registros = registros.filter(r => r.status === sabanaFilters.estado);
+        registros.sort((a,b) => a.emp.localeCompare(b.emp) || a.date.localeCompare(b.date));
+        const periods = [];
+        let cur = null;
+        registros.forEach(r => {
+            const d = new Date(r.date + "T00:00:00");
+            if (!cur) cur = { emp: r.emp, start: d, end: d, count: 1, status: r.status, type: r.type, updatedBy: r.updatedBy };
+            else {
+                const prevEnd = new Date(cur.end); prevEnd.setDate(prevEnd.getDate()+1);
+                if (d.getTime() === prevEnd.getTime() && cur.emp === r.emp && cur.status === r.status && cur.type === r.type && cur.updatedBy === r.updatedBy) { cur.end = d; cur.count++; }
+                else { periods.push(cur); cur = { emp: r.emp, start: d, end: d, count: 1, status: r.status, type: r.type, updatedBy: r.updatedBy }; }
+            }
+        });
+        if (cur) periods.push(cur);
+        return periods;
+    }
+    function imprimirSabana() {
+        const periods = obtenerPeriodosSabana();
+        if (!periods.length) { alertWarning("No hay datos para imprimir."); return; }
+        const area = document.getElementById('printArea');
+        const fechaImp = getFechaImpresion();
+        let tV = 0, tE = 0;
+        periods.forEach(p => { if (p.type === 'ENFERMEDAD') tE += p.count; else tV += p.count; });
+        const empleados = [...new Set(periods.map(p => p.emp))];
+        let title = currentFilter === 'EMPLEADO' ? `SÁBANA — ${selectedEmployeeFilter}` : (currentFilter === 'MULTI' ? `SÁBANA — ${empleados.length} EMPLEADOS` : `SÁBANA DE DATOS — ${monthNames[currentMonth].toUpperCase()} ${currentYear}`);
+        let tablaHTML = `<table class="print-table"><thead><tr>${currentFilter !== 'EMPLEADO' ? '<th>EMPLEADO</th>' : ''}<th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>`;
+        periods.forEach(p => {
+            const tipoTxt = p.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES';
+            const badge = p.status === 'APROBADO' ? '<span class="print-badge-approved">APROBADO</span>' : '<span class="print-badge-pending">PENDIENTE</span>';
+            tablaHTML += `<tr>${currentFilter !== 'EMPLEADO' ? `<td class="emp-name">${p.emp}</td>` : ''}<td>${tipoTxt}</td><td>${p.start.toLocaleDateString('es-AR')}</td><td>${p.end.toLocaleDateString('es-AR')}</td><td><strong>${p.count}</strong></td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
+        });
+        tablaHTML += '</tbody></table>';
+        area.innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>${title}</h2><div class="print-meta">👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>🕐 Impreso el ${fechaImp}<br>🔎 Filtro: <strong>${currentFilter}</strong></div></div></div>${tablaHTML}<div class="print-summary-box"><div class="title">📊 TOTALES</div><div class="row"><span>Períodos:</span> <strong>${periods.length}</strong></div><div class="row"><span>Empleados:</span> <strong>${empleados.length}</strong></div><div class="row"><span>🏖️ Vacaciones:</span> <strong>${tV} días</strong></div><div class="row"><span>🏥 Enfermedad:</span> <strong>${tE} días</strong></div><div class="row"><span>Total:</span> <strong>${tV + tE} días</strong></div></div><div class="print-footer">Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>Minerar S.A. © 2026</div>`;
+        setTimeout(() => window.print(), 300);
+    }
+    function imprimirAlmanaque() {
+        if (currentFilter !== 'EMPLEADO' || !selectedEmployeeFilter) { alertWarning("El almanaque solo está disponible cuando filtrás 1 empleado."); return; }
+        const empleado = selectedEmployeeFilter;
+        const mm = String(currentMonth+1).padStart(2,'0');
+        const diasCon = {};
+        for (let k in notesData) { notesData[k].forEach(r => { if (normalizar(r.text) === empleado) diasCon[k] = r.type || 'VACACIONES'; }); }
+        const first = new Date(currentYear, currentMonth, 1).getDay();
+        const diasIn = new Date(currentYear, currentMonth+1, 0).getDate();
+        let gridHTML = '<table style="width:100%; border-collapse:collapse; font-size:0.75rem;"><thead><tr>';
+        ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"].forEach(d => { gridHTML += `<th style="background:#1e272e; color:#fff; padding:5px; border:1px solid #1e272e; -webkit-print-color-adjust: exact;">${d}</th>`; });
+        gridHTML += '</tr></thead><tbody><tr>';
+        for (let i=0;i<first;i++) gridHTML += '<td style="border:1px solid #bdc3c7; padding:8px; height:55px;"></td>';
+        for (let day=1; day<=diasIn; day++) {
+            const k = `${currentYear}-${mm}-${String(day).padStart(2,'0')}`;
+            const tipo = diasCon[k];
+            let bg = '#fff', txt = '';
+            if (tipo === 'VACACIONES') { bg = '#d6eaf8'; txt = '🏖️'; }
+            else if (tipo === 'ENFERMEDAD') { bg = '#e8daef'; txt = '🏥'; }
+            gridHTML += `<td style="border:1px solid #bdc3c7; padding:5px; height:55px; background:${bg}; -webkit-print-color-adjust: exact; vertical-align:top;"><div style="font-weight:900; font-size:0.85rem;">${day}</div>${txt ? `<div style="font-size:1.1rem; text-align:center; margin-top:3px;">${txt}</div>` : ''}</td>`;
+            if ((first + day) % 7 === 0 && day < diasIn) gridHTML += '</tr><tr>';
+        }
+        const lastDay = (first + diasIn) % 7;
+        if (lastDay !== 0) for (let i=lastDay; i<7; i++) gridHTML += '<td style="border:1px solid #bdc3c7; padding:8px; height:55px;"></td>';
+        gridHTML += '</tr></tbody></table>';
+        const emp = empleadosData.find(e => normalizar(e.nombre) === empleado);
+        const fIng = emp && emp.fecha_ingreso ? new Date(emp.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'No cargada';
+        const diasAsig = getDiasAsignados(empleado);
+        const usados = calcularDiasUsadosAnio(empleado, currentYear);
+        const restantes = Math.max(0, diasAsig - usados.vac);
+        document.getElementById('printArea').innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>ALMANAQUE — ${empleado}</h2><div class="print-meta">📅 ${monthNames[currentMonth].toUpperCase()} ${currentYear}<br>📅 Ingreso: ${fIng} · Días por ley: ${diasAsig}<br>🕐 Impreso el ${getFechaImpresion()}</div></div></div>${gridHTML}<div class="print-summary-box" style="margin-top:15px;"><div class="title">📊 RESUMEN</div><div class="row"><span>🏖️ Días vacaciones usados:</span> <strong>${usados.vac}</strong></div><div class="row"><span>🏥 Días enfermedad:</span> <strong>${usados.enf}</strong></div><div class="row"><span>✅ Días asignados por ley:</span> <strong>${diasAsig}</strong></div><div class="row"><span>🎯 Saldo restante:</span> <strong>${restantes} días</strong></div></div><div class="print-footer">Documento generado automáticamente.<br>Minerar S.A. © 2026</div>`;
+        setTimeout(() => window.print(), 300);
+    }
+    function exportarSabanaExcel() {
+        if (typeof XLSX === 'undefined') { alertError("Librería Excel no cargada."); return; }
+        const periods = obtenerPeriodosSabana();
+        if (!periods.length) { alertWarning("No hay datos para exportar."); return; }
+        const rows = periods.map(p => ({
+            'Empleado': p.emp,
+            'Tipo': p.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES',
+            'Desde': p.start.toLocaleDateString('es-AR'),
+            'Hasta': p.end.toLocaleDateString('es-AR'),
+            'Días': p.count,
+            'Estado': p.status,
+            'Cargó': p.updatedBy
+        }));
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(rows);
+        ws['!cols'] = [{wch:28},{wch:14},{wch:14},{wch:14},{wch:8},{wch:12},{wch:22}];
+        XLSX.utils.book_append_sheet(wb, ws, "Sabana");
+        XLSX.writeFile(wb, `Sabana_${hoyStr()}.xlsx`);
+        alertSuccess(`Excel generado con ${rows.length} registros.`);
     }
 
     // ==================== HISTORIAL / COORDINACIÓN ====================
@@ -1703,44 +1882,25 @@
         const anioRef = anio === 'ALL' ? currentYear : parseInt(anio);
         const usados = calcularDiasUsadosAnio(empleado, anioRef);
         const restantes = Math.max(0, diasAsig - usados.vac);
-
         const periodos = [];
         for (let k in notesData) {
             if (anio !== 'ALL' && !k.startsWith(anio + "-")) continue;
-            notesData[k].forEach(r => {
-                if (normalizar(r.text) === empleado) periodos.push({ date: k, ...r });
-            });
+            notesData[k].forEach(r => { if (normalizar(r.text) === empleado) periodos.push({ date: k, ...r }); });
         }
         periodos.sort((a,b) => a.date.localeCompare(b.date));
-
-        let html = `<div class="summary-card" style="margin-bottom:10px;">
-            <div class="summary-header">📊 ${empleado} — ${anioRef}</div>
-            <div style="font-size:0.82rem; color:#2c3e50; line-height:1.6; padding-top:6px;">
-                📅 Fecha ingreso: <strong>${fIng}</strong><br>
-                ⏱️ Días asignados por ley: <strong>${diasAsig} días</strong><br>
-                🏖️ Días vacaciones usados: <strong>${usados.vac}</strong><br>
-                🏥 Días enfermedad: <strong>${usados.enf}</strong><br>
-                ✅ Días restantes: <strong>${restantes} días</strong>
-            </div>
-        </div>`;
-
-        if (!periodos.length) {
-            html += `<p style="font-size:0.8rem; color:#a4b0be; text-align:center; padding:10px;">Sin registros en el período.</p>`;
-        } else {
+        let html = `<div class="summary-card" style="margin-bottom:10px;"><div class="summary-header">📊 ${empleado} — ${anioRef}</div><div style="font-size:0.82rem; color:#2c3e50; line-height:1.6; padding-top:6px;">📅 Fecha ingreso: <strong>${fIng}</strong><br>⏱️ Días asignados por ley: <strong>${diasAsig} días</strong><br>🏖️ Días vacaciones usados: <strong>${usados.vac}</strong><br>🏥 Días enfermedad: <strong>${usados.enf}</strong><br>✅ Días restantes: <strong>${restantes} días</strong></div></div>`;
+        if (!periodos.length) { html += `<p style="font-size:0.8rem; color:#a4b0be; text-align:center; padding:10px;">Sin registros en el período.</p>`; }
+        else {
             html += '<div style="max-height:280px; overflow-y:auto;">';
             periodos.forEach(p => {
                 const tipo = p.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
                 const sb = p.status === 'APROBADO' ? 'APROBADO' : 'PENDIENTE';
-                html += `<div style="background:#2d3436; padding:8px 10px; border-radius:6px; margin-bottom:5px; font-size:0.78rem; border-left:3px solid ${p.type === 'ENFERMEDAD' ? '#8e44ad' : '#2980b9'};">
-                    <div style="color:#fff; font-weight:bold;">${tipo} ${p.date}</div>
-                    <div style="color:#a4b0be; font-size:0.7rem;">${sb} · Cargó: ${p.updatedBy}</div>
-                </div>`;
+                html += `<div style="background:#2d3436; padding:8px 10px; border-radius:6px; margin-bottom:5px; font-size:0.78rem; border-left:3px solid ${p.type === 'ENFERMEDAD' ? '#8e44ad' : '#2980b9'};"><div style="color:#fff; font-weight:bold;">${tipo} ${p.date}</div><div style="color:#a4b0be; font-size:0.7rem;">${sb} · Cargó: ${p.updatedBy}</div></div>`;
             });
             html += '</div>';
         }
         cont.innerHTML = html;
     }
-
     function renderCoordinationSummary() {
         const cont = document.getElementById("coordinationSummary");
         if (!cont) return;
@@ -1750,25 +1910,18 @@
         const items = [];
         for (let k in notesData) {
             if (k.startsWith(`${currentYear}-${mm}`)) {
-                notesData[k].forEach(r => {
-                    if (supFiltro === 'ALL' || r.updatedBy === supFiltro) items.push({ date: k, data: r });
-                });
+                notesData[k].forEach(r => { if (supFiltro === 'ALL' || r.updatedBy === supFiltro) items.push({ date: k, data: r }); });
             }
         }
         if (!items.length) { cont.innerHTML = `<p style="font-size:0.8rem; color:#a4b0be; text-align:center;">No hay registros.</p>`; return; }
         items.sort((a,b) => a.date.localeCompare(b.date));
-        cont.innerHTML = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">${monthNames[mesFiltro]} ${currentYear}:</div>` +
-            items.map(it => {
-                const day = it.date.split("-")[2];
-                const sb = it.data.status === 'APROBADO' ? '<span class="status-badge approved">APROBADO</span>' : '<span class="status-badge pending">PENDIENTE</span>';
-                const tipo = it.data.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
-                return `<div class="coordination-card" style="border-left-color:${getColorForSupervisor(it.data.updatedBy)};">
-                    <div style="display:flex; justify-content:space-between; align-items:center;"><strong>Día ${day} · ${tipo} ${it.data.text}</strong>${sb}</div>
-                    <div style="font-size:0.72rem; color:#fbc531; margin-top:4px;">👤 ${it.data.updatedBy}</div>
-                </div>`;
-            }).join("");
+        cont.innerHTML = `<div style="font-size:0.8rem; color:#fbc531; font-weight:bold; margin-bottom:8px;">${monthNames[mesFiltro]} ${currentYear}:</div>` + items.map(it => {
+            const day = it.date.split("-")[2];
+            const sb = it.data.status === 'APROBADO' ? '<span class="status-badge approved">APROBADO</span>' : '<span class="status-badge pending">PENDIENTE</span>';
+            const tipo = it.data.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
+            return `<div class="coordination-card" style="border-left-color:${getColorForSupervisor(it.data.updatedBy)};"><div style="display:flex; justify-content:space-between; align-items:center;"><strong>Día ${day} · ${tipo} ${it.data.text}</strong>${sb}</div><div style="font-size:0.72rem; color:#fbc531; margin-top:4px;">👤 ${it.data.updatedBy}</div></div>`;
+        }).join("");
     }
-
     function previewEmployeeReport() {
         const empleado = normalizar(document.getElementById('employeePrintSelect').value);
         const anio = document.getElementById('employeeYearSelect').value;
@@ -1780,23 +1933,13 @@
         const anioRef = anio === 'ALL' ? currentYear : parseInt(anio);
         const usados = calcularDiasUsadosAnio(empleado, anioRef);
         const restantes = Math.max(0, diasAsig - usados.vac);
-
         const regs = [];
         for (let k in notesData) {
             if (anio !== 'ALL' && !k.startsWith(anio + "-")) continue;
             notesData[k].forEach(r => { if (normalizar(r.text) === empleado) regs.push({ date: k, ...r }); });
         }
         regs.sort((a,b) => a.date.localeCompare(b.date));
-
-        let html = `<div class="summary-card">
-            <div class="summary-header">📄 ${empleado} — ${anioRef}</div>
-            <div style="font-size:0.82rem; color:#2c3e50; line-height:1.7; padding-top:6px;">
-                📅 Ingreso: <strong>${fIng}</strong><br>
-                ⏱️ Días por ley: <strong>${diasAsig}</strong><br>
-                🏖️ Usados: <strong>${usados.vac}</strong><br>
-                🏥 Enfermedad: <strong>${usados.enf}</strong><br>
-                ✅ Restantes: <strong>${restantes} días</strong>
-            </div>`;
+        let html = `<div class="summary-card"><div class="summary-header">📄 ${empleado} — ${anioRef}</div><div style="font-size:0.82rem; color:#2c3e50; line-height:1.7; padding-top:6px;">📅 Ingreso: <strong>${fIng}</strong><br>⏱️ Días por ley: <strong>${diasAsig}</strong><br>🏖️ Usados: <strong>${usados.vac}</strong><br>🏥 Enfermedad: <strong>${usados.enf}</strong><br>✅ Restantes: <strong>${restantes} días</strong></div>`;
         if (regs.length) {
             html += '<table class="summary-table" style="margin-top:8px;"><thead><tr><th>FECHA</th><th>TIPO</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>';
             regs.forEach(r => {
@@ -1816,7 +1959,6 @@
         document.getElementById("avisosToggle").classList.toggle("on", avisosEnabled);
         try { localStorage.setItem(AVISOS_KEY, avisosEnabled ? '1' : '0'); } catch(e) {}
     }
-
     function agruparPeriodos() {
         const grupos = {};
         for (let k in notesData) {
@@ -1834,17 +1976,13 @@
             for (let i = 1; i < fechas.length; i++) {
                 const prevD = new Date(prev + "T00:00:00"); prevD.setDate(prevD.getDate()+1);
                 const prevK = `${prevD.getFullYear()}-${String(prevD.getMonth()+1).padStart(2,'0')}-${String(prevD.getDate()).padStart(2,'0')}`;
-                if (fechas[i] !== prevK) {
-                    periodos.push({ nombre, supervisor: sup, tipo, start: ini, end: prev });
-                    ini = fechas[i];
-                }
+                if (fechas[i] !== prevK) { periodos.push({ nombre, supervisor: sup, tipo, start: ini, end: prev }); ini = fechas[i]; }
                 prev = fechas[i];
             }
             periodos.push({ nombre, supervisor: sup, tipo, start: ini, end: prev });
         }
         return periodos;
     }
-
     function getReminders() {
         const hoy = new Date(); hoy.setHours(0,0,0,0);
         const hoyK = hoyStr();
@@ -1863,17 +2001,13 @@
         });
         return { iniciando, ultimo, terminando, proximos };
     }
-
     function renderReminders() {
         const r = getReminders();
         const fmt = k => new Date(k+"T00:00:00").toLocaleDateString('es-AR');
         const fmtFull = p => `${fmt(p.start)} al ${fmt(p.end)}`;
         const renderList = (arr, clase) => {
             if (!arr.length) return '<p style="font-size:0.75rem; color:#7f8c8d; padding:4px 8px;">Sin novedades.</p>';
-            return arr.map(p => `<div class="reminder-item ${clase}">
-                <div class="rem-name">${p.nombre}</div>
-                <div class="rem-dates">📅 ${fmtFull(p)}</div>
-            </div>`).join("");
+            return arr.map(p => `<div class="reminder-item ${clase}"><div class="rem-name">${p.nombre}</div><div class="rem-dates">📅 ${fmtFull(p)}</div></div>`).join("");
         };
         document.getElementById("remindersIniciando").innerHTML = renderList(r.iniciando, 'iniciando');
         document.getElementById("remindersUltimo").innerHTML = renderList(r.ultimo, 'ultimo');
@@ -1881,66 +2015,48 @@
         const proxFiltrados = r.proximos.filter(p => p.start !== hoyStr() && p.end !== hoyStr());
         document.getElementById("remindersProximos").innerHTML = renderList(proxFiltrados, 'proximo');
     }
-
     function mostrarAvisosDelDia() {
         if (!avisosEnabled) return;
-        try {
-            const last = localStorage.getItem(LAST_REMINDER_KEY);
-            if (last === hoyStr()) return;
-        } catch(e) {}
+        try { const last = localStorage.getItem(LAST_REMINDER_KEY); if (last === hoyStr()) return; } catch(e) {}
         const r = getReminders();
         const total = r.iniciando.length + r.ultimo.length + r.terminando.length;
         if (total === 0) { try { localStorage.setItem(LAST_REMINDER_KEY, hoyStr()); } catch(e) {} return; }
         const fmt = k => new Date(k+"T00:00:00").toLocaleDateString('es-AR');
         let html = '';
-        if (r.iniciando.length) {
-            html += `<div style="background:rgba(39,174,96,0.15);border-left:3px solid #27ae60;padding:10px;border-radius:6px;margin-bottom:10px;">
-                <div style="color:#27ae60;font-weight:900;margin-bottom:6px;">🟢 INICIAN VACACIONES HOY</div>
-                ${r.iniciando.map(p => `<div><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}
-            </div>`;
-        }
-        if (r.ultimo.length) {
-            html += `<div style="background:rgba(231,76,60,0.15);border-left:3px solid #e74c3c;padding:10px;border-radius:6px;margin-bottom:10px;">
-                <div style="color:#e74c3c;font-weight:900;margin-bottom:6px;">🔴 ÚLTIMO DÍA DE VACACIONES</div>
-                ${r.ultimo.map(p => `<div><strong>${p.nombre}</strong> retoma actividades mañana</div>`).join("")}
-            </div>`;
-        }
-        if (r.terminando.length && !r.ultimo.length) {
-            html += `<div style="background:rgba(230,126,34,0.15);border-left:3px solid #e67e22;padding:10px;border-radius:6px;margin-bottom:10px;">
-                <div style="color:#e67e22;font-weight:900;margin-bottom:6px;">🟠 FINALIZAN VACACIONES</div>
-                ${r.terminando.map(p => `<div><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}
-            </div>`;
-        }
+        if (r.iniciando.length) html += `<div style="background:rgba(39,174,96,0.15);border-left:3px solid #27ae60;padding:10px;border-radius:6px;margin-bottom:10px;"><div style="color:#27ae60;font-weight:900;margin-bottom:6px;">🟢 INICIAN VACACIONES HOY</div>${r.iniciando.map(p => `<div><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}</div>`;
+        if (r.ultimo.length) html += `<div style="background:rgba(231,76,60,0.15);border-left:3px solid #e74c3c;padding:10px;border-radius:6px;margin-bottom:10px;"><div style="color:#e74c3c;font-weight:900;margin-bottom:6px;">🔴 ÚLTIMO DÍA DE VACACIONES</div>${r.ultimo.map(p => `<div><strong>${p.nombre}</strong> retoma actividades mañana</div>`).join("")}</div>`;
+        if (r.terminando.length && !r.ultimo.length) html += `<div style="background:rgba(230,126,34,0.15);border-left:3px solid #e67e22;padding:10px;border-radius:6px;margin-bottom:10px;"><div style="color:#e67e22;font-weight:900;margin-bottom:6px;">🟠 FINALIZAN VACACIONES</div>${r.terminando.map(p => `<div><strong>${p.nombre}</strong> · ${fmt(p.start)} al ${fmt(p.end)}</div>`).join("")}</div>`;
         document.getElementById("remindersContent").innerHTML = html;
         document.getElementById("remindersModal").classList.add("active");
         try { localStorage.setItem(LAST_REMINDER_KEY, hoyStr()); } catch(e) {}
     }
-
     function mostrarBienvenida() {
-        try {
-            const last = localStorage.getItem(LAST_WELCOME_KEY);
-            if (last === hoyStr()) return;
-        } catch(e) {}
+        try { const last = localStorage.getItem(LAST_WELCOME_KEY); if (last === hoyStr()) return; } catch(e) {}
         const d = new Date();
         const esLunes = d.getDay() === 1;
         document.getElementById("welcomeTitle").innerText = `¡Bienvenido, ${currentUser}!`;
-        document.getElementById("welcomeMessage").innerHTML = esLunes 
-            ? "🌟 ¡Arrancamos la semana con todo! Que tengas un excelente lunes."
-            : "Que tengas un excelente día. 👋";
+        document.getElementById("welcomeMessage").innerHTML = esLunes ? "🌟 ¡Arrancamos la semana con todo! Que tengas un excelente lunes." : "Que tengas un excelente día. 👋";
         document.getElementById("welcomeModal").classList.add("active");
         try { localStorage.setItem(LAST_WELCOME_KEY, hoyStr()); } catch(e) {}
     }
 
-    // ==================== RESUMEN ====================
+    // ==================== RESUMEN / IMPRESIÓN ====================
     function renderPrintVacationSummary() {
-        const cont = document.getElementById("printSummaryContainer");
-        if (!cont) return;
+        if (currentFilter !== 'ALL') {
+            const c = document.getElementById("printSummaryContainer");
+            if (c) c.innerHTML = '';
+            renderSabana();
+            return;
+        }
+        const c2 = document.getElementById("sabanaContainer");
+        if (c2) c2.innerHTML = '';
+        const summaryContainer = document.getElementById("printSummaryContainer");
+        if (!summaryContainer) return;
         const mm = String(currentMonth+1).padStart(2,'0');
         const employeeDays = {};
         for (let k in notesData) {
             if (k.startsWith(`${currentYear}-${mm}`)) {
                 notesData[k].forEach(r => {
-                    if (!shouldShowRecord(r)) return;
                     const emp = normalizar(r.text);
                     if (!employeeDays[emp]) employeeDays[emp] = [];
                     employeeDays[emp].push({ date: k, status: r.status, updatedBy: r.updatedBy, type: r.type });
@@ -1948,24 +2064,14 @@
             }
         }
         const empNames = Object.keys(employeeDays).sort();
-        let filterTag = '';
-        if (currentFilter === 'MINE') filterTag = '<span class="summary-filter-tag">📄 SOLO MÍOS</span>';
-        if (currentFilter === 'VAC') filterTag = '<span class="summary-filter-tag">🏖️ VACACIONES</span>';
-        if (currentFilter === 'ENF') filterTag = '<span class="summary-filter-tag">🏥 ENFERMEDAD</span>';
-        if (currentFilter === 'EMPLEADO' && selectedEmployeeFilter) filterTag = `<span class="summary-filter-tag">👤 ${selectedEmployeeFilter}</span>`;
-        if (currentFilter === 'MULTI' && selectedMultiFilter.length > 0) filterTag = `<span class="summary-filter-tag">🏷️ ${selectedMultiFilter.length} EMPLEADOS</span>`;
         if (!empNames.length) {
-            cont.innerHTML = `<div class="summary-card"><div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear} ${filterTag}</div><p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No hay registros.</p></div>`;
+            summaryContainer.innerHTML = `<div class="summary-card"><div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear}</div><p style="font-size:0.82rem; color:#7f8c8d; text-align:center; padding:10px; font-weight:bold;">No hay registros.</p></div>`;
             return;
         }
-        let html = `<div class="summary-card"><div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear} ${filterTag}</div><table class="summary-table"><thead><tr>
-            <th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th>
-        </tr></thead><tbody>`;
+        let html = `<div class="summary-card"><div class="summary-header">📋 NÓMINA - ${monthNames[currentMonth].toUpperCase()} ${currentYear}</div><table class="summary-table"><thead><tr><th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>`;
         empNames.forEach(emp => {
-            const items = employeeDays[emp];
-            items.sort((a,b) => a.date.localeCompare(b.date));
-            const periods = [];
-            let cur = null;
+            const items = employeeDays[emp].sort((a,b) => a.date.localeCompare(b.date));
+            const periods = []; let cur = null;
             items.forEach(it => {
                 const d = new Date(it.date + "T00:00:00");
                 if (!cur) cur = { start: d, end: d, count: 1, status: it.status, updatedBy: it.updatedBy, type: it.type };
@@ -1989,10 +2095,8 @@
             });
         });
         html += `</tbody></table></div>`;
-        cont.innerHTML = html;
+        summaryContainer.innerHTML = html;
     }
-
-    // ==================== IMPRESIÓN / EXPORTACIÓN ====================
     function printFullReport() { renderPrintArea('full'); closeExportMenu(); setTimeout(() => window.print(), 300); }
     function printMyRecords() {
         document.getElementById("filterSelect").value = 'MINE';
@@ -2002,7 +2106,6 @@
         setTimeout(() => { renderPrintArea('mine'); setTimeout(() => window.print(), 300); }, 200);
     }
     function exportPDF() { renderPrintArea('full'); closeExportMenu(); setTimeout(() => window.print(), 300); }
-
     function exportExcel() {
         closeExportMenu();
         if (typeof XLSX === 'undefined') { alertError("La librería de Excel no está cargada."); return; }
@@ -2012,11 +2115,7 @@
             if (k.startsWith(`${currentYear}-${mm}`)) {
                 notesData[k].forEach(r => {
                     if (!shouldShowRecord(r)) return;
-                    rows.push({
-                        'Empleado': normalizar(r.text),
-                        'Tipo': r.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES',
-                        'Fecha': k, 'Estado': r.status, 'Supervisor': r.updatedBy, 'Nota': r.supervisorNote || ''
-                    });
+                    rows.push({ 'Empleado': normalizar(r.text), 'Tipo': r.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES', 'Fecha': k, 'Estado': r.status, 'Supervisor': r.updatedBy, 'Nota': r.supervisorNote || '' });
                 });
             }
         }
@@ -2029,43 +2128,31 @@
         XLSX.writeFile(wb, `Minerar_${monthNames[currentMonth]}_${currentYear}.xlsx`);
         alertSuccess(`Excel generado: <strong>Minerar_${monthNames[currentMonth]}_${currentYear}.xlsx</strong><br>${rows.length} registros exportados.`);
     }
-
     async function downloadBackupJSON() {
         closeExportMenu();
         try {
             const { data: vac } = await supabase.from('vacaciones').select('*');
             const { data: usr } = await supabase.from('usuarios').select('*');
             const { data: emp } = await supabase.from('empleados').select('*');
-            const backup = {
-                version: "1.0", generado: new Date().toISOString(), generado_por: currentUser,
-                resumen: { vacaciones: (vac || []).length, usuarios: (usr || []).length, empleados: (emp || []).length },
-                vacaciones: vac || [], usuarios: usr || [], empleados: emp || []
-            };
+            const backup = { version: "1.0", generado: new Date().toISOString(), generado_por: currentUser, resumen: { vacaciones: (vac || []).length, usuarios: (usr || []).length, empleados: (emp || []).length }, vacaciones: vac || [], usuarios: usr || [], empleados: emp || [] };
             const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = `backup_minerar_${hoyStr()}.json`;
+            a.href = url; a.download = `backup_minerar_${hoyStr()}.json`;
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
             URL.revokeObjectURL(url);
             alertSuccess(`Backup generado:<br><strong>${(vac||[]).length} vacaciones · ${(usr||[]).length} usuarios · ${(emp||[]).length} empleados</strong>`);
         } catch(err) { alertError("Error: " + err.message); }
     }
-
-    function toggleExportMenu(e) {
-        e.stopPropagation();
-        document.getElementById("exportDropdown").classList.toggle("open");
-    }
+    function toggleExportMenu(e) { e.stopPropagation(); document.getElementById("exportDropdown").classList.toggle("open"); }
     function closeExportMenu() { document.getElementById("exportDropdown").classList.remove("open"); }
     document.addEventListener('click', () => closeExportMenu());
-
     function renderPrintArea(mode, empleado = "", anio = "") {
         const area = document.getElementById("printArea");
         if (!area) return;
         const mm = String(currentMonth+1).padStart(2,'0');
         const fechaImp = getFechaImpresion();
         let headerTitle = "", headerSub = "", tablaHTML = "", resumenHTML = "";
-
         if (mode === 'employee') {
             headerTitle = "HISTORIAL DE VACACIONES";
             headerSub = `Empleado: ${empleado} ${anio !== 'ALL' ? '— Año ' + anio : '— Todos los años'}`;
@@ -2076,7 +2163,7 @@
                 notesData[k].forEach(r => { if (normalizar(r.text) === normalizar(empleado)) regs.push({ date: k, status: r.status, updatedBy: r.updatedBy, type: r.type }); });
             }
             regs.sort((a,b) => a.date.localeCompare(b.date));
-            if (!regs.length) { tablaHTML = '<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No hay registros para este empleado.</p>'; }
+            if (!regs.length) tablaHTML = '<p style="text-align:center; color:#7f8c8d; padding:20px; font-weight:bold;">No hay registros para este empleado.</p>';
             else {
                 const vacRegs = regs.filter(r => r.type !== 'ENFERMEDAD');
                 const enfRegs = regs.filter(r => r.type === 'ENFERMEDAD');
@@ -2097,10 +2184,8 @@
                     if (cur) periods.push(cur);
                     periods.forEach(p => {
                         const an = p.start.getFullYear();
-                        const s = p.start.toLocaleDateString('es-AR');
-                        const e = p.end.toLocaleDateString('es-AR');
                         const badge = p.status === 'APROBADO' ? '<span class="print-badge-approved">APROBADO</span>' : '<span class="print-badge-pending">PENDIENTE</span>';
-                        h += `<tr><td><strong>${an}</strong></td><td>${s}</td><td>${e}</td><td><strong>${p.count}</strong></td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
+                        h += `<tr><td><strong>${an}</strong></td><td>${p.start.toLocaleDateString('es-AR')}</td><td>${p.end.toLocaleDateString('es-AR')}</td><td><strong>${p.count}</strong></td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
                     });
                     return h + `</tbody></table>`;
                 };
@@ -2108,19 +2193,11 @@
                 const diasAsig = getDiasAsignados(empleado);
                 const emp = empleadosData.find(e => normalizar(e.nombre) === normalizar(empleado));
                 const fIng = emp && emp.fecha_ingreso ? new Date(emp.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'No cargada';
-                let totalVac = 0, totalEnf = 0;
+                let tV = 0, tE = 0;
                 let anioRef = anio === 'ALL' ? currentYear : parseInt(anio);
-                regs.forEach(r => {
-                    const y = parseInt(r.date.split("-")[0]);
-                    if (anio === 'ALL' || y === anioRef) { if (r.type === 'ENFERMEDAD') totalEnf++; else totalVac++; }
-                });
-                const restantes = Math.max(0, diasAsig - totalVac);
-                resumenHTML = `<div class="print-summary-box"><div class="title">📊 RESUMEN ANUAL ${anioRef}</div>
-                    <div class="row"><span>Fecha de ingreso:</span> <strong>${fIng}</strong></div>
-                    <div class="row"><span>Días asignados por ley:</span> <strong>${diasAsig} días</strong></div>
-                    <div class="row"><span>Días vacaciones usados:</span> <strong>${totalVac} días</strong></div>
-                    <div class="row"><span>Días de enfermedad:</span> <strong>${totalEnf} días</strong></div>
-                    <div class="row" style="border-top:1px solid #bdc3c7;padding-top:6px;margin-top:6px;"><span>Saldo restante:</span> <strong>${restantes} días</strong></div></div>`;
+                regs.forEach(r => { const y = parseInt(r.date.split("-")[0]); if (anio === 'ALL' || y === anioRef) { if (r.type === 'ENFERMEDAD') tE++; else tV++; } });
+                const restantes = Math.max(0, diasAsig - tV);
+                resumenHTML = `<div class="print-summary-box"><div class="title">📊 RESUMEN ANUAL ${anioRef}</div><div class="row"><span>Fecha de ingreso:</span> <strong>${fIng}</strong></div><div class="row"><span>Días asignados por ley:</span> <strong>${diasAsig} días</strong></div><div class="row"><span>Días vacaciones usados:</span> <strong>${tV} días</strong></div><div class="row"><span>Días de enfermedad:</span> <strong>${tE} días</strong></div><div class="row" style="border-top:1px solid #bdc3c7;padding-top:6px;margin-top:6px;"><span>Saldo restante:</span> <strong>${restantes} días</strong></div></div>`;
             }
         } else {
             headerTitle = "NÓMINA DE PERSONAL Y DÍAS DE VACACIONES";
@@ -2138,7 +2215,7 @@
                 }
             }
             const empNames = Object.keys(empDays).sort();
-            if (!empNames.length) { tablaHTML = '<p style="text-align:center;color:#7f8c8d;padding:20px;font-weight:bold;">No hay registros.</p>'; }
+            if (!empNames.length) tablaHTML = '<p style="text-align:center;color:#7f8c8d;padding:20px;font-weight:bold;">No hay registros.</p>';
             else {
                 tablaHTML = `<table class="print-table"><thead><tr><th>EMPLEADO</th><th>TIPO</th><th>DESDE</th><th>HASTA</th><th>DÍAS</th><th>RESTANTES</th><th>ESTADO</th><th>CARGÓ</th></tr></thead><tbody>`;
                 empNames.forEach(emp => {
@@ -2155,22 +2232,19 @@
                     });
                     if (cur) periods.push(cur);
                     periods.forEach(p => {
-                        const sStr = p.start.toLocaleDateString('es-AR');
-                        const eStr = p.end.toLocaleDateString('es-AR');
                         const sK = `${p.start.getFullYear()}-${String(p.start.getMonth()+1).padStart(2,'0')}-${String(p.start.getDate()).padStart(2,'0')}`;
                         const eK = `${p.end.getFullYear()}-${String(p.end.getMonth()+1).padStart(2,'0')}-${String(p.end.getDate()).padStart(2,'0')}`;
                         const rest = calcularDiasRestantesPeriodo(sK, eK);
                         const tipoTxt = p.type === 'ENFERMEDAD' ? 'ENFERMEDAD' : 'VACACIONES';
                         const badge = p.status === 'APROBADO' ? '<span class="print-badge-approved">APROBADO</span>' : '<span class="print-badge-pending">PENDIENTE</span>';
-                        tablaHTML += `<tr><td class="emp-name">${emp}</td><td>${tipoTxt}</td><td>${sStr}</td><td>${eStr}</td><td><strong>${p.count}</strong></td><td>${rest.label}</td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
+                        tablaHTML += `<tr><td class="emp-name">${emp}</td><td>${tipoTxt}</td><td>${p.start.toLocaleDateString('es-AR')}</td><td>${p.end.toLocaleDateString('es-AR')}</td><td><strong>${p.count}</strong></td><td>${rest.label}</td><td>${badge}</td><td class="sup-name">${p.updatedBy}</td></tr>`;
                     });
                 });
                 tablaHTML += `</tbody></table>`;
             }
         }
-        area.innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo" onerror="this.src='https://placehold.co/60x60/E67E00/white?text=M'"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>${headerTitle} — ${headerSub}</h2><div class="print-meta">👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>🕐 Impreso el ${fechaImp}<br>🔎 Filtro: <strong>${mode === 'mine' ? 'Solo mis registros' : (mode === 'employee' ? 'Historial de ' + empleado : 'Todos')}</strong></div></div></div>${tablaHTML}${resumenHTML}<div class="print-footer">Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>Minerar S.A. © 2026 — Todos los derechos reservados.</div>`;
+        area.innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo" onerror="this.src='https://placehold.co/60x60/E67E00/white?text=M'"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>${headerTitle} — ${headerSub}</h2><div class="print-meta">👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>🕐 Impreso el ${fechaImp}<br>🔎 Filtro: <strong>${mode === 'mine' ? 'Solo mis registros' : (mode === 'employee' ? 'Historial de ' + empleado : 'Todos')}</strong></div></div></div>${tablaHTML}${resumenHTML}<div class="print-footer">Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>Minerar S.A. © 2026</div>`;
     }
-
     function printEmployeeHistory() {
         const empleado = normalizar(document.getElementById("employeePrintSelect").value);
         const anio = document.getElementById("employeeYearSelect").value;
@@ -2197,15 +2271,11 @@
         m.style.left = x + 'px'; m.style.top = y + 'px';
     }
     function hideHoverModal() { document.getElementById("hoverModal").classList.remove("active"); }
-
     function switchTab(name) {
-        if (name === 'empleados' && !isAdmin()) {
-            alertError("Solo ADMINISTRADOR y EDGARDO SAAVEDRA tienen acceso a la pestaña Empleados.");
-            return;
-        }
+        if (name === 'empleados' && !isAdmin()) { alertError("Solo ADMINISTRADOR y EDGARDO SAAVEDRA tienen acceso a la pestaña Empleados."); return; }
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        const tabs = ['single','range','equity','coordination','reporte','multi','empleados','recordatorios'];
+        const tabs = ['range','single','multi','reporte','coordination','equity','empleados','recordatorios'];
         const idx = tabs.indexOf(name);
         if (idx >= 0) {
             document.querySelectorAll('.tab-btn')[idx].classList.add('active');
@@ -2221,7 +2291,6 @@
     // ==================== LOGIN ====================
     function showLoginError(m) { const e = document.getElementById("loginErrorMsg"); e.innerText = m; e.style.display = "block"; }
     function hideLoginError() { document.getElementById("loginErrorMsg").style.display = "none"; }
-
     function playUnlockSound() {
         try {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2232,7 +2301,6 @@
             o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.25);
         } catch(e) {}
     }
-
     function populateUserDropdown(sel = "") {
         const s = document.getElementById("userSelect");
         if (!s) return;
@@ -2251,20 +2319,16 @@
         n.style.fontWeight = "bold"; n.style.color = "#E67E00"; s.appendChild(n);
         handleUserSelectChange();
     }
-
     function setLoginMode(mode) {
         const s = document.getElementById("userSelect");
         if (mode === 'register') s.value = "NEW_USER";
         else {
             if (s.value === "NEW_USER" || !s.value) {
-                for (let o of s.querySelectorAll("option")) {
-                    if (o.value && o.value !== "NEW_USER" && !o.disabled) { s.value = o.value; break; }
-                }
+                for (let o of s.querySelectorAll("option")) { if (o.value && o.value !== "NEW_USER" && !o.disabled) { s.value = o.value; break; } }
             }
         }
         handleUserSelectChange();
     }
-
     function handleUserSelectChange() {
         hideLoginError();
         const s = document.getElementById("userSelect");
@@ -2279,10 +2343,7 @@
             b.innerText = "REGISTRAR E INGRESAR";
             i.innerText = "Ingresá nombre, correo y contraseña.";
             f.style.display = "none";
-            if (lm && rm) {
-                lm.style.background = "transparent"; lm.style.color = "#a4b0be"; lm.style.border = "1px solid #485460";
-                rm.style.background = "#E67E00"; rm.style.color = "white"; rm.style.border = "none";
-            }
+            if (lm && rm) { lm.style.background = "transparent"; lm.style.color = "#a4b0be"; lm.style.border = "1px solid #485460"; rm.style.background = "#E67E00"; rm.style.color = "white"; rm.style.border = "none"; }
         } else {
             isRegisteringNew = false;
             u.style.display = "none"; e.style.display = "none"; c.style.display = "none";
@@ -2290,13 +2351,9 @@
             b.innerText = "INGRESAR AL SISTEMA";
             i.innerText = "Seleccioná tu usuario e ingresá tu contraseña.";
             f.style.display = "inline-block";
-            if (lm && rm) {
-                lm.style.background = "#E67E00"; lm.style.color = "white"; lm.style.border = "none";
-                rm.style.background = "transparent"; rm.style.color = "#E67E00"; rm.style.border = "2px solid #E67E00";
-            }
+            if (lm && rm) { lm.style.background = "#E67E00"; lm.style.color = "white"; lm.style.border = "none"; rm.style.background = "transparent"; rm.style.color = "#E67E00"; rm.style.border = "2px solid #E67E00"; }
         }
     }
-
     async function processLogin() {
         hideLoginError();
         const s = document.getElementById("userSelect");
@@ -2332,17 +2389,12 @@
             document.getElementById("loginOverlay").style.display = "none";
             document.getElementById("mainContainer").style.display = "block";
             document.getElementById("supervisorInput").value = currentUser;
-            // Ocultar pestaña Empleados si no es admin
-            if (!isAdmin()) {
-                const tabs = document.querySelectorAll('.tab-btn');
-                if (tabs[6]) tabs[6].style.display = 'none';
-            }
+            if (!isAdmin()) { const tabs = document.querySelectorAll('.tab-btn'); if (tabs[6]) tabs[6].style.display = 'none'; }
             updateCalendar();
             setTimeout(() => mostrarBienvenida(), 500);
             setTimeout(() => mostrarAvisosDelDia(), 1500);
         }, 300);
     }
-
     function recoverPassword() {
         hideLoginError();
         const s = document.getElementById("userSelect").value;
@@ -2356,7 +2408,6 @@
         document.getElementById("recoveryEmailHint").innerText = u && u.email ? `Correo registrado: ${u.email}` : "Ingresá tu correo y nueva contraseña.";
         document.getElementById("recoveryModal").style.display = "flex";
     }
-
     async function confirmPasswordReset() {
         const username = normalizar(document.getElementById("recoveryUsernameText").innerText);
         const email = document.getElementById("recoveryEmailInput").value.trim().toLowerCase();
@@ -2377,7 +2428,6 @@
             setTimeout(() => { closeRecoveryModal(); }, 1200);
         } catch(err) { m.style.color = "#ff6b6b"; m.style.background = "rgba(255,107,107,0.1)"; m.innerText = "Error: " + err.message; }
     }
-
     function closeRecoveryModal() { document.getElementById("recoveryModal").style.display = "none"; }
     function openDeleteAccountModal() {
         document.getElementById("deleteConfirmPassword").value = "";
@@ -2385,7 +2435,6 @@
         document.getElementById("deleteAccountModal").style.display = "flex";
     }
     function closeDeleteAccountModal() { document.getElementById("deleteAccountModal").style.display = "none"; }
-
     async function confirmDeleteAccount() {
         const pass = document.getElementById("deleteConfirmPassword").value.trim();
         const m = document.getElementById("deleteModalMsg");
@@ -2400,7 +2449,6 @@
             setTimeout(() => { closeDeleteAccountModal(); logoutUser(); }, 2000);
         } catch(err) { m.style.color = "#ff6b6b"; m.innerText = "Error: " + err.message; }
     }
-
     function logoutUser() {
         const last = currentUser;
         document.getElementById("mainContainer").style.display = "none";
@@ -2415,14 +2463,9 @@
         populateUserDropdown(last);
         hideLoginError();
     }
-
-    // ==================== MULTI FILTRO (pestaña) ====================
     function addToMultiSelect(nombre) {
         if (!nombre) return;
-        if (!selectedMultiFilter.includes(nombre)) {
-            selectedMultiFilter.push(nombre);
-            renderMultiSelectedList();
-        }
+        if (!selectedMultiFilter.includes(nombre)) { selectedMultiFilter.push(nombre); renderMultiSelectedList(); }
         document.getElementById('multiAddSelect').value = '';
     }
     function removeFromMultiSelect(nombre) {
@@ -2432,14 +2475,8 @@
     function renderMultiSelectedList() {
         const cont = document.getElementById('multiSelectedList');
         if (!cont) return;
-        if (!selectedMultiFilter.length) {
-            cont.innerHTML = '<p style="font-size:0.75rem; color:#a4b0be; text-align:center; padding:15px;">Sin empleados seleccionados.</p>';
-            return;
-        }
-        cont.innerHTML = selectedMultiFilter.map(n => `<div class="multi-selected-item">
-            <span class="ms-name">👤 ${n}</span>
-            <button class="ms-remove" onclick="removeFromMultiSelect('${n}')">✕</button>
-        </div>`).join("");
+        if (!selectedMultiFilter.length) { cont.innerHTML = '<p style="font-size:0.75rem; color:#a4b0be; text-align:center; padding:15px;">Sin empleados seleccionados.</p>'; return; }
+        cont.innerHTML = selectedMultiFilter.map(n => `<div class="multi-selected-item"><span class="ms-name">👤 ${n}</span><button class="ms-remove" onclick="removeFromMultiSelect('${n}')">✕</button></div>`).join("");
     }
     function applyMultiFilter() {
         if (!selectedMultiFilter.length) { alertWarning("Seleccioná al menos un empleado."); return; }
@@ -2463,16 +2500,13 @@
             avisosEnabled = av === null ? true : av === '1';
             document.getElementById("avisosToggle").classList.toggle("on", avisosEnabled);
         } catch(e) {}
-
         const notesArea = document.getElementById("notes");
         if (notesArea) notesArea.addEventListener("input", triggerEquityCheckOnSingle);
         document.getElementById("rangeEmployeeName")?.addEventListener("input", checkRangeEquity);
         document.getElementById("monthSelect").value = currentMonth;
         document.getElementById("yearSelect").value = currentYear;
         document.getElementById("coordMonthSelect").value = currentMonth;
-
         await cargarTodo();
-
         try {
             const ses = localStorage.getItem(LOCAL_SESION_KEY);
             if (ses && usersDB[normalizar(ses)]) {
@@ -2480,10 +2514,7 @@
                 document.getElementById("loginOverlay").style.display = "none";
                 document.getElementById("mainContainer").style.display = "block";
                 document.getElementById("supervisorInput").value = currentUser;
-                if (!isAdmin()) {
-                    const tabs = document.querySelectorAll('.tab-btn');
-                    if (tabs[6]) tabs[6].style.display = 'none';
-                }
+                if (!isAdmin()) { const tabs = document.querySelectorAll('.tab-btn'); if (tabs[6]) tabs[6].style.display = 'none'; }
                 updateCalendar();
                 setTimeout(() => mostrarBienvenida(), 500);
                 setTimeout(() => mostrarAvisosDelDia(), 1500);
@@ -2491,7 +2522,6 @@
         } catch(e) {}
     };
 
-    // Exponer al window
     window.processLogin = processLogin;
     window.setLoginMode = setLoginMode;
     window.handleUserSelectChange = handleUserSelectChange;
@@ -2548,6 +2578,10 @@
     window.renderEmployeeHistory = renderEmployeeHistory;
     window.closePassConfirmModal = closePassConfirmModal;
     window.confirmPassAction = confirmPassAction;
+    window.renderSabana = renderSabana;
+    window.imprimirSabana = imprimirSabana;
+    window.imprimirAlmanaque = imprimirAlmanaque;
+    window.exportarSabanaExcel = exportarSabanaExcel;
 </script>
 </body>
 </html>
