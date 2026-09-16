@@ -1752,7 +1752,7 @@ function renderSabana() {
         cont.innerHTML = `<div class="sabana-card"><div class="sabana-header"><div><div class="sabana-title">${titulo}</div><div class="sabana-subtitle">${subtitulo}</div>${mesesInfo}</div></div>${filtrosHTML}${tablaHTML}${totalesHTML}${avisoVarios}${accionesHTML}</div>`;
     }
     function obtenerPeriodosSabana() {
-        const registros = [];
+                let registros = [];
         const isFiltroMes = (currentFilter === 'MINE' || currentFilter === 'VAC' || currentFilter === 'ENF');
         const mm = String(currentMonth+1).padStart(2,'0');
         const isFiltroEmpleado = (currentFilter === 'EMPLEADO' && selectedEmployeeFilter);
@@ -1772,7 +1772,7 @@ function renderSabana() {
         if (sabanaFilters.tipo !== 'ALL') registros = registros.filter(r => r.type === sabanaFilters.tipo);
         if (sabanaFilters.estado !== 'ALL') registros = registros.filter(r => r.status === sabanaFilters.estado);
         registros.sort((a,b) => a.emp.localeCompare(b.emp) || a.date.localeCompare(b.date));
-        const periods = [];
+        let periods = [];
         let cur = null;
         registros.forEach(r => {
             const d = new Date(r.date + "T00:00:00");
