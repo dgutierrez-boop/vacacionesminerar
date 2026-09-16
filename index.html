@@ -433,7 +433,6 @@
         </div>
     </div>
 
-    <!-- MODAL ELIMINAR CUENTA -->
     <div class="login-overlay" id="deleteAccountModal" style="display:none;">
         <div class="login-box" style="border-top-color:#e74c3c;">
             <div style="font-size:2.5rem; margin-bottom:10px;">⚠️</div>
@@ -448,7 +447,6 @@
         </div>
     </div>
 
-    <!-- MODAL RECUPERAR -->
     <div class="login-overlay" id="recoveryModal" style="display:none;">
         <div class="login-box">
             <div style="font-size:2.5rem; margin-bottom:8px;">🔑</div>
@@ -466,14 +464,12 @@
         </div>
     </div>
 
-    <!-- MODAL HOVER FERIADO -->
     <div id="hoverModal" style="position:fixed; display:none; z-index:10000; background:#1e272e; border:2px solid #e74c3c; border-radius:8px; padding:12px; width:300px; box-shadow:0 8px 25px rgba(0,0,0,0.8); pointer-events:none;">
         <div id="fhmDateText" style="font-size:0.75rem; font-weight:bold; color:#e74c3c; margin-bottom:4px;"></div>
         <div id="fhmTitle" style="font-size:0.95rem; font-weight:bold; color:#fff; margin-bottom:6px;"></div>
         <div id="fhmDesc" style="font-size:0.8rem; color:#dcdde1; line-height:1.3;"></div>
     </div>
 
-    <!-- MODAL GENÉRICO -->
     <div class="modal-overlay" id="genericModal">
         <div class="modal-box" id="genericModalBox">
             <span class="modal-emoji" id="genericModalEmoji">ℹ️</span>
@@ -483,7 +479,6 @@
         </div>
     </div>
 
-    <!-- MODAL BIENVENIDA -->
     <div class="modal-overlay" id="welcomeModal">
         <div class="modal-box tipo-success">
             <span class="modal-emoji">👋</span>
@@ -495,7 +490,6 @@
         </div>
     </div>
 
-    <!-- MODAL RECORDATORIOS -->
     <div class="modal-overlay" id="remindersModal">
         <div class="modal-box tipo-info" style="max-width:600px;">
             <span class="modal-emoji">🔔</span>
@@ -507,7 +501,6 @@
         </div>
     </div>
 
-    <!-- MODAL PEDIR CONTRASEÑA -->
     <div class="modal-overlay" id="passConfirmModal">
         <div class="modal-box tipo-warning">
             <span class="modal-emoji">🔐</span>
@@ -521,7 +514,6 @@
         </div>
     </div>
 
-    <!-- MODAL MULTI-SELECTOR -->
     <div class="multi-modal" id="multiSelectModal">
         <div class="multi-modal-box">
             <div class="multi-modal-header">
@@ -546,7 +538,6 @@
         </div>
     </div>
 
-    <!-- CONTAINER PRINCIPAL -->
     <div class="container" id="mainContainer">
         <header>
             <div class="header-top-row">
@@ -667,13 +658,17 @@
                     <button class="tab-btn" onclick="switchTab('recordatorios')">🔔 Recordatorios</button>
                 </div>
 
+                <!-- TAB RANGO -->
                 <div id="tabRange" class="tab-content active">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna o elimina un rango completo:</p>
                     <div class="range-inputs">
                         <div><label>Desde:</label><input type="date" id="rangeStart"></div>
                         <div><label>Hasta:</label><input type="date" id="rangeEnd"></div>
                     </div>
-                    <input type="text" id="rangeEmployeeName" placeholder="Nombre del empleado" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px; text-transform:uppercase;" oninput="checkRangeEquity()">
+                    <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">👤 Empleado:</label>
+                    <select id="rangeEmployeeName" style="width:100%; padding:10px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.9rem; margin-bottom:10px; cursor:pointer;" onchange="checkRangeEquity()">
+                        <option value="">-- Elegí el empleado --</option>
+                    </select>
                     <div style="margin-bottom:10px;">
                         <label style="font-size:0.72rem; color:#a4b0be; font-weight:bold; display:block; margin-bottom:4px;">Tipo:</label>
                         <select id="rangeType" style="width:100%; padding:8px; border-radius:6px; border:1px solid #485460; background:#2f3640; color:white; font-size:0.85rem;">
@@ -693,6 +688,7 @@
                     <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar MIS Registros</button>
                 </div>
 
+                <!-- TAB SINGLE -->
                 <div id="tabSingle" class="tab-content">
                     <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla</div>
                     <div id="otherRecordsContainer" class="other-records-section" style="display:none;">
@@ -856,18 +852,19 @@
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📅 2. Asignar Vacaciones <span class="arrow">▼</span></div>
                     <div class="accordion-content">
-                        <p><strong>Por rango (recomendado):</strong> pestaña "🗓️ Rango", completá desde/hasta/nombre/tipo/estado.</p>
+                        <p><strong>Por rango (recomendado):</strong> pestaña "🗓️ Rango", completá desde/hasta, elegí el empleado del desplegable, tipo y estado.</p>
                         <p><strong>Por día suelto:</strong> clic en un día del calendario y completá el formulario.</p>
+                        <div class="tip-box">💡 Los empleados se eligen de una lista, no se escriben a mano. Así todos usan el nombre exacto.</div>
                     </div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏥 3. Registrar Enfermedad <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "Tipo" elegí 🏥 ENFERMEDAD. Se registra igual que vacaciones pero con color violeta y se contabiliza por separado.</p></div>
+                    <div class="accordion-content"><p>En "Tipo" elegí 🏥 ENFERMEDAD. Se registra igual que vacaciones pero con color violeta.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🗑️ 4. Borrar Registros <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>Por rango o por día suelto. Solo podés borrar lo tuyo.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👤 5. Filtro por Empleado <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y ves la <strong>Sábana de Datos</strong>.</p></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Ves la <strong>Sábana de Datos</strong>.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏷️ 6. Filtro Múltiple <span class="arrow">▼</span></div>
                     <div class="accordion-content"><p>En "VER:" elegí "✏️ Varios empleados..." y clic en "🏷️ Seleccionar empleados".</p></div>
@@ -1274,6 +1271,19 @@
             lista.forEach(n => { const o = document.createElement('option'); o.value = n; o.innerText = n; sel.appendChild(o); });
             if (actual && lista.includes(actual)) sel.value = actual;
         });
+        // Desplegable de la pestaña Rango
+        const rangeSelect = document.getElementById('rangeEmployeeName');
+        if (rangeSelect) {
+            const valorActual = rangeSelect.value;
+            rangeSelect.innerHTML = '<option value="">-- Elegí el empleado --</option>';
+            lista.forEach(n => {
+                const opt = document.createElement('option');
+                opt.value = n;
+                opt.innerText = n;
+                rangeSelect.appendChild(opt);
+            });
+            if (valorActual && lista.includes(valorActual)) rangeSelect.value = valorActual;
+        }
         updateCoordSupervisorDropdown();
     }
     function updateCoordSupervisorDropdown() {
@@ -1566,7 +1576,7 @@
         const name = normalizar(document.getElementById("rangeEmployeeName").value);
         const status = document.getElementById("rangeApprovalStatus").value;
         const type = document.getElementById("rangeType").value;
-        if (!s || !e || !name) { alertWarning("Completá fechas y nombre."); return; }
+        if (!s || !e || !name) { alertWarning("Completá fechas y elegí un empleado."); return; }
         const sd = new Date(s + "T00:00:00"), ed = new Date(e + "T00:00:00");
         if (sd > ed) { alertWarning("Fecha inicio debe ser anterior al fin."); return; }
         const fechas = [];
@@ -1632,13 +1642,12 @@
     }
 
     // ==================== SÁBANA DE DATOS ====================
-     // Funciones globales para filtros de la Sábana
     function setSabanaAnio(valor) { sabanaFilters.anio = valor; renderSabana(); }
     function setSabanaTipo(valor) { sabanaFilters.tipo = valor; renderSabana(); }
     function setSabanaEstado(valor) { sabanaFilters.estado = valor; renderSabana(); }
     function setSabanaOrden(valor) { sabanaFilters.orden = valor; renderSabana(); }
-   
-function renderSabana() {
+
+    function renderSabana() {
         const cont = document.getElementById('sabanaContainer');
         if (!cont) return;
         if (currentFilter === 'ALL') { cont.innerHTML = ''; return; }
@@ -1721,7 +1730,7 @@ function renderSabana() {
             });
             totalesHTML += '</div>';
         }
-                        const filtrosHTML = `<div class="sabana-filters">
+        const filtrosHTML = `<div class="sabana-filters">
             <div class="sf-group"><label>Año:</label><select onchange="setSabanaAnio(this.value)">
                 <option value="ALL"${sabanaFilters.anio==='ALL'?' selected':''}>Todos</option>
                 <option value="2024"${sabanaFilters.anio==='2024'?' selected':''}>2024</option>
@@ -1752,7 +1761,7 @@ function renderSabana() {
         cont.innerHTML = `<div class="sabana-card"><div class="sabana-header"><div><div class="sabana-title">${titulo}</div><div class="sabana-subtitle">${subtitulo}</div>${mesesInfo}</div></div>${filtrosHTML}${tablaHTML}${totalesHTML}${avisoVarios}${accionesHTML}</div>`;
     }
     function obtenerPeriodosSabana() {
-                let registros = [];
+        let registros = [];
         const isFiltroMes = (currentFilter === 'MINE' || currentFilter === 'VAC' || currentFilter === 'ENF');
         const mm = String(currentMonth+1).padStart(2,'0');
         const isFiltroEmpleado = (currentFilter === 'EMPLEADO' && selectedEmployeeFilter);
@@ -2179,24 +2188,20 @@ function renderSabana() {
     function toggleExportMenu(e) { e.stopPropagation(); document.getElementById("exportDropdown").classList.toggle("open"); }
     function closeExportMenu() { document.getElementById("exportDropdown").classList.remove("open"); }
     document.addEventListener('click', () => closeExportMenu());
-        // Atajo: Enter para ejecutar la acción principal del panel activo
+
+    // Enter para ejecutar acciones principales
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Enter') return;
         const tag = (e.target.tagName || '').toLowerCase();
-        // Si está escribiendo en un textarea, permitir salto de línea normal
         if (tag === 'textarea') return;
-
-        // Buscar el panel activo
         const panelActivo = document.querySelector('.tab-content.active');
         if (!panelActivo) return;
-
         const id = panelActivo.id;
-        // Ejecutar la acción según el panel
         if (id === 'tabRange') { saveRange(); }
         else if (id === 'tabSingle') { saveNote(); }
         else if (id === 'tabEmpleados') { saveEmployee(); }
-        // Los demás paneles no tienen una acción "principal" clara, se ignora
     });
+
     function renderPrintArea(mode, empleado = "", anio = "") {
         const area = document.getElementById("printArea");
         if (!area) return;
@@ -2552,7 +2557,7 @@ function renderSabana() {
         } catch(e) {}
         const notesArea = document.getElementById("notes");
         if (notesArea) notesArea.addEventListener("input", triggerEquityCheckOnSingle);
-        document.getElementById("rangeEmployeeName")?.addEventListener("input", checkRangeEquity);
+        document.getElementById("rangeEmployeeName")?.addEventListener("change", checkRangeEquity);
         document.getElementById("monthSelect").value = currentMonth;
         document.getElementById("yearSelect").value = currentYear;
         document.getElementById("coordMonthSelect").value = currentMonth;
@@ -2629,13 +2634,13 @@ function renderSabana() {
     window.closePassConfirmModal = closePassConfirmModal;
     window.confirmPassAction = confirmPassAction;
     window.renderSabana = renderSabana;
+    window.imprimirSabana = imprimirSabana;
+    window.imprimirAlmanaque = imprimirAlmanaque;
+    window.exportarSabanaExcel = exportarSabanaExcel;
     window.setSabanaAnio = setSabanaAnio;
     window.setSabanaTipo = setSabanaTipo;
     window.setSabanaEstado = setSabanaEstado;
     window.setSabanaOrden = setSabanaOrden;
-    window.imprimirSabana = imprimirSabana;
-    window.imprimirAlmanaque = imprimirAlmanaque;
-    window.exportarSabanaExcel = exportarSabanaExcel;
 </script>
 </body>
 </html>
