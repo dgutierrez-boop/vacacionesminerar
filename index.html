@@ -1632,7 +1632,13 @@
     }
 
     // ==================== SÁBANA DE DATOS ====================
-    function renderSabana() {
+     // Funciones globales para filtros de la Sábana
+    function setSabanaAnio(valor) { sabanaFilters.anio = valor; renderSabana(); }
+    function setSabanaTipo(valor) { sabanaFilters.tipo = valor; renderSabana(); }
+    function setSabanaEstado(valor) { sabanaFilters.estado = valor; renderSabana(); }
+    function setSabanaOrden(valor) { sabanaFilters.orden = valor; renderSabana(); }
+   
+function renderSabana() {
         const cont = document.getElementById('sabanaContainer');
         if (!cont) return;
         if (currentFilter === 'ALL') { cont.innerHTML = ''; return; }
@@ -1715,25 +1721,25 @@
             });
             totalesHTML += '</div>';
         }
-        const filtrosHTML = `<div class="sabana-filters">
-            <div class="sf-group"><label>Año:</label><select onchange="sabanaFilters.anio=this.value;renderSabana()">
+                        const filtrosHTML = `<div class="sabana-filters">
+            <div class="sf-group"><label>Año:</label><select onchange="setSabanaAnio(this.value)">
                 <option value="ALL"${sabanaFilters.anio==='ALL'?' selected':''}>Todos</option>
                 <option value="2024"${sabanaFilters.anio==='2024'?' selected':''}>2024</option>
                 <option value="2025"${sabanaFilters.anio==='2025'?' selected':''}>2025</option>
                 <option value="2026"${sabanaFilters.anio==='2026'?' selected':''}>2026</option>
                 <option value="2027"${sabanaFilters.anio==='2027'?' selected':''}>2027</option>
             </select></div>
-            <div class="sf-group"><label>Tipo:</label><select onchange="sabanaFilters.tipo=this.value;renderSabana()">
+            <div class="sf-group"><label>Tipo:</label><select onchange="setSabanaTipo(this.value)">
                 <option value="ALL"${sabanaFilters.tipo==='ALL'?' selected':''}>Todos</option>
                 <option value="VACACIONES"${sabanaFilters.tipo==='VACACIONES'?' selected':''}>🏖️ Vacaciones</option>
                 <option value="ENFERMEDAD"${sabanaFilters.tipo==='ENFERMEDAD'?' selected':''}>🏥 Enfermedad</option>
             </select></div>
-            <div class="sf-group"><label>Estado:</label><select onchange="sabanaFilters.estado=this.value;renderSabana()">
+            <div class="sf-group"><label>Estado:</label><select onchange="setSabanaEstado(this.value)">
                 <option value="ALL"${sabanaFilters.estado==='ALL'?' selected':''}>Todos</option>
                 <option value="APROBADO"${sabanaFilters.estado==='APROBADO'?' selected':''}>✅ Aprobado</option>
                 <option value="PENDIENTE"${sabanaFilters.estado==='PENDIENTE'?' selected':''}>⏳ Pendiente</option>
             </select></div>
-            <div class="sf-group"><label>Orden:</label><select onchange="sabanaFilters.orden=this.value;renderSabana()">
+            <div class="sf-group"><label>Orden:</label><select onchange="setSabanaOrden(this.value)">
                 <option value="fecha"${sabanaFilters.orden==='fecha'?' selected':''}>📅 Fecha</option>
                 <option value="empleado"${sabanaFilters.orden==='empleado'?' selected':''}>👤 Empleado</option>
                 <option value="estado"${sabanaFilters.orden==='estado'?' selected':''}>📊 Vencimiento</option>
@@ -2173,6 +2179,24 @@
     function toggleExportMenu(e) { e.stopPropagation(); document.getElementById("exportDropdown").classList.toggle("open"); }
     function closeExportMenu() { document.getElementById("exportDropdown").classList.remove("open"); }
     document.addEventListener('click', () => closeExportMenu());
+        // Atajo: Enter para ejecutar la acción principal del panel activo
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        const tag = (e.target.tagName || '').toLowerCase();
+        // Si está escribiendo en un textarea, permitir salto de línea normal
+        if (tag === 'textarea') return;
+
+        // Buscar el panel activo
+        const panelActivo = document.querySelector('.tab-content.active');
+        if (!panelActivo) return;
+
+        const id = panelActivo.id;
+        // Ejecutar la acción según el panel
+        if (id === 'tabRange') { saveRange(); }
+        else if (id === 'tabSingle') { saveNote(); }
+        else if (id === 'tabEmpleados') { saveEmployee(); }
+        // Los demás paneles no tienen una acción "principal" clara, se ignora
+    });
     function renderPrintArea(mode, empleado = "", anio = "") {
         const area = document.getElementById("printArea");
         if (!area) return;
@@ -2605,6 +2629,10 @@
     window.closePassConfirmModal = closePassConfirmModal;
     window.confirmPassAction = confirmPassAction;
     window.renderSabana = renderSabana;
+    window.setSabanaAnio = setSabanaAnio;
+    window.setSabanaTipo = setSabanaTipo;
+    window.setSabanaEstado = setSabanaEstado;
+    window.setSabanaOrden = setSabanaOrden;
     window.imprimirSabana = imprimirSabana;
     window.imprimirAlmanaque = imprimirAlmanaque;
     window.exportarSabanaExcel = exportarSabanaExcel;
