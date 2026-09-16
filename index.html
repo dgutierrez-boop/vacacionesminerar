@@ -1817,37 +1817,82 @@
         area.innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>${title}</h2><div class="print-meta">👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>🕐 Impreso el ${fechaImp}<br>🔎 Filtro: <strong>${currentFilter}</strong></div></div></div>${tablaHTML}<div class="print-summary-box"><div class="title">📊 TOTALES</div><div class="row"><span>Períodos:</span> <strong>${periods.length}</strong></div><div class="row"><span>Empleados:</span> <strong>${empleados.length}</strong></div><div class="row"><span>🏖️ Vacaciones:</span> <strong>${tV} días</strong></div><div class="row"><span>🏥 Enfermedad:</span> <strong>${tE} días</strong></div><div class="row"><span>Total:</span> <strong>${tV + tE} días</strong></div></div><div class="print-footer">Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>Minerar S.A. © 2026</div>`;
         setTimeout(() => window.print(), 300);
     }
-    function imprimirAlmanaque() {
+        function imprimirAlmanaque() {
         if (currentFilter !== 'EMPLEADO' || !selectedEmployeeFilter) { alertWarning("El almanaque solo está disponible cuando filtrás 1 empleado."); return; }
         const empleado = selectedEmployeeFilter;
         const mm = String(currentMonth+1).padStart(2,'0');
         const diasCon = {};
-        for (let k in notesData) { notesData[k].forEach(r => { if (normalizar(r.text) === empleado) diasCon[k] = r.type || 'VACACIONES'; }); }
+        for (let k in notesData) {
+            notesData[k].forEach(r => {
+                if (normalizar(r.text) === empleado) diasCon[k] = { type: r.type || 'VACACIONES', status: r.status, updatedBy: r.updatedBy, note: r.supervisorNote || '' };
+            });
+        }
         const first = new Date(currentYear, currentMonth, 1).getDay();
         const diasIn = new Date(currentYear, currentMonth+1, 0).getDate();
-        let gridHTML = '<table style="width:100%; border-collapse:collapse; font-size:0.75rem;"><thead><tr>';
-        ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"].forEach(d => { gridHTML += `<th style="background:#1e272e; color:#fff; padding:5px; border:1px solid #1e272e; -webkit-print-color-adjust: exact;">${d}</th>`; });
+        let gridHTML = '<table style="width:100%; border-collapse:collapse; font-size:0.7rem; table-layout:fixed;"><thead><tr>';
+        ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"].forEach(d => {
+            gridHTML += `<th style="background:#1e272e; color:#fff; padding:6px 2px; border:1px solid #1e272e; -webkit-print-color-adjust: exact; font-size:0.75rem;">${d}</th>`;
+        });
         gridHTML += '</tr></thead><tbody><tr>';
-        for (let i=0;i<first;i++) gridHTML += '<td style="border:1px solid #bdc3c7; padding:8px; height:55px;"></td>';
+        for (let i=0;i<first;i++) gridHTML += '<td style="border:1px solid #bdc3c7; padding:6px; height:85px; vertical-align:top;"></td>';
         for (let day=1; day<=diasIn; day++) {
             const k = `${currentYear}-${mm}-${String(day).padStart(2,'0')}`;
-            const tipo = diasCon[k];
-            let bg = '#fff', txt = '';
-            if (tipo === 'VACACIONES') { bg = '#d6eaf8'; txt = '🏖️'; }
-            else if (tipo === 'ENFERMEDAD') { bg = '#e8daef'; txt = '🏥'; }
-            gridHTML += `<td style="border:1px solid #bdc3c7; padding:5px; height:55px; background:${bg}; -webkit-print-color-adjust: exact; vertical-align:top;"><div style="font-weight:900; font-size:0.85rem;">${day}</div>${txt ? `<div style="font-size:1.1rem; text-align:center; margin-top:3px;">${txt}</div>` : ''}</td>`;
+            const info = diasCon[k];
+            let bg = '#fff';
+            let contenido = '';
+            if (info) {
+                if (info.type === 'ENFERMEDAD') bg = '#e8daef';
+                else bg = '#d6eaf8';
+                const emoji = info.type === 'ENFERMEDAD' ? '🏥' : '🏖️';
+                const nombreCorto = empleado.length > 14 ? empleado.substring(0,13) + '.' : empleado;
+                const supervisorCorto = info.updatedBy && info.updatedBy.length > 12 ? info.updatedBy.substring(0,11) + '.' : (info.updatedBy || '—');
+                const estadoBadge = info.status === 'APROBADO' ? '✅ APROB' : '⏳ PEND';
+                contenido = `
+                    <div style="font-size:1.05rem; text-align:center; margin-bottom:1px;">${emoji}</div>
+                    <div style="font-weight:900; font-size:0.62rem; color:#1e272e; text-align:center; line-height:1.1; word-break:break-word;">${nombreCorto}</div>
+                    <div style="font-size:0.55rem; color:#2c3e50; text-align:center; margin-top:1px; line-height:1.1;">👤 ${supervisorCorto}</div>
+                    <div style="font-size:0.52rem; color:${info.status === 'APROBADO' ? '#27ae60' : '#e67e22'}; text-align:center; font-weight:bold; margin-top:1px;">${estadoBadge}</div>
+                `;
+            }
+            gridHTML += `<td style="border:1px solid #bdc3c7; padding:4px; height:85px; background:${bg}; -webkit-print-color-adjust: exact; vertical-align:top; overflow:hidden;">
+                <div style="font-weight:900; font-size:0.78rem; color:#1e272e; text-align:right; margin-bottom:2px;">${day}</div>
+                ${contenido}
+            </td>`;
             if ((first + day) % 7 === 0 && day < diasIn) gridHTML += '</tr><tr>';
         }
         const lastDay = (first + diasIn) % 7;
-        if (lastDay !== 0) for (let i=lastDay; i<7; i++) gridHTML += '<td style="border:1px solid #bdc3c7; padding:8px; height:55px;"></td>';
+        if (lastDay !== 0) for (let i=lastDay; i<7; i++) gridHTML += '<td style="border:1px solid #bdc3c7; padding:6px; height:85px;"></td>';
         gridHTML += '</tr></tbody></table>';
         const emp = empleadosData.find(e => normalizar(e.nombre) === empleado);
         const fIng = emp && emp.fecha_ingreso ? new Date(emp.fecha_ingreso + "T00:00:00").toLocaleDateString('es-AR') : 'No cargada';
         const diasAsig = getDiasAsignados(empleado);
         const usados = calcularDiasUsadosAnio(empleado, currentYear);
         const restantes = Math.max(0, diasAsig - usados.vac);
-        document.getElementById('printArea').innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>ALMANAQUE — ${empleado}</h2><div class="print-meta">📅 ${monthNames[currentMonth].toUpperCase()} ${currentYear}<br>📅 Ingreso: ${fIng} · Días por ley: ${diasAsig}<br>🕐 Impreso el ${getFechaImpresion()}</div></div></div>${gridHTML}<div class="print-summary-box" style="margin-top:15px;"><div class="title">📊 RESUMEN</div><div class="row"><span>🏖️ Días vacaciones usados:</span> <strong>${usados.vac}</strong></div><div class="row"><span>🏥 Días enfermedad:</span> <strong>${usados.enf}</strong></div><div class="row"><span>✅ Días asignados por ley:</span> <strong>${diasAsig}</strong></div><div class="row"><span>🎯 Saldo restante:</span> <strong>${restantes} días</strong></div></div><div class="print-footer">Documento generado automáticamente.<br>Minerar S.A. © 2026</div>`;
+        document.getElementById('printArea').innerHTML = `
+            <div class="print-header">
+                <img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo">
+                <div class="print-header-text">
+                    <h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1>
+                    <h2>ALMANAQUE — ${empleado}</h2>
+                    <div class="print-meta">
+                        📅 ${monthNames[currentMonth].toUpperCase()} ${currentYear}<br>
+                        📅 Ingreso: ${fIng} · Días por ley: ${diasAsig}<br>
+                        🕐 Impreso el ${getFechaImpresion()}
+                    </div>
+                </div>
+            </div>
+            ${gridHTML}
+            <div class="print-summary-box" style="margin-top:15px;">
+                <div class="title">📊 RESUMEN</div>
+                <div class="row"><span>🏖️ Días vacaciones usados:</span> <strong>${usados.vac}</strong></div>
+                <div class="row"><span>🏥 Días enfermedad:</span> <strong>${usados.enf}</strong></div>
+                <div class="row"><span>✅ Días asignados por ley:</span> <strong>${diasAsig}</strong></div>
+                <div class="row"><span>🎯 Saldo restante:</span> <strong>${restantes} días</strong></div>
+            </div>
+            <div class="print-footer">Documento generado automáticamente.<br>Minerar S.A. © 2026</div>
+        `;
         setTimeout(() => window.print(), 300);
+    }
     }
     function exportarSabanaExcel() {
         if (typeof XLSX === 'undefined') { alertError("Librería Excel no cargada."); return; }
