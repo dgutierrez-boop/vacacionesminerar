@@ -87,7 +87,6 @@
         .badge-restantes-fin { background:#95a5a6; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
         .badge-restantes-ultimo { background:#e74c3c; color:#fff; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:800; }
 
-        /* Sábana de datos */
         .sabana-card { background:#fff; color:#2d3436; border-radius:8px; padding:14px 16px; border:2px solid #E67E00; box-shadow:0 4px 10px rgba(0,0,0,0.15); margin-top:15px; }
         .sabana-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:2px solid #E67E00; padding-bottom:8px; margin-bottom:10px; }
         .sabana-title { font-size:0.95rem; font-weight:900; color:#1e272e; text-transform:uppercase; }
@@ -651,10 +650,7 @@
                     <span><span style="color:#8e44ad;">&#9632;</span> Enfermedad</span>
                 </div>
 
-                <!-- Contenedor de la Sábana (arriba de la Nómina) -->
                 <div id="sabanaContainer"></div>
-
-                <!-- Nómina (solo se muestra cuando NO hay filtro) -->
                 <div id="printSummaryContainer" class="print-summary-container"></div>
             </div>
 
@@ -671,7 +667,6 @@
                     <button class="tab-btn" onclick="switchTab('recordatorios')">🔔 Recordatorios</button>
                 </div>
 
-                <!-- TAB RANGO (activa por defecto) -->
                 <div id="tabRange" class="tab-content active">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">Asigna o elimina un rango completo:</p>
                     <div class="range-inputs">
@@ -698,7 +693,6 @@
                     <button class="btn-secondary" style="background:#c0392b; margin-top:8px;" onclick="deleteRange()">🗑️ Eliminar MIS Registros</button>
                 </div>
 
-                <!-- TAB SINGLE -->
                 <div id="tabSingle" class="tab-content">
                     <div class="selected-date-info" id="selectedDateText">Haz clic en una casilla</div>
                     <div id="otherRecordsContainer" class="other-records-section" style="display:none;">
@@ -729,7 +723,6 @@
                     </div>
                 </div>
 
-                <!-- TAB FILTRO MULTIPLE -->
                 <div id="tabMulti" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">🔍 Elegí varios empleados para ver solo sus registros.</p>
                     <div class="multi-selector-box">
@@ -746,7 +739,6 @@
                     <button class="btn-secondary" style="background:#7f8c8d;" onclick="clearMultiFilter()">✕ Limpiar Selección</button>
                 </div>
 
-                <!-- TAB REPORTE -->
                 <div id="tabReporte" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📄 Reporte individual en pantalla.</p>
                     <div class="employee-print-form">
@@ -764,7 +756,6 @@
                     <div id="employeePreviewContainer" style="margin-top:15px;"></div>
                 </div>
 
-                <!-- TAB COORDINACION -->
                 <div id="tabCoordination" class="tab-content">
                     <div class="employee-print-form">
                         <label>👤 Supervisor:</label>
@@ -783,7 +774,6 @@
                     <button class="btn-secondary" onclick="renderCoordinationSummary()">🔄 Actualizar</button>
                 </div>
 
-                <!-- TAB HISTORIAL -->
                 <div id="tabEquity" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">📊 Consultá el historial de un empleado (en pantalla).</p>
                     <div class="employee-print-form">
@@ -801,7 +791,6 @@
                     <div id="historyResults" style="margin-top:10px;"></div>
                 </div>
 
-                <!-- TAB EMPLEADOS -->
                 <div id="tabEmpleados" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">👥 Gestión de empleados y saldos.</p>
                     <div class="emp-form-box">
@@ -823,7 +812,6 @@
                     </div>
                 </div>
 
-                <!-- TAB RECORDATORIOS -->
                 <div id="tabRecordatorios" class="tab-content">
                     <p style="font-size:0.8rem; color:#dcdde1; margin-bottom:10px;">🔔 Recordatorios y avisos.</p>
                     <div class="avisos-toggle-box">
@@ -855,7 +843,6 @@
 
     <div id="printArea"></div>
 
-    <!-- AYUDA -->
     <div id="helpModal">
         <div class="help-modal-box">
             <div class="help-modal-header">
@@ -871,7 +858,6 @@
                     <div class="accordion-content">
                         <p><strong>Por rango (recomendado):</strong> pestaña "🗓️ Rango", completá desde/hasta/nombre/tipo/estado.</p>
                         <p><strong>Por día suelto:</strong> clic en un día del calendario y completá el formulario.</p>
-                        <div class="tip-box">✨ Podés cargar varios empleados el mismo día.</div>
                     </div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏥 3. Registrar Enfermedad <span class="arrow">▼</span></div>
@@ -881,27 +867,23 @@
                     <div class="accordion-content"><p>Por rango o por día suelto. Solo podés borrar lo tuyo.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👤 5. Filtro por Empleado <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y vas a ver la <strong>Sábana de Datos</strong> con todos sus períodos.</p></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "👤 Por empleado...". Aparece un selector al lado. Elegí un empleado y ves la <strong>Sábana de Datos</strong>.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🏷️ 6. Filtro Múltiple <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>En "VER:" elegí "✏️ Varios empleados..." y clic en el botón "🏷️ Seleccionar empleados". Se abre un modal con checkboxes.</p>
-                    <div class="tip-box">💡 También podés usar la pestaña "🔍 Filtro Múltiple" del panel derecho.</div></div>
+                    <div class="accordion-content"><p>En "VER:" elegí "✏️ Varios empleados..." y clic en "🏷️ Seleccionar empleados".</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📋 7. Sábana de Datos <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Cuando filtrás, aparece la <strong>Sábana</strong> abajo del calendario con TODOS los períodos sin importar el mes. Incluye filtros internos (Año, Tipo, Estado, Orden).</p>
-                    <div class="tip-box">💡 Si filtrás 1 empleado, podés imprimir también el <strong>Almanaque visual</strong> con sus días marcados.</div></div>
+                    <div class="accordion-content"><p>Cuando filtrás, aparece la <strong>Sábana</strong> abajo del calendario con TODOS los períodos sin importar el mes.</p>
+                    <div class="tip-box">💡 Si filtrás 1 empleado, podés imprimir el <strong>Almanaque visual</strong> con nombre, supervisor y estado en cada día.</div></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">👥 8. Gestión de Empleados <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Solo ADMINISTRADOR y EDGARDO SAAVEDRA ven la pestaña "👥 Empleados". Cargá nombre + fecha de ingreso. El sistema calcula los días por antigüedad:</p>
-                    <ul><li>0-5 años: 14 días</li><li>5-10 años: 21 días</li><li>10-20 años: 28 días</li><li>+20 años: 35 días</li></ul>
-                    <div class="tip-box">💡 El campo "Días override" solo se usa si hay convenio especial.</div></div>
+                    <div class="accordion-content"><p>Solo ADMINISTRADOR y EDGARDO SAAVEDRA. Días por antigüedad: 0-5→14 / 5-10→21 / 10-20→28 / +20→35.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🔔 9. Recordatorios <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Pestaña "🔔 Recordatorios": muestra inicios, últimos días, fines y próximos 7 días. Podés activar/desactivar los avisos automáticos.</p></div>
+                    <div class="accordion-content"><p>Pestaña "🔔 Recordatorios": inicios, últimos días, fines y próximos 7 días.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📤 10. Exportar <span class="arrow">▼</span></div>
-                    <div class="accordion-content"><p>Botón "📤 Exportar":</p>
-                    <ul><li>🖨️ Imprimir</li><li>📄 PDF (guardar como PDF)</li><li>📊 Excel (.xlsx)</li><li>💾 Backup JSON (respaldo técnico)</li><li>📋 Solo Mis Registros</li></ul></div>
+                    <div class="accordion-content"><p>Botón "📤 Exportar": Imprimir, PDF, Excel, Backup JSON, Solo Mis Registros.</p></div>
                 </div>
                 <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">🎨 11. Colores <span class="arrow">▼</span></div>
                     <div class="accordion-content">
@@ -1817,7 +1799,7 @@
         area.innerHTML = `<div class="print-header"><img src="https://i.ibb.co/cKVCzpy7/Logo-Minerar-1.gif" alt="Logo"><div class="print-header-text"><h1>CALENDARIO VACACIONAL — MINERAR S.A.</h1><h2>${title}</h2><div class="print-meta">👤 Supervisor: <strong>${currentUser || 'NO ESPECIFICADO'}</strong><br>🕐 Impreso el ${fechaImp}<br>🔎 Filtro: <strong>${currentFilter}</strong></div></div></div>${tablaHTML}<div class="print-summary-box"><div class="title">📊 TOTALES</div><div class="row"><span>Períodos:</span> <strong>${periods.length}</strong></div><div class="row"><span>Empleados:</span> <strong>${empleados.length}</strong></div><div class="row"><span>🏖️ Vacaciones:</span> <strong>${tV} días</strong></div><div class="row"><span>🏥 Enfermedad:</span> <strong>${tE} días</strong></div><div class="row"><span>Total:</span> <strong>${tV + tE} días</strong></div></div><div class="print-footer">Documento generado automáticamente por el Calendario Vacacional de Minerar S.A.<br>Minerar S.A. © 2026</div>`;
         setTimeout(() => window.print(), 300);
     }
-        function imprimirAlmanaque() {
+    function imprimirAlmanaque() {
         if (currentFilter !== 'EMPLEADO' || !selectedEmployeeFilter) { alertWarning("El almanaque solo está disponible cuando filtrás 1 empleado."); return; }
         const empleado = selectedEmployeeFilter;
         const mm = String(currentMonth+1).padStart(2,'0');
@@ -1892,7 +1874,6 @@
             <div class="print-footer">Documento generado automáticamente.<br>Minerar S.A. © 2026</div>
         `;
         setTimeout(() => window.print(), 300);
-    }
     }
     function exportarSabanaExcel() {
         if (typeof XLSX === 'undefined') { alertError("Librería Excel no cargada."); return; }
